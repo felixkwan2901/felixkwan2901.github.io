@@ -147,7 +147,7 @@
     .hero-cta { display: flex; gap: 13px; flex-wrap: wrap; }
 
     /* scrapbook collage */
-    .collage { position: relative; height: 560px; }
+    .collage { position: relative; height: 600px; }
     .collage .pin { position: absolute; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
     .tape { position: absolute; width: 90px; height: 28px; background: var(--tape); top: -12px; left: 50%; transform: translateX(-50%) rotate(-3deg); border-radius: 2px; box-shadow: 0 2px 6px rgba(0,0,0,.25); z-index: 3; }
     .tape::after { content:''; position:absolute; inset:0; background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(0,0,0,.04) 6px 7px); }
@@ -156,25 +156,35 @@
     .polaroid img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
     .polaroid .cap { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-family: 'Caveat',cursive; font-size: 1.15rem; color: #3a3a3a; }
 
-    .photo-1 { top: 18px; left: 4%; width: 230px; transform: rotate(-5deg); z-index: 2; }
-    .photo-1 img { height: 250px; }
+    .photo-1 { top: 14px; left: 3%; width: 232px; transform: rotate(-5deg); z-index: 2; padding-bottom: 70px; }
+    .photo-1 img { height: 248px; }
+    .photo-1 .cap { line-height: 1.18; bottom: 12px; font-size: 1.18rem; }
 
     /* UC lanyard + ID badge */
-    .lanyard { top: -30px; right: 6%; width: 200px; z-index: 4; transform: rotate(3deg); }
-    .strap { position: relative; height: 120px; display: flex; justify-content: center; }
-    .strap::before, .strap::after { content:''; position: absolute; top: 0; width: 30px; height: 120px; background-color: var(--uc-red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='120'%3E%3Crect width='30' height='120' fill='%23b91c2c'/%3E%3Crect x='0.5' y='0.5' width='29' height='119' fill='none' stroke='%238f1421' stroke-width='3'/%3E%3Ctext x='15' y='60' font-family='Arial,sans-serif' font-size='8.5' font-weight='700' letter-spacing='1.5' fill='%23ffffff' text-anchor='middle' transform='rotate(-90 15 60)'%3EUNIVERSITY OF CANTERBURY%3C/text%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 30px 120px; box-shadow: inset 0 0 8px rgba(0,0,0,.35), inset 3px 0 5px rgba(255,255,255,.12); border-radius: 2px; }
-    .strap::before { left: 50%; transform: translateX(-46px) rotate(8deg); transform-origin: top; }
-    .strap::after { right: 50%; transform: translateX(46px) rotate(-8deg); transform-origin: top; }
-    .clip { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 26px; height: 18px; background: linear-gradient(#d4d4d8,#9ca3af); border-radius: 4px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,.4); }
-    .badge { background: #fbfbfb; border-radius: 12px; padding: 16px 16px 20px; box-shadow: 0 20px 50px rgba(0,0,0,.55); position: relative; margin-top: -4px; }
-    .badge .b-head { display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--uc-red); padding-bottom: 9px; margin-bottom: 12px; }
-    .badge .uc-logo { display: inline-flex; flex: 0 0 auto; }
-    .badge .uc-logo svg { width: 30px; height: 36px; display: block; }
-    .badge .uc-name { font-size: .54rem; font-weight: 700; color: #333; letter-spacing: .02em; line-height: 1.2; }
-    .badge .b-name { font-family: 'Sora'; font-weight: 800; font-size: 1.3rem; color: #1a1a1a; }
-    .badge .b-name::after { content:''; display:block; width: 60px; height: 3px; background: var(--uc-red); border-radius: 2px; margin: 5px 0 8px; }
-    .badge .b-role { font-size: .72rem; color: #555; font-weight: 600; line-height: 1.3; }
-    .badge .barcode { margin-top: 14px; height: 34px; background: repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 4px,#111 4px 5px,#fff 5px 9px); border-radius: 2px; }
+    .lanyard { top: -40px; right: 5%; width: 212px; z-index: 4; transform: rotate(2deg); }
+    .strap { position: relative; height: 118px; display: flex; justify-content: center; }
+    .strap::before, .strap::after { content:''; position: absolute; top: 0; width: 30px; height: 118px; background-color: var(--uc-red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='118'%3E%3Crect width='30' height='118' fill='%23b91c2c'/%3E%3Ctext x='15' y='59' font-family='Arial,sans-serif' font-size='8.5' font-weight='700' letter-spacing='1.5' fill='%23ffffff' text-anchor='middle' transform='rotate(-90 15 59)'%3EUNIVERSITY OF CANTERBURY%3C/text%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 30px 118px; box-shadow: inset -5px 0 7px rgba(0,0,0,.30), inset 5px 0 7px rgba(255,255,255,.16); border-radius: 2px; }
+    .strap::before { left: 50%; transform: translateX(-44px) rotate(7deg); transform-origin: top; }
+    .strap::after { right: 50%; transform: translateX(44px) rotate(-7deg); transform-origin: top; }
+    /* metal clasp */
+    .clasp { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 30px; height: 28px; z-index: 3; }
+    .clasp::before { content:''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 13px; background: linear-gradient(#f1f3f5,#9aa0a8); border-radius: 3px 3px 2px 2px; box-shadow: 0 2px 4px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.8); }
+    .clasp::after { content:''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 13px; height: 18px; border: 3px solid #b4b8bf; border-top: none; border-radius: 0 0 7px 7px; box-shadow: inset 0 -1px 1px rgba(0,0,0,.3); }
+    /* clear plastic holder */
+    .holder { position: relative; margin-top: 7px; padding: 16px 12px 13px; border-radius: 13px; background: linear-gradient(152deg, rgba(255,255,255,.22), rgba(255,255,255,.05) 55%, rgba(255,255,255,.14)); border: 1px solid rgba(255,255,255,.55); box-shadow: 0 22px 52px rgba(0,0,0,.58), inset 0 1px 2px rgba(255,255,255,.55), inset 0 -10px 18px rgba(0,0,0,.10); }
+    .holder::before { content:''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 44px; height: 7px; background: rgba(20,20,24,.55); border-radius: 5px; box-shadow: inset 0 1px 2px rgba(0,0,0,.7); }
+    .holder::after { content:''; position: absolute; inset: 0; border-radius: 13px; background: linear-gradient(120deg, rgba(255,255,255,.32) 0 18%, transparent 34%); pointer-events: none; }
+    .badge { background: #fcfcfa; border-radius: 7px; padding: 15px 15px 15px; box-shadow: 0 6px 16px rgba(0,0,0,.22); position: relative; overflow: hidden; }
+    .badge .b-head { display: flex; align-items: center; gap: 9px; border-bottom: 2px solid var(--uc-red); padding-bottom: 8px; margin-bottom: 12px; }
+    .badge .uc-mono { font-family: Georgia,'Times New Roman',serif; font-weight: 700; font-size: 2rem; line-height: .82; color: var(--uc-red); letter-spacing: -1.5px; }
+    .badge .uc-name { font-size: .5rem; font-weight: 800; color: #b91c2c; letter-spacing: .05em; line-height: 1.25; text-transform: uppercase; }
+    .badge .uc-name .maori { display: block; font-style: italic; font-weight: 600; font-size: .46rem; color: #8a1622; text-transform: none; letter-spacing: 0; margin-top: 2px; }
+    .badge .b-name { font-family: 'Sora'; font-weight: 800; font-size: 1.35rem; color: #1a1a1a; }
+    .badge .b-name::after { content:''; display:block; width: 70px; height: 3px; background: var(--uc-red); border-radius: 2px; margin: 5px 0 9px; }
+    .badge .b-role { font-size: .72rem; color: #444; font-weight: 600; line-height: 1.3; }
+    .badge .b-crest { position: absolute; right: 12px; bottom: 28px; width: 42px; opacity: .92; }
+    .badge .b-crest svg { width: 100%; display: block; }
+    .badge .barcode { margin-top: 15px; height: 30px; background: repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 4px,#111 4px 5px,#fff 5px 9px); border-radius: 2px; }
 
     /* handwritten note */
     .note { top: 290px; right: 2%; width: 150px; background: #14141a; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; transform: rotate(4deg); z-index: 3; }
@@ -237,17 +247,34 @@
     .focus-row .fd { font-size: .84rem; color: var(--text-2); }
 
     /* timeline */
-    .timeline { position: relative; margin-top: 46px; padding-left: 34px; max-width: 760px; }
-    .timeline::before { content:''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--blue),transparent); }
-    .tl-item { position: relative; padding: 0 0 34px; }
-    .tl-item:last-child { padding-bottom: 0; }
-    .tl-item::before { content:''; position: absolute; left: -34px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--blue); box-shadow: 0 0 0 4px rgba(59,130,246,.12); }
-    .tl-card { padding: 22px 24px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); transition: all .3s; }
-    .tl-card:hover { border-color: var(--border-2); transform: translateX(6px); }
-    .tl-period { font-size: .74rem; font-weight: 700; color: var(--blue-2); text-transform: uppercase; letter-spacing: .12em; }
-    .tl-card h3 { font-size: 1.15rem; margin: 7px 0 3px; }
-    .tl-org { font-size: .88rem; color: var(--text-3); margin-bottom: 10px; }
-    .tl-card p { font-size: .92rem; color: var(--text-2); }
+    .hand-sub { font-family: 'Caveat',cursive; font-weight: 700; font-size: 1.7rem; color: var(--blue-2); margin: 6px 0 2px; }
+    .timeline { position: relative; margin-top: 54px; display: flex; flex-direction: column; gap: 58px; }
+    .timeline::before { content:''; position: absolute; left: 47px; top: 26px; bottom: 26px; width: 2px; background: linear-gradient(180deg, var(--blue), rgba(59,130,246,.1)); }
+    .tl-item { position: relative; display: grid; grid-template-columns: 96px 232px minmax(0,1fr) 158px; gap: 24px; align-items: start; }
+    .tl-rail { position: relative; min-height: 56px; }
+    .tl-tape { display: inline-block; margin-top: 20px; padding: 9px 12px; background: #e7ddc4; color: #44402f; font-family: 'Caveat',cursive; font-weight: 700; font-size: 1.05rem; line-height: 1.05; text-align: center; border-radius: 2px; transform: rotate(-3deg); box-shadow: 0 5px 12px rgba(0,0,0,.32); position: relative; }
+    .tl-tape::before { content:''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 7px, rgba(0,0,0,.05) 7px 8px); }
+    .tl-dot { position: absolute; left: 41px; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent); z-index: 2; }
+    .tl-photo { position: relative; background: var(--paper); padding: 11px 11px 33px; border-radius: 4px; box-shadow: 0 18px 40px rgba(0,0,0,.5); transform: rotate(-3deg); }
+    .tl-photo .pic { height: 150px; border-radius: 2px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(140deg, color-mix(in srgb,var(--accent) 60%, #0d0d12), #0d0d12); }
+    .tl-photo .pic img { width: 100%; height: 100%; object-fit: cover; }
+    .tl-photo .pic svg { width: 48px; height: 48px; color: #fff; opacity: .92; }
+    .tl-photo .tcap { position: absolute; bottom: 7px; left: 0; right: 0; text-align: center; font-family: 'Caveat',cursive; font-size: 1.12rem; color: #3a3a3a; }
+    .tl-photo .ttape { position: absolute; top: -11px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 72px; height: 22px; background: var(--tape); border-radius: 2px; box-shadow: 0 2px 6px rgba(0,0,0,.22); }
+    .tl-card { padding: 22px 25px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); transition: all .3s; position: relative; overflow: hidden; }
+    .tl-card::before { content:''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; border-radius: 3px; background: var(--accent); opacity: .85; }
+    .tl-card:hover { border-color: var(--border-2); transform: translateY(-3px); box-shadow: 0 22px 44px rgba(0,0,0,.32); }
+    .tl-card h3 { font-family: 'Caveat',cursive; font-size: 1.75rem; font-weight: 700; color: var(--accent); line-height: 1.05; }
+    .tl-card .tl-org { font-size: .9rem; color: var(--text-2); font-weight: 600; margin: 3px 0 10px; }
+    .tl-card p { font-size: .92rem; color: var(--text-2); line-height: 1.6; }
+    .tl-feats { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .tl-feat svg { width: 22px; height: 22px; color: var(--accent); margin-bottom: 8px; }
+    .tl-feat .fnum { font-family: 'Sora'; font-weight: 800; font-size: 1.02rem; color: var(--text); line-height: 1.1; }
+    .tl-feat .flbl { font-size: .72rem; color: var(--text-3); line-height: 1.3; margin-top: 3px; }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tl-tags span { font-size: .72rem; font-weight: 700; color: var(--accent); padding: 5px 12px; border-radius: 20px; border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent); }
+    .tl-note { align-self: start; margin-top: 26px; font-family: 'Caveat',cursive; font-size: 1.14rem; line-height: 1.42; color: var(--text-2); background: color-mix(in srgb, var(--accent) 12%, var(--panel)); border: 1px solid var(--border); border-radius: 4px; padding: 16px 15px 18px; transform: rotate(2deg); box-shadow: 0 10px 24px rgba(0,0,0,.3); position: relative; }
+    .tl-note::before { content:''; position: absolute; top: -9px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 54px; height: 18px; background: var(--tape); border-radius: 2px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
 
     /* volunteer / leadership */
     .lead-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; margin-top: 46px; }
@@ -300,6 +327,13 @@
       .work-grid { grid-template-columns: repeat(2,1fr); }
       .vol-grid { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
       .story { grid-template-columns: 1fr; }
+      .timeline { gap: 40px; }
+      .timeline::before { display: none; }
+      .tl-item { grid-template-columns: 1fr; gap: 16px; max-width: 460px; margin-inline: auto; }
+      .tl-rail { display: none; }
+      .tl-dot { display: none; }
+      .tl-note { transform: rotate(0); margin-top: 0; }
+      .tl-photo { transform: rotate(0); max-width: 320px; }
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .skills-grid { grid-template-columns: repeat(3,1fr); }
       .roles { grid-template-columns: repeat(2,1fr); }
@@ -342,7 +376,7 @@
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-right">
-        <a href="cv.pdf" download class="resume-btn">
+        <a href="cv.pdf" download="Felix-Pratamajaya-Kwan-CV.pdf" class="resume-btn">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M5 7l3 3 3-3M2 13h12"/></svg>
           <span>Resume</span>
         </a>
@@ -380,17 +414,20 @@
           <div class="pin polaroid photo-1">
             <div class="tape"></div>
             <img src="portrait.jpg" alt="Felix Kwan portrait" />
-            <div class="cap hand">Always building.</div>
+            <div class="cap hand">Always learning.<br/>Always building.<br/>Always contributing.</div>
           </div>
 
           <!-- UC lanyard + ID badge -->
           <div class="pin lanyard">
-            <div class="strap"><div class="clip"></div></div>
-            <div class="badge">
-              <div class="b-head"><span class="uc-logo"><svg viewBox="0 0 60 72" xmlns="http://www.w3.org/2000/svg"><path d="M30 2 L56 11 V36 C56 53 44 64 30 70 C16 64 4 53 4 36 V11 Z" fill="#b91c2c" stroke="#8f1421" stroke-width="2"/><path d="M30 18 C24 14 16 14 12 16 V46 C16 44 24 44 30 48 C36 44 44 44 48 46 V16 C44 14 36 14 30 18 Z" fill="#fff"/><path d="M30 19 V48" stroke="#b91c2c" stroke-width="1.6"/><path d="M16 22 H26 M16 27 H26 M16 32 H26 M34 22 H44 M34 27 H44 M34 32 H44" stroke="#b91c2c" stroke-width="1.2"/><path d="M30 7 l2.2 4.5 4.8 .6 -3.5 3.3 .9 4.9 -4.4 -2.4 -4.4 2.4 .9 -4.9 -3.5 -3.3 4.8 -.6 Z" fill="#fff"/></svg></span><span class="uc-name">UNIVERSITY OF<br/>CANTERBURY</span></div>
-              <div class="b-name">Felix Kwan</div>
-              <div class="b-role">Business Information<br/>Systems Student</div>
-              <div class="barcode"></div>
+            <div class="strap"><span class="clasp"></span></div>
+            <div class="holder">
+              <div class="badge">
+                <div class="b-head"><span class="uc-mono">UC</span><span class="uc-name">University of<br/>Canterbury<span class="maori">Te Whare Wānanga o Waitaha</span></span></div>
+                <div class="b-name">Felix Kwan</div>
+                <div class="b-role">Business Information<br/>Systems Student</div>
+                <div class="b-crest"><svg viewBox="0 0 60 72" xmlns="http://www.w3.org/2000/svg"><path d="M30 2 L56 11 V36 C56 53 44 64 30 70 C16 64 4 53 4 36 V11 Z" fill="#b91c2c" stroke="#8f1421" stroke-width="2"/><path d="M30 18 C24 14 16 14 12 16 V46 C16 44 24 44 30 48 C36 44 44 44 48 46 V16 C44 14 36 14 30 18 Z" fill="#fff"/><path d="M30 19 V48" stroke="#b91c2c" stroke-width="1.6"/><path d="M16 22 H26 M16 27 H26 M16 32 H26 M34 22 H44 M34 27 H44 M34 32 H44" stroke="#b91c2c" stroke-width="1.2"/><path d="M30 7 l2.2 4.5 4.8 .6 -3.5 3.3 .9 4.9 -4.4 -2.4 -4.4 2.4 .9 -4.9 -3.5 -3.3 4.8 -.6 Z" fill="#fff"/></svg></div>
+                <div class="barcode"></div>
+              </div>
             </div>
           </div>
 
@@ -489,39 +526,96 @@
       <div class="reveal">
         <div class="eyebrow">Experience</div>
         <h2 class="section-title">My journey so far</h2>
-        <p class="section-sub">A track record of professional roles across systems, data, operations, and stakeholder management.</p>
+        <p class="hand-sub">Different roles. One purpose.</p>
+        <p class="section-sub">Each role has sharpened how I work with data, systems, and people — across New Zealand and Indonesia.</p>
       </div>
       <div class="timeline">
-        <div class="tl-item reveal"><div class="tl-card">
-          <div class="tl-period">2025 · Present</div>
-          <h3>Tuakana — Evaluation & Student Insight</h3>
-          <div class="tl-org">University of Canterbury · Christchurch</div>
-          <p>Support international students through academic and cultural transition, and partner with university staff to deliver student-focused engagement initiatives.</p>
-        </div></div>
-        <div class="tl-item reveal"><div class="tl-card">
-          <div class="tl-period">2025 · Present</div>
-          <h3>Pharmacy Assistant</h3>
-          <div class="tl-org">Chemist Warehouse · Northwood, Christchurch</div>
-          <p>Manage stock receiving, inventory accuracy, and POS/system data entry in a fast-paced retail environment, resolving pricing and stock discrepancies with supervisors.</p>
-        </div></div>
-        <div class="tl-item reveal"><div class="tl-card">
-          <div class="tl-period">2022 · 2025</div>
-          <h3>Assistant Manager</h3>
-          <div class="tl-org">CV. Multi Sarana · Bandung, Indonesia</div>
-          <p>Managed online marketplace platforms and overseas supplier relationships (China, Korea, Germany), and aligned online and offline inventory, pricing, and promotions.</p>
-        </div></div>
-        <div class="tl-item reveal"><div class="tl-card">
-          <div class="tl-period">2020 · 2022</div>
-          <h3>Insurance Staff → Business Partner</h3>
-          <div class="tl-org">PT. Allianz Life Indonesia Tbk · Bandung</div>
-          <p>Managed client data and policies with a focus on accuracy and analysed client needs to drive sales — promoted to Business Partner leading two staff, with recognition awards.</p>
-        </div></div>
-        <div class="tl-item reveal"><div class="tl-card">
-          <div class="tl-period">2017 · 2020</div>
-          <h3>Marketing Officer</h3>
-          <div class="tl-org">PT. Chitose International Tbk · Cimahi, Indonesia</div>
-          <p>Organised government procurement events across provinces, onboarded clients to e-catalogue systems, and consistently achieved sales targets.</p>
-        </div></div>
+
+        <div class="tl-item reveal" style="--accent:#3b82f6">
+          <div class="tl-rail"><span class="tl-tape">2025<br/>Present</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="hero-bg.jpg" alt="Tuakana student community" loading="lazy"/></div><span class="tcap">Tuakana</span></div>
+          <div class="tl-card">
+            <h3>Tuakana — Evaluation &amp; Student Insight</h3>
+            <div class="tl-org">University of Canterbury · Christchurch</div>
+            <p>Supporting international students through academic and cultural transition, and partnering with university staff to deliver student-focused engagement initiatives.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><div class="fnum">100+</div><div class="flbl">Students supported</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6.3 6.9 .9-5 4.8 1.2 6.8L12 17.8 5.9 20.8 7.1 14 2.1 9.2 9 8.3z"/></svg><div class="fnum">15+</div><div class="flbl">Events facilitated</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg><div class="fnum">500+</div><div class="flbl">Hours contributed</div></div>
+            </div>
+            <div class="tl-tags"><span>Mentoring</span><span>Leadership</span><span>Community Engagement</span></div>
+          </div>
+          <div class="tl-note">Empowering students to feel seen, supported &amp; connected.</div>
+        </div>
+
+        <div class="tl-item reveal" style="--accent:#22c55e">
+          <div class="tl-rail"><span class="tl-tape">2025<br/>Present</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg></div><span class="tcap">Chemist Warehouse</span></div>
+          <div class="tl-card">
+            <h3>Pharmacy Assistant</h3>
+            <div class="tl-org">Chemist Warehouse · Northwood, Christchurch</div>
+            <p>Managing stock receiving, inventory accuracy, and POS/system data entry in a fast-paced retail environment — resolving pricing and stock discrepancies with supervisors.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.7l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.7l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/></svg><div class="fnum">Inventory</div><div class="flbl">Receiving &amp; stock checks</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><div class="fnum">POS Systems</div><div class="flbl">Data entry &amp; accuracy</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg><div class="fnum">Accuracy</div><div class="flbl">Pricing &amp; reconciliation</div></div>
+            </div>
+            <div class="tl-tags"><span>Attention to Detail</span><span>Problem Solving</span><span>Teamwork</span></div>
+          </div>
+          <div class="tl-note">Built strong operations skills and attention to detail.</div>
+        </div>
+
+        <div class="tl-item reveal" style="--accent:#f59e0b">
+          <div class="tl-rail"><span class="tl-tape">2022<br/>2025</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg></div><span class="tcap">Multi Sarana</span></div>
+          <div class="tl-card">
+            <h3>Assistant Manager</h3>
+            <div class="tl-org">CV. Multi Sarana · Bandung, Indonesia</div>
+            <p>Managed online marketplace platforms and overseas supplier relationships (China, Korea, Germany), aligning online and offline inventory, pricing, and promotions.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><div class="fnum">Marketplaces</div><div class="flbl">Listings &amp; pricing</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="13" height="10" rx="1"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><div class="fnum">Suppliers</div><div class="flbl">China · Korea · Germany</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.7l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.7l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/></svg><div class="fnum">Inventory</div><div class="flbl">Online ↔ offline sync</div></div>
+            </div>
+            <div class="tl-tags"><span>E-commerce</span><span>Supplier Management</span><span>Operations</span></div>
+          </div>
+          <div class="tl-note">Connecting global suppliers to local growth.</div>
+        </div>
+
+        <div class="tl-item reveal" style="--accent:#14b8a6">
+          <div class="tl-rail"><span class="tl-tape">2020<br/>2022</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V5z"/></svg></div><span class="tcap">Allianz Life</span></div>
+          <div class="tl-card">
+            <h3>Insurance Staff → Business Partner</h3>
+            <div class="tl-org">PT. Allianz Life Indonesia Tbk · Bandung</div>
+            <p>Managed client data and policies with a focus on accuracy, and analysed client needs to drive sales — promoted to Business Partner leading two staff, with recognition awards.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg><div class="fnum">Promoted</div><div class="flbl">to Business Partner</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg><div class="fnum">Led 2</div><div class="flbl">Direct staff</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg><div class="fnum">Awarded</div><div class="flbl">Recognition trip</div></div>
+            </div>
+            <div class="tl-tags"><span>Client Data</span><span>Sales Analysis</span><span>Leadership</span></div>
+          </div>
+          <div class="tl-note">Turning client insight into real results.</div>
+        </div>
+
+        <div class="tl-item reveal" style="--accent:#ec4899">
+          <div class="tl-rail"><span class="tl-tape">2017<br/>2020</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v2a1 1 0 001 1h2l9 5V5L6 10H4a1 1 0 00-1 1z"/><path d="M18 8a4 4 0 010 8"/></svg></div><span class="tcap">Chitose Intl</span></div>
+          <div class="tl-card">
+            <h3>Marketing Officer</h3>
+            <div class="tl-org">PT. Chitose International Tbk · Cimahi, Indonesia</div>
+            <p>Organised government procurement events across provinces, onboarded clients to e-catalogue systems, and consistently achieved sales targets.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><div class="fnum">Events</div><div class="flbl">Multi-province</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 12.4a2 2 0 002 1.6h8.7a2 2 0 002-1.6L23 7H6"/></svg><div class="fnum">e-Catalogue</div><div class="flbl">Client onboarding</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg><div class="fnum">Targets</div><div class="flbl">Consistently met</div></div>
+            </div>
+            <div class="tl-tags"><span>Event Management</span><span>Procurement</span><span>Sales</span></div>
+          </div>
+          <div class="tl-note">Showing up, delivering, exceeding.</div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -597,7 +691,7 @@
         <a href="mailto:kwanfelixp@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/kwanfelix/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/felixkwan2901" target="_blank" rel="noopener">GitHub</a>
-        <a href="cv.pdf" download>Resume</a>
+        <a href="cv.pdf" download="Felix-Pratamajaya-Kwan-CV.pdf">Resume</a>
       </div>
     </div>
   </footer>
