@@ -129,7 +129,11 @@
     .pad { padding: 120px 0; position: relative; }
 
     /* ===== HERO ===== */
-    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 70px; }
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 70px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: url('hero-bg.jpg') center 30%/cover no-repeat; opacity: .22; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, var(--bg) 28%, transparent 78%), linear-gradient(to top, var(--bg) 4%, transparent 45%), linear-gradient(to bottom, var(--bg) 2%, transparent 22%); }
+    .hero .wrap { position: relative; z-index: 2; }
+    .hero .side-index { z-index: 2; }
     .side-index { position: absolute; left: 26px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; align-items: center; color: var(--text-3); font-size: .72rem; font-weight: 600; letter-spacing: .1em; }
     .side-index .bar { width: 1px; height: 120px; background: linear-gradient(var(--border-2),transparent); }
     .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; width: 100%; }
@@ -158,13 +162,14 @@
     /* UC lanyard + ID badge */
     .lanyard { top: -30px; right: 6%; width: 200px; z-index: 4; transform: rotate(3deg); }
     .strap { position: relative; height: 120px; display: flex; justify-content: center; }
-    .strap::before, .strap::after { content:''; position: absolute; top: 0; width: 26px; height: 120px; background: repeating-linear-gradient(160deg, var(--uc-red) 0 14px, var(--uc-red-2) 14px 28px); box-shadow: inset 0 0 8px rgba(0,0,0,.3); }
+    .strap::before, .strap::after { content:''; position: absolute; top: 0; width: 28px; height: 120px; background-color: var(--uc-red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='46'%3E%3Crect width='28' height='46' fill='%23b91c2c'/%3E%3Crect width='28' height='46' fill='none' stroke='%238f1421' stroke-width='3'/%3E%3Ctext x='14' y='16' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EUC%3C/text%3E%3Ctext x='14' y='39' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EUC%3C/text%3E%3C/svg%3E"); background-repeat: repeat-y; box-shadow: inset 0 0 8px rgba(0,0,0,.35), inset 3px 0 5px rgba(255,255,255,.12); border-radius: 2px; }
     .strap::before { left: 50%; transform: translateX(-46px) rotate(8deg); transform-origin: top; }
     .strap::after { right: 50%; transform: translateX(46px) rotate(-8deg); transform-origin: top; }
     .clip { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 26px; height: 18px; background: linear-gradient(#d4d4d8,#9ca3af); border-radius: 4px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,.4); }
     .badge { background: #fbfbfb; border-radius: 12px; padding: 16px 16px 20px; box-shadow: 0 20px 50px rgba(0,0,0,.55); position: relative; margin-top: -4px; }
     .badge .b-head { display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--uc-red); padding-bottom: 9px; margin-bottom: 12px; }
-    .badge .uc-logo { font-family: 'Sora'; font-weight: 800; color: var(--uc-red); font-size: 1.4rem; line-height: 1; border: 2px solid var(--uc-red); border-radius: 4px; padding: 2px 5px; }
+    .badge .uc-logo { display: inline-flex; flex: 0 0 auto; }
+    .badge .uc-logo svg { width: 30px; height: 36px; display: block; }
     .badge .uc-name { font-size: .54rem; font-weight: 700; color: #333; letter-spacing: .02em; line-height: 1.2; }
     .badge .b-name { font-family: 'Sora'; font-weight: 800; font-size: 1.3rem; color: #1a1a1a; }
     .badge .b-name::after { content:''; display:block; width: 60px; height: 3px; background: var(--uc-red); border-radius: 2px; margin: 5px 0 8px; }
@@ -349,6 +354,7 @@
 
   <!-- HERO -->
   <header class="hero" id="home">
+    <div class="hero-bg"></div>
     <div class="side-index"><span>01</span><span class="bar"></span><span>05</span></div>
     <div class="wrap">
       <div class="hero-grid">
@@ -377,7 +383,7 @@
           <div class="pin lanyard">
             <div class="strap"><div class="clip"></div></div>
             <div class="badge">
-              <div class="b-head"><span class="uc-logo">UC</span><span class="uc-name">UNIVERSITY OF<br/>CANTERBURY</span></div>
+              <div class="b-head"><span class="uc-logo"><svg viewBox="0 0 60 72" xmlns="http://www.w3.org/2000/svg"><path d="M30 2 L56 11 V36 C56 53 44 64 30 70 C16 64 4 53 4 36 V11 Z" fill="#b91c2c" stroke="#8f1421" stroke-width="2"/><path d="M30 18 C24 14 16 14 12 16 V46 C16 44 24 44 30 48 C36 44 44 44 48 46 V16 C44 14 36 14 30 18 Z" fill="#fff"/><path d="M30 19 V48" stroke="#b91c2c" stroke-width="1.6"/><path d="M16 22 H26 M16 27 H26 M16 32 H26 M34 22 H44 M34 27 H44 M34 32 H44" stroke="#b91c2c" stroke-width="1.2"/><path d="M30 7 l2.2 4.5 4.8 .6 -3.5 3.3 .9 4.9 -4.4 -2.4 -4.4 2.4 .9 -4.9 -3.5 -3.3 4.8 -.6 Z" fill="#fff"/></svg></span><span class="uc-name">UNIVERSITY OF<br/>CANTERBURY</span></div>
               <div class="b-name">Felix Kwan</div>
               <div class="b-role">Business Information<br/>Systems Student</div>
               <div class="barcode"></div>
@@ -422,21 +428,21 @@
       </div>
       <div class="work-grid">
         <div class="work-card reveal">
-          <div class="work-img grad-1"><span class="ph">📊</span></div>
-          <div class="work-body"><h3>Analytics Dashboard</h3><p>Power BI · DAX · SQL</p></div>
+          <div class="work-img"><img src="rugby.jpg" alt="Volunteering at rugby event" loading="lazy"/></div>
+          <div class="work-body"><h3>Event Volunteer</h3><p>Rugby Match Day · Crowd & Logistics</p></div>
         </div>
         <div class="work-card reveal">
-          <div class="work-img"><img src="deloitte.jpg" alt="Deloitte ServiceNow program" loading="lazy"/></div>
-          <div class="work-body"><h3>ServiceNow Project</h3><p>Workflow · Implementation</p></div>
+          <div class="work-img"><img src="sva.jpg" alt="Student Volunteer Army school garden cleanup" loading="lazy"/></div>
+          <div class="work-body"><h3>Student Volunteer Army</h3><p>School Garden Cleanup · Community</p></div>
         </div>
         <div class="work-card reveal">
           <div class="work-feat">FEATURED</div>
-          <div class="work-img grad-2"><span class="ph">🎓</span></div>
-          <div class="work-body"><h3>Tuakana Mentoring Model</h3><p>Leadership · Community</p></div>
+          <div class="work-img"><img src="impact.jpg" alt="Global impact and cultural representation" loading="lazy"/></div>
+          <div class="work-body"><h3>Global Impact</h3><p>Indonesian Culture · Connecting Communities</p></div>
         </div>
         <div class="work-card reveal">
-          <div class="work-img"><img src="trading.jpg" alt="UC Trading Competition" loading="lazy"/></div>
-          <div class="work-body"><h3>UC Trading Competition</h3><p>Markets · Data · Strategy</p></div>
+          <div class="work-img"><img src="multimedia.jpg" alt="Multimedia leader at IFGF" loading="lazy"/></div>
+          <div class="work-body"><h3>Multimedia Leader</h3><p>IFGF Church · AV & Production</p></div>
         </div>
       </div>
 
@@ -449,7 +455,7 @@
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
         </div>
-        <div class="story-photo"><img src="deloitte.jpg" alt="Deloitte NZ ServiceNow cohort" loading="lazy"/></div>
+        <div class="story-photo"><img src="hero-bg.jpg" alt="Felix with the UC community" loading="lazy"/></div>
       </div>
     </div>
   </section>
