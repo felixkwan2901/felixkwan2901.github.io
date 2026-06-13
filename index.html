@@ -130,6 +130,7 @@
     .section-title { font-size: clamp(1.9rem,4.4vw,3rem); font-weight: 800; }
     .section-sub { color: var(--text-2); font-size: 1.04rem; max-width: 540px; margin-top: 14px; }
     .pad { padding: 120px 0; position: relative; }
+    .pad-tight-b { padding-bottom: 36px; }
 
     /* ===== HERO ===== */
     .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 70px; overflow: hidden; }
@@ -178,7 +179,11 @@
     .photo-1 .cap { line-height: 1.18; bottom: 12px; font-size: 1.18rem; }
 
     /* UC lanyard + ID badge */
-    .lanyard { top: -40px; right: 5%; width: 212px; z-index: 4; transform: rotate(2deg); }
+    .lanyard { top: -40px; right: -6%; width: 212px; z-index: 4; transform: rotate(2deg); transform-origin: top center; cursor: grab; touch-action: none; }
+    .lanyard.grabbing { cursor: grabbing; transition: none; }
+    .lanyard.released { transition: transform 1s cubic-bezier(.34,1.7,.5,1); }
+    .lanyard .pull-hint { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--blue-2); white-space: nowrap; opacity: .85; pointer-events: none; transition: opacity .3s; }
+    .lanyard.grabbing .pull-hint, .lanyard.tugged .pull-hint { opacity: 0; }
     .strap { position: relative; height: 118px; display: flex; justify-content: center; }
     .strap::before, .strap::after { content:''; position: absolute; top: 0; width: 30px; height: 118px; background-color: var(--uc-red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='118'%3E%3Crect width='30' height='118' fill='%23b91c2c'/%3E%3Ctext x='15' y='59' font-family='Arial,sans-serif' font-size='8.5' font-weight='700' letter-spacing='1.5' fill='%23ffffff' text-anchor='middle' transform='rotate(-90 15 59)'%3EUNIVERSITY OF CANTERBURY%3C/text%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 30px 118px; box-shadow: inset -5px 0 7px rgba(0,0,0,.30), inset 5px 0 7px rgba(255,255,255,.16); border-radius: 2px; }
     .strap::before { left: 50%; transform: translateX(-44px) rotate(7deg); transform-origin: top; }
@@ -337,7 +342,10 @@
     .story { margin-top: 70px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 50px; align-items: center; padding: 44px; border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(59,130,246,.06), var(--panel)); }
     .story h2 { font-size: clamp(1.6rem,3vw,2.3rem); font-weight: 800; margin-bottom: 18px; }
     .story p { color: var(--text-2); font-size: 1.02rem; }
-    .story .read { margin-top: 22px; display: inline-flex; align-items: center; gap: 8px; color: var(--blue-2); font-weight: 600; }
+    .story .read { margin-top: 22px; display: inline-flex; align-items: center; gap: 9px; color: var(--blue-2); font-weight: 600; padding: 11px 20px; border-radius: 11px; border: 1px solid color-mix(in srgb,var(--blue) 38%,transparent); background: color-mix(in srgb,var(--blue) 10%,transparent); transition: background .25s, border-color .25s, transform .25s, box-shadow .25s; }
+    .story .read:hover { background: color-mix(in srgb,var(--blue) 18%,transparent); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 24px color-mix(in srgb,var(--blue) 28%,transparent); }
+    .story .read svg { transition: transform .25s; }
+    .story .read:hover svg { transform: translateX(4px); }
     .story-photo { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
     .story-photo img { width: 100%; height: 260px; object-fit: cover; }
 
@@ -588,7 +596,8 @@
           </div>
 
           <!-- UC lanyard + ID badge -->
-          <div class="pin lanyard">
+          <div class="pin lanyard" id="lanyard">
+            <span class="pull-hint">pull me ↓</span>
             <div class="strap"><span class="clasp"></span></div>
             <div class="holder">
               <div class="badge">
@@ -599,11 +608,6 @@
                 <div class="barcode"></div>
               </div>
             </div>
-          </div>
-
-          <!-- handwritten note -->
-          <div class="pin note">
-            <p class="hand"><b>Data</b><br/>Technology<br/>Leadership<br/>Community<br/><b>Impact</b></p>
           </div>
 
           <!-- polaroid 2 -->
@@ -626,7 +630,7 @@
   </header>
 
   <!-- FEATURED WORK -->
-  <section class="pad" id="work">
+  <section class="pad pad-tight-b" id="work">
     <div class="wrap">
       <div class="work-head reveal">
         <div>
@@ -1272,6 +1276,39 @@
         }
       }
       tick();
+    })();
+
+    // draggable lanyard — pull it and watch it spring back
+    (function(){
+      const el = document.getElementById('lanyard');
+      if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const base = 2; // base rotation in deg
+      let dragging = false, sx = 0, sy = 0;
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+      function down(e){
+        dragging = true;
+        el.classList.add('grabbing', 'tugged');
+        el.classList.remove('released');
+        const p = e.touches ? e.touches[0] : e;
+        sx = p.clientX; sy = p.clientY;
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      }
+      function move(e){
+        if (!dragging) return;
+        const dx = e.clientX - sx, dy = clamp(e.clientY - sy, -20, 90);
+        const rot = base + clamp(dx * 0.12, -16, 16);
+        el.style.transform = `translate(${clamp(dx*0.25,-30,30)}px, ${dy}px) rotate(${rot}deg)`;
+      }
+      function up(){
+        dragging = false;
+        el.classList.remove('grabbing');
+        el.classList.add('released');
+        el.style.transform = '';
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+      }
+      el.addEventListener('pointerdown', down);
     })();
 
     // word-by-word rise for the hero tagline
