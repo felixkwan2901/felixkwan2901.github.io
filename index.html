@@ -234,6 +234,33 @@
     .work-card:hover .work-go { transform: translateX(3px) scale(1.08); background: color-mix(in srgb, var(--accent,#3b82f6) 22%, transparent); }
     .work-card:hover .work-go svg { animation: nudge .6s ease; }
     @keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
+    .work-card.clickable { cursor: pointer; }
+    .work-card.clickable:focus-visible { outline: 2px solid var(--accent,#3b82f6); outline-offset: 3px; }
+
+    /* ===== project detail modal ===== */
+    .pm-overlay { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 22px; background: rgba(5,8,16,.62); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s; }
+    .pm-overlay.open { opacity: 1; visibility: visible; }
+    .pm-dialog { --accent:#3b82f6; position: relative; width: min(680px,100%); max-height: 88vh; overflow: auto; background: var(--panel); border: 1px solid var(--border-2); border-radius: 20px; box-shadow: 0 40px 90px -20px rgba(0,0,0,.7); transform: translateY(24px) scale(.97); opacity: 0; transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .4s; }
+    .pm-overlay.open .pm-dialog { transform: none; opacity: 1; }
+    .pm-hero { position: relative; height: 220px; overflow: hidden; border-radius: 20px 20px 0 0; }
+    .pm-hero img { width: 100%; height: 100%; object-fit: cover; }
+    .pm-hero::after { content:''; position: absolute; inset: 0; background: linear-gradient(to top, var(--panel), transparent 55%); }
+    .pm-close { position: absolute; top: 14px; right: 14px; z-index: 3; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: rgba(8,12,24,.5); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.25); cursor: pointer; transition: transform .25s, background .25s; }
+    .pm-close:hover { transform: rotate(90deg); background: rgba(8,12,24,.8); }
+    .pm-body { padding: 6px 26px 28px; }
+    .pm-cat { display: inline-block; font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent); padding: 4px 9px; border-radius: 999px; }
+    .pm-body h3 { font-family: 'Sora'; font-size: 1.5rem; font-weight: 800; margin: 12px 0 4px; }
+    .pm-meta { font-size: .82rem; color: var(--text-3); margin-bottom: 16px; }
+    .pm-body p { font-size: .9rem; color: var(--text-2); line-height: 1.6; }
+    .pm-h { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin: 22px 0 10px; }
+    .pm-hi { list-style: none; display: grid; gap: 9px; }
+    .pm-hi li { position: relative; padding-left: 24px; font-size: .86rem; color: var(--text-2); line-height: 1.5; }
+    .pm-hi li::before { content:''; position: absolute; left: 4px; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .pm-tech { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pm-tech span { font-size: .76rem; font-weight: 600; color: var(--text-2); background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid var(--border); padding: 6px 12px; border-radius: 999px; }
+    .pm-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .pm-links a { display: inline-flex; align-items: center; gap: 7px; font-size: .82rem; font-weight: 700; color: #fff; padding: 10px 16px; border-radius: 999px; background: var(--accent); transition: transform .25s; }
+    .pm-links a:hover { transform: translateY(-2px); }
 
     /* ===== Building with AI ===== */
     .ai-head { text-align: center; max-width: 640px; margin: 96px auto 0; }
@@ -315,12 +342,12 @@
     /* timeline */
     .hand-sub { font-family: 'Caveat',cursive; font-weight: 700; font-size: 1.7rem; color: var(--blue-2); margin: 6px 0 2px; }
     .timeline { position: relative; margin-top: 54px; display: flex; flex-direction: column; gap: 58px; }
-    .timeline::before { content:''; position: absolute; left: 47px; top: 26px; bottom: 26px; width: 2px; background: linear-gradient(180deg, var(--blue), rgba(59,130,246,.1)); }
+    .timeline::before { content:''; position: absolute; left: 47px; top: 14px; bottom: 26px; width: 2px; background: linear-gradient(180deg, var(--blue), rgba(59,130,246,.1)); }
     .tl-item { position: relative; display: grid; grid-template-columns: 96px 232px minmax(0,1fr) 158px; gap: 24px; align-items: start; }
-    .tl-rail { position: relative; min-height: 56px; }
-    .tl-tape { display: inline-block; margin-top: 20px; padding: 9px 12px; background: #e7ddc4; color: #44402f; font-family: 'Caveat',cursive; font-weight: 700; font-size: 1.05rem; line-height: 1.05; text-align: center; border-radius: 2px; transform: rotate(-3deg); box-shadow: 0 5px 12px rgba(0,0,0,.32); position: relative; }
+    .tl-rail { position: relative; min-height: 56px; padding-top: 34px; }
+    .tl-tape { display: inline-block; padding: 9px 12px; background: #e7ddc4; color: #44402f; font-family: 'Caveat',cursive; font-weight: 700; font-size: 1.05rem; line-height: 1.05; text-align: center; border-radius: 2px; transform: rotate(-3deg); box-shadow: 0 5px 12px rgba(0,0,0,.32); position: relative; }
     .tl-tape::before { content:''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 7px, rgba(0,0,0,.05) 7px 8px); }
-    .tl-dot { position: absolute; left: 41px; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent); z-index: 2; }
+    .tl-dot { position: absolute; left: 41px; top: 7px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent); z-index: 2; }
     .tl-photo { position: relative; background: var(--paper); padding: 11px 11px 33px; border-radius: 4px; box-shadow: 0 18px 40px rgba(0,0,0,.5); transform: rotate(-3deg); }
     .tl-photo .pic { height: 150px; border-radius: 2px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(140deg, color-mix(in srgb,var(--accent) 60%, #0d0d12), #0d0d12); }
     .tl-photo .pic img { width: 100%; height: 100%; object-fit: cover; }
@@ -396,8 +423,16 @@
     .word-rise { display: inline-block; opacity: 0; transform: translateY(14px); }
     .reveal.visible .word-rise { animation: wordRise .55s cubic-bezier(.22,1,.36,1) forwards; }
     @keyframes wordRise { to { opacity: 1; transform: none; } }
+    /* split-text reveal for "Kia Ora" */
+    .split-char { display: inline-block; opacity: 0; transform: translateY(20px) rotate(8deg); will-change: transform, opacity; }
+    .split-char.space { width: .3em; }
+    .kia.played .split-char { animation: splitIn .6s cubic-bezier(.34,1.56,.64,1) forwards; }
+    @keyframes splitIn { to { opacity: 1; transform: none; } }
+    .wave { display: inline-block; transform-origin: 70% 70%; }
+    .kia.played .wave { animation: wave 2.6s ease-in-out .6s infinite; }
+    @keyframes wave { 0%,55%,100%{transform:rotate(0)} 10%{transform:rotate(16deg)} 20%{transform:rotate(-10deg)} 30%{transform:rotate(16deg)} 40%{transform:rotate(-6deg)} 50%{transform:rotate(12deg)} }
 
-    @media (prefers-reduced-motion: reduce) { .reveal{opacity:1;transform:none;transition:none} .orb{animation:none} .hero h1{animation:none;-webkit-text-fill-color:#fff} .scroll-progress{display:none} .word-rise{opacity:1;transform:none;animation:none} }
+    @media (prefers-reduced-motion: reduce) { .reveal{opacity:1;transform:none;transition:none} .orb{animation:none} .hero h1{animation:none;-webkit-text-fill-color:#fff} .scroll-progress{display:none} .word-rise{opacity:1;transform:none;animation:none} .split-char{opacity:1;transform:none;animation:none} .wave{animation:none} }
 
     /* responsive */
     @media (max-width: 1000px) {
@@ -551,37 +586,7 @@
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
-      <div class="work-grid">
-        <div class="work-card tilt reveal" style="--accent:#3b82f6">
-          <div class="work-feat">FEATURED</div>
-          <div class="work-img"><img src="impact.jpg" alt="UC Global Leadership Programme" loading="lazy"/></div>
-          <div class="work-body">
-            <div class="wc-cat">Leadership</div>
-            <h3>UC Global Leadership</h3>
-            <p>Market research, competitor analysis &amp; market-entry strategy for NZ companies through the UC Global Leadership programme.</p>
-            <div class="work-stats">
-              <div class="wstat"><span class="wnum" data-count="6">0</span><span class="wlbl">Members</span></div>
-              <div class="wstat"><span class="wnum" data-count="4">0</span><span class="wlbl">Months</span></div>
-              <div class="wstat"><span class="wnum" data-count="1">0</span><span class="wlbl">Project</span></div>
-            </div>
-            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </div>
-        <div class="work-card tilt reveal" style="--accent:#14b8a6">
-          <div class="work-img"><img src="deloitte.jpg" alt="Appathon project with Deloitte" loading="lazy"/></div>
-          <div class="work-body">
-            <div class="wc-cat">Technology</div>
-            <h3>Appathon Project — Deloitte</h3>
-            <p>Rapid app prototyping in a team build with Deloitte — ideating, designing, and presenting a working solution under time pressure.</p>
-            <div class="work-stats">
-              <div class="wstat"><span class="wnum" data-count="3">0</span><span class="wlbl">Members</span></div>
-              <div class="wstat"><span class="wnum" data-count="24" data-suffix="h">0</span><span class="wlbl">Build</span></div>
-              <div class="wstat"><span class="wnum" data-count="1">0</span><span class="wlbl">Prototype</span></div>
-            </div>
-            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </div>
-      </div>
+      <div class="work-grid" id="workGrid"><!-- cards rendered from the PROJECTS list in JS --></div>
 
       <!-- BUILDING WITH AI -->
       <div class="ai-head reveal">
@@ -866,7 +871,161 @@
     </div>
   </footer>
 
+  <!-- PROJECT DETAIL MODAL -->
+  <div class="pm-overlay" id="pmOverlay" role="dialog" aria-modal="true" aria-labelledby="pmTitle" hidden>
+    <div class="pm-dialog" id="pmDialog">
+      <div class="pm-hero">
+        <button class="pm-close" id="pmClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <img id="pmImg" src="" alt=""/>
+      </div>
+      <div class="pm-body">
+        <span class="pm-cat" id="pmCat"></span>
+        <h3 id="pmTitle"></h3>
+        <div class="pm-meta" id="pmMeta"></div>
+        <p id="pmDesc"></p>
+        <div id="pmHiWrap" hidden><div class="pm-h">Highlights</div><ul class="pm-hi" id="pmHi"></ul></div>
+        <div id="pmTechWrap" hidden><div class="pm-h">Tech &amp; Tools</div><div class="pm-tech" id="pmTech"></div></div>
+        <div class="pm-links" id="pmLinks"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* =====================================================================
+       FEATURED WORK — to add a project, copy a block below and edit it.
+       Fields: featured (red badge), accent (card colour), category, title,
+       image, alt, summary (card text), stats[], detail{ meta, body,
+       highlights[], tech[], links[{label,url}] }.
+    ===================================================================== */
+    const PROJECTS = [
+      {
+        featured: true,
+        accent: '#3b82f6',
+        category: 'Leadership',
+        title: 'UC Global Leadership',
+        image: 'impact.jpg',
+        alt: 'UC Global Leadership Programme',
+        summary: 'Market research, competitor analysis & market-entry strategy for NZ companies through the UC Global Leadership programme.',
+        stats: [ {n:6,label:'Members'}, {n:4,label:'Months'}, {n:1,label:'Project'} ],
+        detail: {
+          meta: 'Apr – Oct 2026 · Market Research & Strategy',
+          body: 'Selected for the University of Canterbury Global Leadership Programme — a selective, industry-linked project working with real New Zealand companies. I led research into target markets, mapped the competitive landscape, and helped shape a practical market-entry strategy that the team presented to stakeholders.',
+          highlights: [
+            'Ran competitor and market analysis across target regions to size the opportunity.',
+            'Synthesised findings into a clear, actionable market-entry strategy.',
+            'Presented recommendations to industry partners and academic mentors.'
+          ],
+          tech: ['Power BI','Excel','SQL']
+        }
+      },
+      {
+        featured: false,
+        accent: '#14b8a6',
+        category: 'Technology',
+        title: 'Appathon Project — Deloitte',
+        image: 'deloitte.jpg',
+        alt: 'Appathon project with Deloitte',
+        summary: 'Rapid app prototyping in a team build with Deloitte — ideating, designing, and presenting a working solution under time pressure.',
+        stats: [ {n:3,label:'Members'}, {n:24,label:'Build',suffix:'h'}, {n:1,label:'Prototype'} ],
+        detail: {
+          meta: 'Deloitte · Team of 3 · 24-hour build',
+          body: 'A fast-paced hackathon-style build run with Deloitte. In a small team we went from problem statement to a working prototype in 24 hours — scoping the idea, designing the experience, splitting the build, and pitching the final solution to judges.',
+          highlights: [
+            'Scoped and prioritised features to ship a working demo within the time limit.',
+            'Designed and built the prototype collaboratively under pressure.',
+            'Pitched the solution to Deloitte mentors and the judging panel.'
+          ],
+          tech: ['Figma','JavaScript','HTML','CSS']
+        }
+      }
+    ];
+
+    const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+    function renderWork() {
+      const grid = document.getElementById('workGrid');
+      if (!grid) return;
+      grid.innerHTML = PROJECTS.map((p, i) => {
+        const stats = (p.stats||[]).map(s => `<div class="wstat"><span class="wnum" data-count="${s.n}"${s.suffix?` data-suffix="${esc(s.suffix)}"`:''}>0</span><span class="wlbl">${esc(s.label)}</span></div>`).join('');
+        return `<div class="work-card tilt clickable reveal" style="--accent:${esc(p.accent)}" data-idx="${i}" tabindex="0" role="button" aria-label="View ${esc(p.title)} details">
+          ${p.featured?'<div class="work-feat">FEATURED</div>':''}
+          <div class="work-img"><img src="${esc(p.image)}" alt="${esc(p.alt||p.title)}" loading="lazy"/></div>
+          <div class="work-body">
+            <div class="wc-cat">${esc(p.category)}</div>
+            <h3>${esc(p.title)}</h3>
+            <p>${esc(p.summary)}</p>
+            <div class="work-stats">${stats}</div>
+            <span class="work-go" aria-hidden="true">${ARROW}</span>
+          </div>
+        </div>`;
+      }).join('');
+      grid.querySelectorAll('.work-card').forEach(card => {
+        const open = () => openProject(PROJECTS[+card.dataset.idx]);
+        card.addEventListener('click', open);
+        card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); open(); } });
+      });
+    }
+
+    // ----- project detail modal -----
+    const pm = {
+      overlay: document.getElementById('pmOverlay'), dialog: document.getElementById('pmDialog'),
+      img: document.getElementById('pmImg'), cat: document.getElementById('pmCat'),
+      title: document.getElementById('pmTitle'), meta: document.getElementById('pmMeta'),
+      desc: document.getElementById('pmDesc'),
+      hiWrap: document.getElementById('pmHiWrap'), hi: document.getElementById('pmHi'),
+      techWrap: document.getElementById('pmTechWrap'), tech: document.getElementById('pmTech'),
+      links: document.getElementById('pmLinks')
+    };
+    let pmLastFocus = null;
+    function openProject(p) {
+      const d = p.detail || {};
+      pm.dialog.style.setProperty('--accent', p.accent);
+      pm.img.src = p.image; pm.img.alt = p.alt || p.title;
+      pm.cat.textContent = p.category;
+      pm.title.textContent = p.title;
+      pm.meta.textContent = d.meta || ''; pm.meta.hidden = !d.meta;
+      pm.desc.textContent = d.body || p.summary;
+      if (d.highlights && d.highlights.length) { pm.hi.innerHTML = d.highlights.map(h=>`<li>${esc(h)}</li>`).join(''); pm.hiWrap.hidden = false; } else pm.hiWrap.hidden = true;
+      if (d.tech && d.tech.length) { pm.tech.innerHTML = d.tech.map(t=>`<span>${esc(t)}</span>`).join(''); pm.techWrap.hidden = false; } else pm.techWrap.hidden = true;
+      pm.links.innerHTML = (d.links && d.links.length) ? d.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ${ARROW}</a>`).join('') : '';
+      pmLastFocus = document.activeElement;
+      pm.overlay.hidden = false;
+      requestAnimationFrame(()=> pm.overlay.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      document.getElementById('pmClose').focus();
+    }
+    function closeProject() {
+      pm.overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(()=>{ pm.overlay.hidden = true; }, 320);
+      if (pmLastFocus) pmLastFocus.focus();
+    }
+    document.getElementById('pmClose').addEventListener('click', closeProject);
+    pm.overlay.addEventListener('click', e => { if (e.target === pm.overlay) closeProject(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && pm.overlay.classList.contains('open')) closeProject(); });
+
+    renderWork();
+
+    // ----- Kia Ora split-text reveal -----
+    (function(){
+      const kia = document.querySelector('.kia');
+      if (!kia) return;
+      const raw = kia.textContent.replace('👋','').trim();
+      let html = raw.split('').map((ch,i)=> ch===' '
+        ? '<span class="split-char space"> </span>'
+        : `<span class="split-char" style="animation-delay:${(i*0.05).toFixed(2)}s">${esc(ch)}</span>`).join('');
+      html += ' <span class="wave">👋</span>';
+      kia.innerHTML = html;
+      const play = () => kia.classList.add('played');
+      const ob = new IntersectionObserver((en)=>{ en.forEach(e=>{ if (e.isIntersecting){ play(); ob.disconnect(); } }); }, { threshold: .4 });
+      ob.observe(kia);
+      // safety net: it's above the fold, so guarantee it plays even if the observer is slow
+      setTimeout(play, 1400);
+    })();
+
     const nav = document.getElementById('nav');
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
