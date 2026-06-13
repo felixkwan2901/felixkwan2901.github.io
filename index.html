@@ -234,6 +234,60 @@
     .work-card:hover .work-go svg { animation: nudge .6s ease; }
     @keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
 
+    /* ===== Building with AI ===== */
+    .ai-head { text-align: center; max-width: 640px; margin: 96px auto 0; }
+    .ai-head .eyebrow { justify-content: center; }
+    .ai-head .section-sub { margin-inline: auto; }
+    .gradient-text { background: linear-gradient(95deg,#60a5fa,#a78bfa 55%,#f0abfc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .ai-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 28px; max-width: 1000px; margin: 52px auto 0; }
+    .ai-card { position: relative; border-radius: 22px; background: var(--panel); border: 1px solid var(--border); overflow: hidden; transition: transform .4s cubic-bezier(.2,.7,.3,1), box-shadow .4s; transform-style: preserve-3d; will-change: transform; --c1:#3b82f6; --c2:#8b5cf6; }
+    /* animated gradient glow border */
+    .ai-card::before { content: ""; position: absolute; inset: -1px; border-radius: 23px; padding: 1.5px; background: linear-gradient(130deg, var(--c1), var(--c2), var(--c1)); background-size: 220% 220%; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .55; animation: aiborder 6s ease infinite; transition: opacity .4s; pointer-events: none; }
+    .ai-card:hover::before { opacity: 1; }
+    .ai-card:hover { box-shadow: 0 30px 70px -20px color-mix(in srgb, var(--c2) 50%, transparent); }
+    @keyframes aiborder { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+    /* floating AI particles */
+    .ai-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+    .ai-particles i { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, var(--c2)); opacity: .0; filter: blur(.3px); animation: aifloat 7s ease-in-out infinite; }
+    .ai-particles i:nth-child(1){ left:12%; top:30%; animation-delay:0s; }
+    .ai-particles i:nth-child(2){ left:78%; top:18%; width:4px;height:4px; animation-delay:1.4s; }
+    .ai-particles i:nth-child(3){ left:64%; top:62%; animation-delay:2.6s; }
+    .ai-particles i:nth-child(4){ left:30%; top:74%; width:5px;height:5px; animation-delay:3.8s; }
+    .ai-particles i:nth-child(5){ left:88%; top:48%; width:3px;height:3px; animation-delay:.7s; }
+    @keyframes aifloat { 0%{transform:translateY(8px) scale(.7);opacity:0} 25%{opacity:.9} 50%{transform:translateY(-14px) scale(1);opacity:.7} 75%{opacity:.4} 100%{transform:translateY(-26px) scale(.6);opacity:0} }
+    /* mockup shot with animated gradient bg */
+    .ai-shot { position: relative; height: 190px; padding: 18px; overflow: hidden; background: linear-gradient(125deg, color-mix(in srgb, var(--c1) 80%, #0b1220), color-mix(in srgb, var(--c2) 75%, #0b1220), #0b1220); background-size: 200% 200%; animation: aibg 9s ease infinite; }
+    @keyframes aibg { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+    .ai-shot::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 80% -10%, rgba(255,255,255,.18), transparent 60%); }
+    .ai-status { position: absolute; top: 14px; left: 14px; z-index: 3; display: inline-flex; align-items: center; gap: 6px; font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(8,12,24,.5); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.25); padding: 5px 10px; border-radius: 999px; }
+    .ai-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: aipulse 2s infinite; }
+    @keyframes aipulse { 0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)} 70%{box-shadow:0 0 0 7px rgba(52,211,153,0)} 100%{box-shadow:0 0 0 0 rgba(52,211,153,0)} }
+    .ai-mock { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; background: rgba(255,255,255,.1); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.22); border-radius: 12px; padding: 12px; transform: translateZ(40px); }
+    .mock-bar { display: flex; gap: 5px; margin-bottom: 10px; }
+    .mock-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.5); }
+    .mock-chat { display: flex; flex-direction: column; gap: 7px; }
+    .bubble { font-size: .68rem; padding: 6px 10px; border-radius: 10px; max-width: 82%; color: #fff; line-height: 1.3; }
+    .bubble.bot { background: rgba(255,255,255,.16); border-bottom-left-radius: 3px; align-self: flex-start; }
+    .bubble.usr { background: rgba(255,255,255,.32); border-bottom-right-radius: 3px; align-self: flex-end; }
+    .ai-body { padding: 20px 20px 22px; position: relative; z-index: 2; }
+    .ai-body h3 { font-size: 1.22rem; font-weight: 800; font-family: 'Sora'; margin: 8px 0 14px; }
+    .ai-block { margin-bottom: 12px; }
+    .ai-k { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--c2) 60%, var(--text-3)); margin-bottom: 3px; }
+    .ai-block p { font-size: .82rem; color: var(--text-2); line-height: 1.5; }
+    .ai-stack { display: flex; align-items: center; gap: 10px; margin: 16px 0; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--c1) 6%, transparent); border: 1px solid var(--border); }
+    .ai-stack .ai-k { margin: 0 6px 0 0; align-self: center; }
+    .ai-stack img { width: 24px; height: 24px; object-fit: contain; transition: transform .3s; }
+    .ai-stack img:hover { transform: translateY(-3px) scale(1.12); }
+    .ai-impact { display: flex; align-items: center; gap: 11px; padding: 13px 14px; border-radius: 12px; background: linear-gradient(100deg, color-mix(in srgb, var(--c1) 14%, transparent), color-mix(in srgb, var(--c2) 14%, transparent)); border: 1px solid color-mix(in srgb, var(--c2) 24%, transparent); margin-bottom: 18px; }
+    .ai-impact svg { flex: none; color: var(--c2); }
+    .ai-impact b { font-family: 'Sora'; font-size: 1.05rem; color: var(--text); }
+    .ai-impact span { font-size: .78rem; color: var(--text-2); }
+    .ai-cta { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 700; color: #fff; padding: 11px 18px; border-radius: 999px; background: linear-gradient(95deg, var(--c1), var(--c2)); background-size: 160% 160%; box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--c2) 70%, transparent); transition: transform .3s, box-shadow .3s, background-position .5s; }
+    .ai-cta:hover { transform: translateY(-2px); background-position: 100% 50%; box-shadow: 0 14px 30px -8px color-mix(in srgb, var(--c2) 80%, transparent); }
+    .ai-cta svg { transition: transform .3s; }
+    .ai-cta:hover svg { transform: translateX(4px); }
+    @media (max-width: 760px){ .ai-grid { grid-template-columns: 1fr; max-width: 460px; } .ai-head { margin-top: 72px; } }
+
     /* story block */
     .story { margin-top: 70px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 50px; align-items: center; padding: 44px; border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(59,130,246,.06), var(--panel)); }
     .story h2 { font-size: clamp(1.6rem,3vw,2.3rem); font-weight: 800; margin-bottom: 18px; }
@@ -510,6 +564,82 @@
             <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
+      </div>
+
+      <!-- BUILDING WITH AI -->
+      <div class="ai-head reveal">
+        <div class="eyebrow">Future Concepts</div>
+        <h2 class="section-title gradient-text">Building with AI</h2>
+        <p class="section-sub">Exploring how artificial intelligence can solve real-world operational and customer experience challenges.</p>
+      </div>
+      <div class="ai-grid">
+        <article class="ai-card tilt reveal" style="--c1:#3b82f6;--c2:#8b5cf6">
+          <span class="ai-particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <div class="ai-shot">
+            <span class="ai-status"><span class="dot"></span>Concept Project</span>
+            <div class="ai-mock">
+              <div class="mock-bar"><span></span><span></span><span></span></div>
+              <div class="mock-chat">
+                <div class="bubble bot">How are sales tracking today?</div>
+                <div class="bubble usr">Up 12% vs last week — restock 3 SKUs ✦</div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-body">
+            <div class="wc-cat">Operations</div>
+            <h3>OpsPilot AI</h3>
+            <div class="ai-block"><span class="ai-k">Problem</span><p>Frontline retail &amp; pharmacy teams lose hours each week to repetitive stock checks, policy look-ups, and manual end-of-day reporting.</p></div>
+            <div class="ai-block"><span class="ai-k">Solution</span><p>A conversational copilot that answers operational questions instantly, surfaces live inventory &amp; sales insights, and auto-drafts daily reports — grounded in the company's own data.</p></div>
+            <div class="ai-stack">
+              <span class="ai-k">Stack</span>
+              <img src="icons/_python.svg" alt="Python" title="Python" loading="lazy"/>
+              <img src="icons/_openai.svg" alt="OpenAI" title="OpenAI API" loading="lazy"/>
+              <img src="icons/_sql.svg" alt="SQL" title="SQL" loading="lazy"/>
+              <img src="icons/_microsoft-power-bi.svg" alt="Power BI" title="Power BI" loading="lazy"/>
+            </div>
+            <div class="ai-impact">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+              <span><b><span class="wnum" data-count="30" data-suffix="%">0</span> less time</b> spent on routine operational queries each week.</span>
+            </div>
+            <a href="#contact" class="ai-cta">View Concept
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="ai-card tilt reveal" style="--c1:#8b5cf6;--c2:#ec4899">
+          <span class="ai-particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <div class="ai-shot">
+            <span class="ai-status"><span class="dot"></span>Concept Project</span>
+            <div class="ai-mock">
+              <div class="mock-bar"><span></span><span></span><span></span></div>
+              <div class="mock-chat">
+                <div class="bubble bot">Ticket #4821 · Billing · 😟 Negative</div>
+                <div class="bubble usr">Routed to Tier 2 · draft reply ready ✦</div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-body">
+            <div class="wc-cat">Customer Experience</div>
+            <h3>CareSense AI</h3>
+            <div class="ai-block"><span class="ai-k">Problem</span><p>Support teams face high ticket volumes and inconsistent response quality, leaving customers waiting and issues mis-routed.</p></div>
+            <div class="ai-block"><span class="ai-k">Solution</span><p>An AI triage layer that classifies and routes tickets, drafts empathetic replies, and tracks real-time sentiment — so teams can act before satisfaction drops.</p></div>
+            <div class="ai-stack">
+              <span class="ai-k">Stack</span>
+              <img src="icons/_python.svg" alt="Python" title="Python" loading="lazy"/>
+              <img src="icons/_openai.svg" alt="OpenAI" title="OpenAI API" loading="lazy"/>
+              <img src="icons/_servicenow.svg" alt="ServiceNow" title="ServiceNow" loading="lazy"/>
+              <img src="icons/_tableau.svg" alt="Tableau" title="Tableau" loading="lazy"/>
+            </div>
+            <div class="ai-impact">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              <span><b><span class="wnum" data-count="40" data-suffix="%">0</span> faster triage</b> with higher, more consistent customer satisfaction.</span>
+            </div>
+            <a href="#contact" class="ai-cta">View Concept
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
       </div>
 
       <!-- story -->
