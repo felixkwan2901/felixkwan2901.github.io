@@ -209,19 +209,30 @@
     .work-head .vt { font-size: .9rem; color: var(--blue-2); font-weight: 600; display: inline-flex; align-items: center; gap: 7px; }
     .work-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; max-width: 860px; margin-inline: auto; }
     .vol-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; margin-top: 46px; }
-    .work-card { border-radius: 18px; border: 1px solid var(--border); background: var(--panel); overflow: hidden; transition: all .35s; position: relative; }
-    .work-card:hover { transform: translateY(-6px); border-color: var(--border-2); box-shadow: 0 24px 50px rgba(0,0,0,.4); }
+    .work-card { border-radius: 18px; border: 1px solid var(--border); background: var(--panel); overflow: hidden; position: relative; transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s, box-shadow .35s; transform-style: preserve-3d; will-change: transform; }
+    .work-card::after { content: ""; position: absolute; inset: 0; border-radius: 18px; pointer-events: none; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent,#3b82f6) 0%, transparent); transition: box-shadow .35s; }
+    .work-card:hover { transform: translateY(-8px); border-color: color-mix(in srgb, var(--accent,#3b82f6) 45%, var(--border)); box-shadow: 0 26px 56px rgba(0,0,0,.42); }
+    .work-card:hover::after { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent,#3b82f6) 55%, transparent); }
     .work-img { height: 230px; position: relative; overflow: hidden; background: linear-gradient(135deg,#0f172a,#1e293b); display: grid; place-items: center; }
     .vol-grid .work-img { height: 180px; }
-    .work-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-    .work-card:hover .work-img img { transform: scale(1.06); }
+    .work-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.3,1); }
+    .work-card:hover .work-img img { transform: scale(1.07); }
     .work-img .ph { font-size: 2.6rem; }
     .work-img.grad-1 { background: linear-gradient(135deg,#1e3a8a,#312e81); }
     .work-img.grad-2 { background: linear-gradient(135deg,#0f766e,#155e75); }
     .work-feat { position: absolute; top: 10px; left: 10px; z-index: 2; background: var(--uc-red); color: #fff; font-size: .6rem; font-weight: 800; letter-spacing: .1em; padding: 4px 8px; border-radius: 6px; }
-    .work-body { padding: 18px; }
-    .work-body h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 5px; }
-    .work-body p { font-size: .8rem; color: var(--text-3); }
+    .work-body { padding: 20px 18px 18px; position: relative; }
+    .wc-cat { display: inline-block; font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent,#3b82f6); background: color-mix(in srgb, var(--accent,#3b82f6) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent,#3b82f6) 26%, transparent); padding: 4px 9px; border-radius: 999px; margin-bottom: 10px; }
+    .work-body h3 { font-size: 1.04rem; font-weight: 700; margin-bottom: 6px; padding-right: 40px; }
+    .work-body p { font-size: .8rem; color: var(--text-3); line-height: 1.5; }
+    .work-stats { display: flex; gap: 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .wstat { display: flex; flex-direction: column; line-height: 1.1; }
+    .wnum { font-family: 'Sora'; font-size: 1.25rem; font-weight: 800; color: var(--accent,#3b82f6); }
+    .wlbl { font-size: .64rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin-top: 3px; }
+    .work-go { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--accent,#3b82f6); background: color-mix(in srgb, var(--accent,#3b82f6) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent,#3b82f6) 28%, transparent); transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .35s; }
+    .work-card:hover .work-go { transform: translateX(3px) scale(1.08); background: color-mix(in srgb, var(--accent,#3b82f6) 22%, transparent); }
+    .work-card:hover .work-go svg { animation: nudge .6s ease; }
+    @keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
 
     /* story block */
     .story { margin-top: 70px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 50px; align-items: center; padding: 44px; border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(59,130,246,.06), var(--panel)); }
@@ -289,9 +300,11 @@
 
     /* skills */
     .skills-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 16px; margin-top: 46px; }
-    .skill { padding: 24px 14px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); text-align: center; transition: all .3s; }
-    .skill:hover { transform: translateY(-5px); border-color: var(--blue); box-shadow: 0 14px 34px rgba(59,130,246,.15); }
-    .skill .si { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 13px; display: grid; place-items: center; font-weight: 800; font-size: 1rem; font-family: 'Sora'; background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.22); color: var(--blue-2); }
+    .skill { padding: 24px 14px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); text-align: center; transition: transform .35s cubic-bezier(.34,1.56,.64,1), border-color .3s, box-shadow .3s; }
+    .skill:hover { transform: translateY(-7px); border-color: var(--blue); box-shadow: 0 16px 38px rgba(59,130,246,.16); }
+    .skill .si { width: 54px; height: 54px; margin: 0 auto 13px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, var(--blue) 9%, transparent); border: 1px solid color-mix(in srgb, var(--blue) 20%, transparent); transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+    .skill .si img { width: 30px; height: 30px; object-fit: contain; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
+    .skill:hover .si { transform: scale(1.14) rotate(-4deg); }
     .skill .sn { font-size: .85rem; font-weight: 600; }
     .skill .sc { font-size: .7rem; color: var(--text-3); margin-top: 2px; }
 
@@ -468,14 +481,34 @@
         </a>
       </div>
       <div class="work-grid">
-        <div class="work-card reveal">
+        <div class="work-card tilt reveal" style="--accent:#3b82f6">
           <div class="work-feat">FEATURED</div>
-          <div class="work-img"><img src="impact.jpg" alt="UC Global Impact Industry Project" loading="lazy"/></div>
-          <div class="work-body"><h3>UC Leadership — Global Impact</h3><p>Market research, competitor analysis & entry strategy for NZ companies through the UC Global Impact Industry Project.</p></div>
+          <div class="work-img"><img src="impact.jpg" alt="UC Global Leadership Programme" loading="lazy"/></div>
+          <div class="work-body">
+            <div class="wc-cat">Leadership</div>
+            <h3>UC Global Leadership</h3>
+            <p>Market research, competitor analysis &amp; market-entry strategy for NZ companies through the UC Global Leadership programme.</p>
+            <div class="work-stats">
+              <div class="wstat"><span class="wnum" data-count="6">0</span><span class="wlbl">Members</span></div>
+              <div class="wstat"><span class="wnum" data-count="4">0</span><span class="wlbl">Months</span></div>
+              <div class="wstat"><span class="wnum" data-count="1">0</span><span class="wlbl">Project</span></div>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
         </div>
-        <div class="work-card reveal">
+        <div class="work-card tilt reveal" style="--accent:#14b8a6">
           <div class="work-img"><img src="deloitte.jpg" alt="Appathon project with Deloitte" loading="lazy"/></div>
-          <div class="work-body"><h3>Appathon Project — Deloitte</h3><p>Rapid app prototyping in a team build with Deloitte — ideating, designing, and presenting a working solution under time pressure.</p></div>
+          <div class="work-body">
+            <div class="wc-cat">Technology</div>
+            <h3>Appathon Project — Deloitte</h3>
+            <p>Rapid app prototyping in a team build with Deloitte — ideating, designing, and presenting a working solution under time pressure.</p>
+            <div class="work-stats">
+              <div class="wstat"><span class="wnum" data-count="3">0</span><span class="wlbl">Members</span></div>
+              <div class="wstat"><span class="wnum" data-count="24" data-suffix="h">0</span><span class="wlbl">Build</span></div>
+              <div class="wstat"><span class="wnum" data-count="1">0</span><span class="wlbl">Prototype</span></div>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
         </div>
       </div>
 
@@ -629,16 +662,16 @@
         <p class="section-sub" style="margin-inline:auto;">The technologies I use to analyze, build, and communicate.</p>
       </div>
       <div class="skills-grid">
-        <div class="skill reveal"><div class="si">BI</div><div class="sn">Power BI</div><div class="sc">Analytics</div></div>
-        <div class="skill reveal"><div class="si">SQL</div><div class="sn">SQL</div><div class="sc">Databases</div></div>
-        <div class="skill reveal"><div class="si">Py</div><div class="sn">Python</div><div class="sc">Analysis</div></div>
-        <div class="skill reveal"><div class="si">XL</div><div class="sn">Excel</div><div class="sc">Modelling</div></div>
-        <div class="skill reveal"><div class="si">SN</div><div class="sn">ServiceNow</div><div class="sc">Platform</div></div>
-        <div class="skill reveal"><div class="si">&lt;/&gt;</div><div class="sn">HTML</div><div class="sc">Web</div></div>
-        <div class="skill reveal"><div class="si">{ }</div><div class="sn">CSS</div><div class="sc">Web</div></div>
-        <div class="skill reveal"><div class="si">JS</div><div class="sn">JavaScript</div><div class="sc">Web</div></div>
-        <div class="skill reveal"><div class="si">Cv</div><div class="sn">Canva</div><div class="sc">Design</div></div>
-        <div class="skill reveal"><div class="si">Pr</div><div class="sn">Premiere Pro</div><div class="sc">Video</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_microsoft-power-bi.svg" alt="Power BI" loading="lazy"/></div><div class="sn">Power BI</div><div class="sc">Analytics</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_sql.svg" alt="SQL" loading="lazy"/></div><div class="sn">SQL</div><div class="sc">Databases</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_python.svg" alt="Python" loading="lazy"/></div><div class="sn">Python</div><div class="sc">Analysis</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_microsoft-excel.svg" alt="Excel" loading="lazy"/></div><div class="sn">Excel</div><div class="sc">Modelling</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_servicenow.svg" alt="ServiceNow" loading="lazy"/></div><div class="sn">ServiceNow</div><div class="sc">Platform</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_html-5.svg" alt="HTML5" loading="lazy"/></div><div class="sn">HTML</div><div class="sc">Web</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_css-3.svg" alt="CSS3" loading="lazy"/></div><div class="sn">CSS</div><div class="sc">Web</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_javascript.svg" alt="JavaScript" loading="lazy"/></div><div class="sn">JavaScript</div><div class="sc">Web</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_canva.svg" alt="Canva" loading="lazy"/></div><div class="sn">Canva</div><div class="sc">Design</div></div>
+        <div class="skill reveal"><div class="si"><img src="icons/_tableau.svg" alt="Tableau" loading="lazy"/></div><div class="sn">Tableau</div><div class="sc">Data Viz</div></div>
       </div>
     </div>
   </section>
@@ -652,17 +685,33 @@
         <p class="section-sub">Where I give back — leading teams, serving locally, and supporting major events.</p>
       </div>
       <div class="vol-grid">
-        <div class="work-card reveal">
+        <div class="work-card tilt reveal" style="--accent:#3b82f6">
           <div class="work-img"><img src="multimedia.jpg" alt="Multimedia Team Leader at IFGF Christchurch" loading="lazy"/></div>
-          <div class="work-body"><h3>Multimedia Team Leader</h3><p>IFGF Christchurch · led the AV team, scheduled volunteers, and produced visuals for live services and events.</p></div>
+          <div class="work-body">
+            <div class="wc-cat">Leadership</div>
+            <h3>Multimedia Team Leader</h3>
+            <p>IFGF Christchurch · led the AV team, scheduled volunteers, and produced visuals for live services and events.</p>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
         </div>
-        <div class="work-card reveal">
+        <div class="work-card tilt reveal" style="--accent:#22c55e">
           <div class="work-img"><img src="sva.jpg" alt="Student Volunteer Army garden cleanup" loading="lazy"/></div>
-          <div class="work-body"><h3>Student Volunteer Army</h3><p>Branch Out · gardening and maintenance at Mairehau School, giving back to the local community.</p></div>
+          <div class="work-body">
+            <div class="wc-cat">Community</div>
+            <h3>Student Volunteer Army</h3>
+            <p>Branch Out · gardening and maintenance at Mairehau School, giving back to the local community.</p>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
         </div>
-        <div class="work-card reveal">
+        <div class="work-card tilt reveal" style="--accent:#f59e0b">
           <div class="work-img"><img src="rugby.jpg" alt="Super Round Rugby event crew" loading="lazy"/></div>
-          <div class="work-body"><h3>Super Round Rugby Event</h3><p>Crusaders vs Waratahs · supported crowd safety, access control, and pack-down operations.</p></div>
+          <div class="work-body">
+            <div class="wc-cat">Events</div>
+            <h3>Super Round Rugby Event</h3>
+            <p>Crusaders vs Waratahs · supported crowd safety, access control, and pack-down operations.</p>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -717,8 +766,28 @@
       localStorage.setItem('theme', next);
     });
 
+    // count-up animation for stat numbers
+    function countUp(el) {
+      const target = parseInt(el.dataset.count, 10) || 0;
+      const suffix = el.dataset.suffix || '';
+      const dur = 1100, t0 = performance.now();
+      function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.wnum[data-count]').forEach(n => { if (!n.dataset.done) { n.dataset.done = '1'; countUp(n); } });
+          io.unobserve(e.target);
+        }
+      });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
@@ -727,6 +796,27 @@
       const x = (e.clientX / window.innerWidth - 0.5), y = (e.clientY / window.innerHeight - 0.5);
       orbs.forEach((o,i) => { o.style.transform = `translate(${x*(14+i*6)}px,${y*(14+i*6)}px)`; });
     }, { passive: true });
+
+    // 3D tilt on cards (pointer-driven, react-like spring feel)
+    const fine = window.matchMedia('(pointer:fine)').matches;
+    if (fine) {
+      document.querySelectorAll('.tilt').forEach(card => {
+        let raf = null;
+        card.addEventListener('pointermove', (ev) => {
+          const r = card.getBoundingClientRect();
+          const px = (ev.clientX - r.left) / r.width - 0.5;
+          const py = (ev.clientY - r.top) / r.height - 0.5;
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transform = `translateY(-8px) perspective(900px) rotateX(${(-py*6).toFixed(2)}deg) rotateY(${(px*7).toFixed(2)}deg)`;
+          });
+        });
+        card.addEventListener('pointerleave', () => {
+          if (raf) cancelAnimationFrame(raf);
+          card.style.transform = '';
+        });
+      });
+    }
   </script>
 </body>
 </html>
