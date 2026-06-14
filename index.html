@@ -360,7 +360,7 @@
     .ach-lbl { font-size: .76rem; color: var(--text-2); }
     .ach-desc { color: var(--text-2); font-size: .94rem; line-height: 1.55; }
     .cert-head { text-align: center; font-size: 1.35rem; font-weight: 800; margin-bottom: 24px; }
-    .cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .cert-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
     .cert-card { display: flex; align-items: center; gap: 15px; padding: 20px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); transition: transform .28s, border-color .28s, box-shadow .28s; }
     .cert-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px color-mix(in srgb,var(--accent) 22%,transparent); }
     .cert-ic { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb,var(--accent) 13%,transparent); }
@@ -370,6 +370,9 @@
     .cert-logo { height: 15px; width: auto; margin: 7px 0 2px; display: block; }
     .cert-issuer { color: var(--text-2); font-size: .8rem; margin-top: 4px; }
     .cert-issuer b { color: var(--text); font-weight: 600; }
+    .cert-verify { display: inline-flex; align-items: center; gap: 4px; margin-top: 7px; font-size: .74rem; font-weight: 600; color: var(--accent); text-decoration: none; opacity: .85; transition: opacity .2s, gap .2s; }
+    .cert-verify:hover { opacity: 1; gap: 7px; }
+    .cert-verify svg { width: 12px; height: 12px; }
     .cert-badge { flex-shrink: 0; align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb,var(--accent) 14%,transparent); border: 1px solid color-mix(in srgb,var(--accent) 35%,transparent); }
 
     /* about */
@@ -802,6 +805,7 @@
             <div class="cert-name">Data Platform 2025 — Certified Foundations Associate</div>
             <img class="cert-logo" src="icons/_oracle.svg" alt="Oracle" />
             <div class="cert-issuer">Issued Aug 2025</div>
+            <a class="cert-verify" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=A48425F22FD50BED4E32BA55E671C653432A985E348DA639FE42F495CB8FEADA" target="_blank" rel="noopener">Verify<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
           </div>
           <span class="cert-badge">Certified</span>
         </div>
@@ -811,6 +815,17 @@
           <div class="cert-info">
             <div class="cert-name">Investment Foundations Certificate</div>
             <div class="cert-issuer"><b>CFA Institute</b> · Issued Feb 2026</div>
+            <a class="cert-verify" href="https://credentials.cfainstitute.org/8e1d405c-8854-46fe-ab7e-a9fa85a0623a" target="_blank" rel="noopener">Verify<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          </div>
+          <span class="cert-badge">Certified</span>
+        </div>
+
+        <div class="cert-card reveal" style="--accent:#06b6d4">
+          <div class="cert-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg></div>
+          <div class="cert-info">
+            <div class="cert-name">Finance Accelerator</div>
+            <div class="cert-issuer"><b>AmplifyME</b> · Issued Oct 2025</div>
+            <a class="cert-verify" href="https://my.amplifyme.com/certificate/6e1d297e-3c0b-4a1e-ac88-bcd9b6d4500c" target="_blank" rel="noopener">Verify<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
           </div>
           <span class="cert-badge">Certified</span>
         </div>
