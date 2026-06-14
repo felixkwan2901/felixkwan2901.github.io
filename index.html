@@ -1168,22 +1168,23 @@
       {
         featured: false,
         accent: '#00f2ff',
-        category: 'Built with AI',
-        title: 'Neon Tetris',
+        category: 'Data Analytics',
+        title: 'Neon Tetris — Analytics',
         image: 'tetris-cover.svg',
-        alt: 'Neon Tetris arcade game',
-        summary: 'A playable neon-arcade Tetris built from scratch in vanilla JavaScript — full game loop, line clears, scoring and keyboard controls. Try it right in your browser.',
-        stats: [ {n:7,label:'Pieces'}, {n:0,label:'Dependencies'}, {n:100,label:'Vanilla JS',suffix:'%'} ],
+        alt: 'Neon Tetris arcade game with analytics dashboard',
+        summary: 'A playable neon Tetris with a built-in analytics dashboard. Every game is instrumented to capture events, derive KPIs (efficiency, Tetris-rate, pieces/min) and visualise them with charts, a board heatmap and an auto-generated insight.',
+        stats: [ {n:8,label:'KPIs tracked'}, {n:20,label:'Sessions logged'}, {n:0,label:'Dependencies'} ],
         detail: {
-          meta: 'Personal build · HTML5 Canvas · Vanilla JS',
-          body: 'A fully playable Tetris game built from scratch — no frameworks, no libraries. Rendered on an HTML5 canvas with a neon-arcade aesthetic, it implements the complete game loop: piece spawning and rotation, collision detection, line clears, scoring, increasing speed, and pause. A fun build to sharpen core programming and game-logic fundamentals.',
+          meta: 'Built with AI · Vanilla JS · Product Analytics',
+          body: 'I started with a from-scratch Tetris game (HTML5 canvas, no frameworks) and turned it into a small data product. Each game is instrumented like a real analytics pipeline: it captures every move, rotation and line-clear as event data, derives analyst KPIs, visualises them on a post-game dashboard, and writes a plain-English insight — walking through the full collect → measure → visualise → recommend workflow that a data or business analyst uses every day.',
           highlights: [
-            'Hand-coded game loop with collision detection and line-clearing logic.',
-            'Smooth keyboard controls, scoring, levels and pause — all in one self-contained file.',
-            'Zero dependencies: pure HTML, CSS and JavaScript on an HTML5 canvas.'
+            'Instrumentation: logs every move, rotation, drop and line-clear event during play.',
+            'KPI design: auto-computes pieces/min, line-clear efficiency, Tetris-rate and actions/min.',
+            'Visualisation: post-game dashboard with bar charts, a board heatmap, and score trends across sessions (persisted in localStorage).',
+            'Insight storytelling: generates a written takeaway from the data — e.g. "your score is 18% above your previous average".'
           ],
-          tech: ['JavaScript','HTML5 Canvas','CSS'],
-          links: [ {label:'Play Now', url:'apps/tetris/'} ]
+          tech: ['JavaScript','HTML5 Canvas','KPI Design','Data Viz'],
+          links: [ {label:'Play & See Analytics', url:'apps/tetris/'} ]
         }
       }
     ];

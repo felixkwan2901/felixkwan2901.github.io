@@ -156,6 +156,46 @@
             margin-bottom: 20px;
             display: none;
         }
+
+        /* ===== Analytics dashboard ===== */
+        #analytics {
+            position: fixed; inset: 0; z-index: 50;
+            background: rgba(8, 8, 16, 0.95);
+            backdrop-filter: blur(8px);
+            overflow: auto;
+            padding: 28px 16px;
+            display: flex; justify-content: center; align-items: flex-start;
+            transition: opacity 0.3s;
+        }
+        #analytics.hidden { opacity: 0; pointer-events: none; }
+        .dash { width: 100%; max-width: 760px; }
+        .dash-head { text-align: center; margin-bottom: 20px; }
+        .dash-head h2 { font-size: 26px; color: var(--accent-color); text-shadow: 0 0 14px var(--accent-color); margin: 0 0 6px; }
+        .dash-sub { font-size: 10px; color: #9aabbb; letter-spacing: 3px; margin: 0; }
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+        .kpi { background: rgba(0,0,0,0.5); border: 1px solid var(--accent-color); box-shadow: inset 0 0 10px rgba(0,242,255,0.12); padding: 12px 6px; text-align: center; border-radius: 4px; }
+        .kpi-val { font-size: 21px; font-weight: bold; text-shadow: 0 0 6px var(--accent-color); }
+        .kpi-lbl { font-size: 8px; color: var(--accent-color); margin-top: 5px; letter-spacing: 1px; }
+        .dash-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .dash-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(0,242,255,0.4); border-radius: 6px; padding: 14px; }
+        .dash-card h3 { font-size: 10px; color: var(--accent-color); margin: 0 0 12px; letter-spacing: 1px; }
+        .bars { height: 150px; display: flex; gap: 8px; align-items: stretch; }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+        .bar-val { font-size: 9px; color: #cdddee; }
+        .bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+        .bar { width: 66%; border-radius: 3px 3px 0 0; min-height: 2px; transition: height 0.7s cubic-bezier(.2,.8,.2,1); }
+        .bar-lbl { font-size: 8px; color: #9aabbb; white-space: nowrap; }
+        #heatmap { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1px; width: 124px; margin: 0 auto; }
+        #heatmap i { aspect-ratio: 1; background: rgba(0,242,255,0); border-radius: 1px; border: 0.5px solid rgba(255,255,255,0.04); }
+        .cap { font-size: 8px; color: #9aabbb; text-align: center; margin: 8px 0 0; }
+        .insight { margin: 16px 0; background: rgba(0,242,255,0.06); border-left: 3px solid var(--accent-color); border-radius: 4px; padding: 10px 16px; }
+        .insight p { margin: 7px 0; font-size: 11px; color: #cdddee; text-transform: none; letter-spacing: 0.4px; line-height: 1.5; }
+        .insight b { color: var(--accent-color); }
+        .dash-actions { text-align: center; margin-top: 18px; }
+        @media (max-width: 560px) {
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+            .dash-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -194,6 +234,25 @@
             <h1 id="title">NEON TETRIS</h1>
             <div id="game-over" class="game-over-text">GAME OVER</div>
             <button id="start-btn">Initialize</button>
+        </div>
+    </div>
+
+    <!-- ANALYTICS DASHBOARD (shown on game over) -->
+    <div id="analytics" class="hidden">
+        <div class="dash">
+            <div class="dash-head">
+                <h2>Session Analytics</h2>
+                <p class="dash-sub">COLLECT &rarr; MEASURE &rarr; VISUALISE &rarr; INSIGHT</p>
+            </div>
+            <div class="kpi-row" id="kpiRow"></div>
+            <div class="dash-grid">
+                <div class="dash-card"><h3>Line Clears by Type</h3><div class="bars" id="clearChart"></div></div>
+                <div class="dash-card"><h3>Score — Recent Sessions</h3><div class="bars" id="scoreChart"></div></div>
+                <div class="dash-card"><h3>Piece Distribution</h3><div class="bars" id="pieceChart"></div></div>
+                <div class="dash-card"><h3>Board Heatmap</h3><div id="heatmap"></div><p class="cap">Where your pieces landed</p></div>
+            </div>
+            <div class="insight" id="insight"></div>
+            <div class="dash-actions"><button id="replay-btn">Play Again</button></div>
         </div>
     </div>
 
@@ -337,10 +396,17 @@
             player.matrix.forEach((row, y) => {
                 row.forEach((value, x) => {
                     if (value !== 0) {
-                        arena[y + player.pos.y][x + player.pos.x] = value;
+                        const ay = y + player.pos.y, ax = x + player.pos.x;
+                        arena[ay][ax] = value;
+                        if (gameStats && gameStats.heat[ay]) gameStats.heat[ay][ax]++;
                     }
                 });
             });
+            // --- instrumentation: a piece has locked ---
+            if (gameStats) {
+                gameStats.pieces++;
+                if (player.type) gameStats.pieceCount[player.type] = (gameStats.pieceCount[player.type] || 0) + 1;
+            }
         }
 
         function rotate(matrix, dir) {
@@ -377,6 +443,7 @@
 
         function arenaSweep() {
             let rowCount = 1;
+            let cleared = 0;
             outer: for (let y = arena.length - 1; y > 0; --y) {
                 for (let x = 0; x < arena[y].length; ++x) {
                     if (arena[y][x] === 0) {
@@ -390,7 +457,10 @@
                 player.score += rowCount * 10;
                 player.lines += 1;
                 rowCount *= 2;
+                cleared++;
             }
+            // --- instrumentation: record the clear event (1=single ... 4=tetris) ---
+            if (gameStats && cleared > 0) gameStats.clearDist[cleared] = (gameStats.clearDist[cleared] || 0) + 1;
             updateScore();
         }
 
@@ -446,17 +516,19 @@
 
         function playerReset() {
             const pieces = 'ILJOTSZ';
-            if (player.next === null) {
-                player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+            if (player.nextType == null) {
+                player.type = pieces[pieces.length * Math.random() | 0];
             } else {
-                player.matrix = player.next;
+                player.type = player.nextType;
             }
-            player.next = createPiece(pieces[pieces.length * Math.random() | 0]);
-            
+            player.matrix = createPiece(player.type);
+            player.nextType = pieces[pieces.length * Math.random() | 0];
+            player.next = createPiece(player.nextType);
+
             player.pos.y = 0;
             player.pos.x = (arena[0].length / 2 | 0) -
                            (player.matrix[0].length / 2 | 0);
-            
+
             if (collide(arena, player)) {
                 gameOver();
             }
@@ -509,17 +581,164 @@
             pos: {x: 0, y: 0},
             matrix: null,
             next: null,
+            type: null,
+            nextType: null,
             score: 0,
             lines: 0,
             level: 1,
         };
 
+        /* ===================================================================
+           ANALYTICS LAYER — instrument gameplay, derive KPIs, visualise.
+           Demonstrates the analyst workflow: collect → measure → visualise → insight.
+           =================================================================== */
+        let gameStats;
+        function resetStats() {
+            gameStats = {
+                startTime: performance.now(),
+                moves: 0, rotations: 0, softDrops: 0, hardDrops: 0,
+                pieces: 0,
+                clearDist: {1: 0, 2: 0, 3: 0, 4: 0},
+                pieceCount: {I: 0, J: 0, L: 0, O: 0, S: 0, T: 0, Z: 0},
+                heat: Array.from({length: 20}, () => new Array(12).fill(0))
+            };
+        }
+        resetStats();
+
+        const PIECE_ORDER = ['I','J','L','O','S','T','Z'];
+
+        function computeKPIs() {
+            const duration = (performance.now() - gameStats.startTime) / 1000;
+            const mins = Math.max(duration / 60, 1 / 600);
+            const totalClears = gameStats.clearDist[1] + gameStats.clearDist[2] + gameStats.clearDist[3] + gameStats.clearDist[4];
+            const actions = gameStats.moves + gameStats.rotations + gameStats.softDrops + gameStats.hardDrops;
+            return {
+                score: player.score,
+                lines: player.lines,
+                pieces: gameStats.pieces,
+                ppm: gameStats.pieces / mins,
+                efficiency: gameStats.pieces > 0 ? player.lines / gameStats.pieces : 0,
+                tetrisRate: totalClears > 0 ? (gameStats.clearDist[4] / totalClears) * 100 : 0,
+                apm: actions / mins,
+                duration: duration,
+                totalClears: totalClears
+            };
+        }
+
+        function getSessions() {
+            try { return JSON.parse(localStorage.getItem('neonTetrisSessions')) || []; }
+            catch (e) { return []; }
+        }
+        function saveSession(k) {
+            const s = getSessions();
+            s.push({
+                date: Date.now(), score: k.score, lines: k.lines, pieces: k.pieces,
+                ppm: +k.ppm.toFixed(1), efficiency: +k.efficiency.toFixed(3),
+                tetrisRate: +k.tetrisRate.toFixed(1), duration: +k.duration.toFixed(0)
+            });
+            while (s.length > 20) s.shift();
+            try { localStorage.setItem('neonTetrisSessions', JSON.stringify(s)); } catch (e) {}
+            return s;
+        }
+
+        function barChart(el, data) {
+            const max = Math.max(1, ...data.map(d => d.value));
+            el.innerHTML = data.map(d => `
+                <div class="bar-col">
+                    <div class="bar-val">${d.value}</div>
+                    <div class="bar-track"><div class="bar" style="height:${(d.value / max * 100).toFixed(1)}%;background:${d.color};box-shadow:0 0 8px ${d.color};"></div></div>
+                    <div class="bar-lbl">${d.label}</div>
+                </div>`).join('');
+        }
+
+        function renderHeat(el) {
+            let max = 1;
+            gameStats.heat.forEach(r => r.forEach(c => { if (c > max) max = c; }));
+            el.innerHTML = gameStats.heat.map(r => r.map(c =>
+                `<i style="background:rgba(0,242,255,${(c / max).toFixed(2)})"></i>`
+            ).join('')).join('');
+        }
+
+        function renderKPIs(k) {
+            const cards = [
+                ['Score', k.score],
+                ['Lines', k.lines],
+                ['Pieces', k.pieces],
+                ['Pieces / Min', k.ppm.toFixed(1)],
+                ['Efficiency', k.efficiency.toFixed(2)],
+                ['Tetris Rate', k.tetrisRate.toFixed(0) + '%'],
+                ['Actions / Min', k.apm.toFixed(0)],
+                ['Duration', k.duration.toFixed(0) + 's']
+            ];
+            document.getElementById('kpiRow').innerHTML = cards.map(c =>
+                `<div class="kpi"><div class="kpi-val">${c[1]}</div><div class="kpi-lbl">${c[0]}</div></div>`
+            ).join('');
+        }
+
+        function buildInsight(k, sessions) {
+            const bits = [];
+            if (k.lines > 0) {
+                bits.push(`You cleared a line every <b>${(k.pieces / k.lines).toFixed(1)}</b> pieces (efficiency ${k.efficiency.toFixed(2)} lines/piece).`);
+            } else if (k.pieces > 0) {
+                bits.push(`No lines cleared this run across <b>${k.pieces}</b> pieces — room to optimise placement.`);
+            }
+            const colTotals = new Array(12).fill(0);
+            gameStats.heat.forEach(r => r.forEach((c, x) => colTotals[x] += c));
+            const sum = colTotals.reduce((a, b) => a + b, 0);
+            if (sum > 0) {
+                const left = colTotals.slice(0, 4).reduce((a, b) => a + b, 0);
+                const mid = colTotals.slice(4, 8).reduce((a, b) => a + b, 0);
+                const right = colTotals.slice(8, 12).reduce((a, b) => a + b, 0);
+                const maxSide = Math.max(left, mid, right);
+                const side = maxSide === left ? 'left' : (maxSide === right ? 'right' : 'centre');
+                bits.push(`Most of your pieces landed in the <b>${side}</b> third of the board (${Math.round(maxSide / sum * 100)}%).`);
+            }
+            if (sessions.length >= 2) {
+                const scores = sessions.map(s => s.score);
+                const cur = scores[scores.length - 1];
+                const prev = scores.slice(0, -1);
+                const prevAvg = prev.reduce((a, b) => a + b, 0) / prev.length;
+                if (prevAvg > 0) {
+                    const delta = (cur - prevAvg) / prevAvg * 100;
+                    const dir = delta >= 0 ? 'above' : 'below';
+                    bits.push(`This score is <b>${Math.abs(delta).toFixed(0)}% ${dir}</b> your previous average — personal best <b>${Math.max(...scores)}</b> across ${sessions.length} games.`);
+                }
+            } else {
+                bits.push(`First logged game — play again and the dashboard will track your trend over time.`);
+            }
+            if (k.tetrisRate > 0) {
+                bits.push(`Tetris rate: <b>${k.tetrisRate.toFixed(0)}%</b> of your clears were 4-line Tetrises.`);
+            }
+            return bits.map(b => `<p>&#9657; ${b}</p>`).join('');
+        }
+
+        function renderDashboard(k) {
+            const sessions = saveSession(k);
+            renderKPIs(k);
+            barChart(document.getElementById('clearChart'), [
+                {label: 'Single', value: gameStats.clearDist[1], color: '#00ff44'},
+                {label: 'Double', value: gameStats.clearDist[2], color: '#00f2ff'},
+                {label: 'Triple', value: gameStats.clearDist[3], color: '#ffaa00'},
+                {label: 'Tetris', value: gameStats.clearDist[4], color: '#ff0055'}
+            ]);
+            barChart(document.getElementById('pieceChart'), PIECE_ORDER.map(t =>
+                ({label: t, value: gameStats.pieceCount[t] || 0, color: COLORS[PIECE_ORDER.indexOf(t) + 1]})
+            ));
+            const recent = sessions.slice(-8);
+            const startIdx = sessions.length - recent.length;
+            barChart(document.getElementById('scoreChart'), recent.map((s, i) =>
+                ({label: 'G' + (startIdx + i + 1), value: s.score, color: '#aa00ff'})
+            ));
+            renderHeat(document.getElementById('heatmap'));
+            document.getElementById('insight').innerHTML = buildInsight(k, sessions);
+        }
+
         function gameOver() {
             isPaused = true;
-            document.getElementById('overlay').classList.remove('hidden');
-            document.getElementById('game-over').style.display = 'block';
-            document.getElementById('title').innerText = 'SESSIONS ENDED';
-            document.getElementById('start-btn').innerText = 'Reboot';
+            // Compute KPIs, persist the session and render the analytics dashboard
+            const k = computeKPIs();
+            renderDashboard(k);
+            document.getElementById('analytics').classList.remove('hidden');
         }
 
         document.addEventListener('keydown', event => {
@@ -527,34 +746,45 @@
 
             if (event.keyCode === 37 || event.keyCode === 65) { // Left / A
                 playerMove(-1);
+                if (gameStats) gameStats.moves++;
             } else if (event.keyCode === 39 || event.keyCode === 68) { // Right / D
                 playerMove(1);
+                if (gameStats) gameStats.moves++;
             } else if (event.keyCode === 40 || event.keyCode === 83) { // Down / S
                 playerDrop();
+                if (gameStats) gameStats.softDrops++;
             } else if (event.keyCode === 38 || event.keyCode === 87) { // Up / W
                 playerRotate(1);
+                if (gameStats) gameStats.rotations++;
             } else if (event.keyCode === 32) { // Space
                 playerHardDrop();
+                if (gameStats) gameStats.hardDrops++;
             }
             draw();
         });
 
-        document.getElementById('start-btn').addEventListener('click', () => {
+        function startGame() {
             // Reset game state
             arena.forEach(row => row.fill(0));
             player.score = 0;
             player.lines = 0;
             player.level = 1;
             player.next = null;
+            player.nextType = null;
+            resetStats();
             updateScore();
             playerReset();
-            
+
             document.getElementById('overlay').classList.add('hidden');
             document.getElementById('game-over').style.display = 'none';
+            document.getElementById('analytics').classList.add('hidden');
             isPaused = false;
             lastTime = performance.now();
             update();
-        });
+        }
+
+        document.getElementById('start-btn').addEventListener('click', startGame);
+        document.getElementById('replay-btn').addEventListener('click', startGame);
 
         draw();
     </script>
