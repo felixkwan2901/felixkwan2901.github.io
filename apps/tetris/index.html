@@ -101,6 +101,34 @@
             padding-top: 10px;
         }
 
+        .panel-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .mini-btn {
+            flex: 1;
+            text-align: center;
+            background: transparent;
+            color: #aaa;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 8px 6px;
+            font-size: 11px;
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: none;
+            transition: all 0.2s;
+        }
+        .mini-btn:hover {
+            color: var(--bg-color);
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 14px var(--accent-color);
+        }
+
         #overlay {
             position: absolute;
             top: 0;
@@ -226,7 +254,13 @@
             <div class="controls-hint">
                 ARROWS / WASD: Move & Rotate<br>
                 SPACE: Hard Drop<br>
-                DOWN: Soft Drop
+                DOWN: Soft Drop<br>
+                P / ESC: Pause
+            </div>
+
+            <div class="panel-actions">
+                <button id="pause-btn" class="mini-btn" type="button">Pause</button>
+                <a id="exit-link" class="mini-btn" href="../../">&larr; Exit</a>
             </div>
         </div>
 
@@ -234,6 +268,7 @@
             <h1 id="title">NEON TETRIS</h1>
             <div id="game-over" class="game-over-text">GAME OVER</div>
             <button id="start-btn">Initialize</button>
+            <a class="mini-btn" id="overlay-back" href="../../" style="margin-top:18px;max-width:200px;">&larr; Back to portfolio</a>
         </div>
     </div>
 
@@ -252,7 +287,10 @@
                 <div class="dash-card"><h3>Board Heatmap</h3><div id="heatmap"></div><p class="cap">Where your pieces landed</p></div>
             </div>
             <div class="insight" id="insight"></div>
-            <div class="dash-actions"><button id="replay-btn">Play Again</button></div>
+            <div class="dash-actions">
+                <button id="replay-btn">Play Again</button>
+                <a class="mini-btn" href="../../" style="display:inline-block;margin-top:14px;max-width:220px;">&larr; Back to portfolio</a>
+            </div>
         </div>
     </div>
 
@@ -551,9 +589,10 @@
         }
 
         let dropCounter = 0;
-        let dropInterval = 1000;
+        let dropInterval = 550;
         let lastTime = 0;
         let isPaused = true;
+        let inGame = false;
 
         function update(time = 0) {
             if (isPaused) return;
@@ -564,8 +603,8 @@
             dropCounter += deltaTime;
             
             // Adjust speed based on level
-            const currentInterval = dropInterval - (player.level - 1) * 100;
-            const actualInterval = Math.max(currentInterval, 100);
+            const currentInterval = dropInterval - (player.level - 1) * 55;
+            const actualInterval = Math.max(currentInterval, 80);
 
             if (dropCounter > actualInterval) {
                 playerDrop();
@@ -735,13 +774,41 @@
 
         function gameOver() {
             isPaused = true;
+            inGame = false;
             // Compute KPIs, persist the session and render the analytics dashboard
             const k = computeKPIs();
             renderDashboard(k);
             document.getElementById('analytics').classList.remove('hidden');
         }
 
+        function pauseGame() {
+            if (!inGame || isPaused) return;
+            isPaused = true;
+            document.getElementById('title').textContent = 'PAUSED';
+            document.getElementById('start-btn').textContent = 'Resume';
+            document.getElementById('overlay').classList.remove('hidden');
+        }
+
+        function resumeGame() {
+            if (!inGame || !isPaused) return;
+            isPaused = false;
+            document.getElementById('overlay').classList.add('hidden');
+            lastTime = performance.now();
+            update();
+        }
+
+        function togglePause() {
+            if (!inGame) return;
+            if (isPaused) resumeGame(); else pauseGame();
+        }
+
         document.addEventListener('keydown', event => {
+            // Pause / resume works whenever a game is in progress
+            if (event.keyCode === 80 || event.keyCode === 27) { // P / Esc
+                togglePause();
+                event.preventDefault();
+                return;
+            }
             if (isPaused) return;
 
             if (event.keyCode === 37 || event.keyCode === 65) { // Left / A
@@ -775,16 +842,22 @@
             updateScore();
             playerReset();
 
+            document.getElementById('title').textContent = 'NEON TETRIS';
             document.getElementById('overlay').classList.add('hidden');
             document.getElementById('game-over').style.display = 'none';
             document.getElementById('analytics').classList.add('hidden');
             isPaused = false;
+            inGame = true;
             lastTime = performance.now();
             update();
         }
 
-        document.getElementById('start-btn').addEventListener('click', startGame);
+        // Start button doubles as Resume when a game is paused
+        document.getElementById('start-btn').addEventListener('click', () => {
+            if (inGame && isPaused) resumeGame(); else startGame();
+        });
         document.getElementById('replay-btn').addEventListener('click', startGame);
+        document.getElementById('pause-btn').addEventListener('click', togglePause);
 
         draw();
     </script>
