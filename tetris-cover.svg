@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Neon Tetris arcade game">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a12"/>
+      <stop offset="1" stop-color="#161430"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="tglow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- subtle grid -->
+  <g stroke="#00f2ff" stroke-opacity="0.07" stroke-width="1">
+    <path d="M0 50H800M0 100H800M0 150H800M0 200H800M0 250H800M0 300H800M0 350H800M0 400H800M0 450H800"/>
+    <path d="M50 0V500M100 0V500M150 0V500M200 0V500M250 0V500M300 0V500M350 0V500M400 0V500M450 0V500M500 0V500M550 0V500M600 0V500M650 0V500M700 0V500M750 0V500"/>
+  </g>
+  <!-- falling tetromino blocks -->
+  <g filter="url(#glow)">
+    <!-- S piece (green) -->
+    <g fill="#00ff9d"><rect x="120" y="90" width="44" height="44" rx="5"/><rect x="164" y="90" width="44" height="44" rx="5"/><rect x="76" y="134" width="44" height="44" rx="5"/><rect x="120" y="134" width="44" height="44" rx="5"/></g>
+    <!-- L piece (orange) -->
+    <g fill="#ff7a00"><rect x="600" y="70" width="44" height="44" rx="5"/><rect x="600" y="114" width="44" height="44" rx="5"/><rect x="600" y="158" width="44" height="44" rx="5"/><rect x="644" y="158" width="44" height="44" rx="5"/></g>
+    <!-- T piece (purple) -->
+    <g fill="#b400ff"><rect x="300" y="300" width="44" height="44" rx="5"/><rect x="344" y="300" width="44" height="44" rx="5"/><rect x="388" y="300" width="44" height="44" rx="5"/><rect x="344" y="344" width="44" height="44" rx="5"/></g>
+    <!-- I piece (cyan) -->
+    <g fill="#00f2ff"><rect x="120" y="380" width="44" height="44" rx="5"/><rect x="164" y="380" width="44" height="44" rx="5"/><rect x="208" y="380" width="44" height="44" rx="5"/><rect x="252" y="380" width="44" height="44" rx="5"/></g>
+    <!-- O piece (yellow) -->
+    <g fill="#ffe600"><rect x="610" y="360" width="44" height="44" rx="5"/><rect x="654" y="360" width="44" height="44" rx="5"/><rect x="610" y="404" width="44" height="44" rx="5"/><rect x="654" y="404" width="44" height="44" rx="5"/></g>
+  </g>
+  <!-- title -->
+  <g filter="url(#tglow)" text-anchor="middle" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-weight="800">
+    <text x="400" y="240" font-size="68" letter-spacing="6" fill="#00f2ff">NEON TETRIS</text>
+    <text x="400" y="280" font-size="22" letter-spacing="10" fill="#e0e0ff" fill-opacity="0.8">// ARCADE</text>
+  </g>
+</svg>
