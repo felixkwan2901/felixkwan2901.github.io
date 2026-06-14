@@ -219,7 +219,14 @@
         .insight { margin: 16px 0; background: rgba(0,242,255,0.06); border-left: 3px solid var(--accent-color); border-radius: 4px; padding: 10px 16px; }
         .insight p { margin: 7px 0; font-size: 11px; color: #cdddee; text-transform: none; letter-spacing: 0.4px; line-height: 1.5; }
         .insight b { color: var(--accent-color); }
-        .dash-actions { text-align: center; margin-top: 18px; }
+        .dash-actions { text-align: center; margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .dash-actions .mini-btn { margin-top: 0 !important; }
+        .dash-exit {
+            position: fixed; top: 16px; right: 16px; z-index: 60;
+            width: auto; flex: none; padding: 9px 16px;
+            background: rgba(8,8,16,0.85); color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
         @media (max-width: 560px) {
             .kpi-row { grid-template-columns: repeat(2, 1fr); }
             .dash-grid { grid-template-columns: 1fr; }
@@ -274,6 +281,7 @@
 
     <!-- ANALYTICS DASHBOARD (shown on game over) -->
     <div id="analytics" class="hidden">
+        <a class="mini-btn dash-exit" href="../../">&larr; Exit to portfolio</a>
         <div class="dash">
             <div class="dash-head">
                 <h2>Session Analytics</h2>
@@ -289,7 +297,7 @@
             <div class="insight" id="insight"></div>
             <div class="dash-actions">
                 <button id="replay-btn">Play Again</button>
-                <a class="mini-btn" href="../../" style="display:inline-block;margin-top:14px;max-width:220px;">&larr; Back to portfolio</a>
+                <button id="menu-btn" class="mini-btn" type="button">Main Menu</button>
             </div>
         </div>
     </div>
@@ -862,6 +870,23 @@
         document.getElementById('replay-btn').addEventListener('click', (e) => {
             e.currentTarget.blur();
             startGame();
+        });
+
+        // Return from the analytics screen to the start menu (without leaving the page)
+        function backToMenu() {
+            isPaused = true;
+            inGame = false;
+            arena.forEach(row => row.fill(0));
+            document.getElementById('analytics').classList.add('hidden');
+            document.getElementById('game-over').style.display = 'none';
+            document.getElementById('title').textContent = 'NEON TETRIS';
+            document.getElementById('start-btn').textContent = 'Initialize';
+            document.getElementById('overlay').classList.remove('hidden');
+            draw();
+        }
+        document.getElementById('menu-btn').addEventListener('click', (e) => {
+            e.currentTarget.blur();
+            backToMenu();
         });
         document.getElementById('pause-btn').addEventListener('click', (e) => {
             e.currentTarget.blur();
