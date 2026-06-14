@@ -284,6 +284,26 @@
     .pm-links a { display: inline-flex; align-items: center; gap: 7px; font-size: .82rem; font-weight: 700; color: #fff; padding: 10px 16px; border-radius: 999px; background: var(--accent); transition: transform .25s; }
     .pm-links a:hover { transform: translateY(-2px); }
 
+    /* ===== All-projects list modal ===== */
+    .ap-dialog { position: relative; width: min(560px,100%); max-height: 86vh; overflow: auto; background: var(--panel); border: 1px solid var(--border-2); border-radius: 20px; box-shadow: 0 40px 90px -20px rgba(0,0,0,.7); transform: translateY(24px) scale(.97); opacity: 0; transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .4s; }
+    .pm-overlay.open .ap-dialog { transform: none; opacity: 1; }
+    .ap-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 22px 24px 14px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--panel); z-index: 2; border-radius: 20px 20px 0 0; }
+    .ap-head h3 { font-family: 'Sora'; font-size: 1.2rem; font-weight: 800; }
+    .ap-head .ap-count { font-size: .76rem; color: var(--text-3); font-weight: 600; }
+    .ap-close { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: var(--text-2); background: color-mix(in srgb, var(--text) 6%, transparent); border: 1px solid var(--border); cursor: pointer; transition: transform .25s, color .25s; flex-shrink: 0; }
+    .ap-close:hover { transform: rotate(90deg); color: var(--text); }
+    .ap-list { padding: 10px; display: grid; gap: 6px; }
+    .ap-item { --accent:#3b82f6; display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 12px; border: 1px solid transparent; border-radius: 14px; background: transparent; cursor: pointer; transition: background .22s, border-color .22s, transform .22s; }
+    .ap-item:hover, .ap-item:focus-visible { background: color-mix(in srgb, var(--accent) 8%, transparent); border-color: color-mix(in srgb, var(--accent) 30%, transparent); transform: translateX(3px); outline: none; }
+    .ap-thumb { width: 64px; height: 48px; flex-shrink: 0; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); }
+    .ap-info { flex: 1; min-width: 0; }
+    .ap-cat { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+    .ap-title { font-weight: 700; font-size: .94rem; margin: 2px 0; }
+    .ap-sub { font-size: .78rem; color: var(--text-3); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+    .ap-go { flex-shrink: 0; color: var(--accent); opacity: .7; transition: transform .22s, opacity .22s; }
+    .ap-item:hover .ap-go { transform: translateX(3px); opacity: 1; }
+    .vt { background: none; border: none; cursor: pointer; font-family: inherit; }
+
     /* ===== Building with AI ===== */
     .ai-head { text-align: center; max-width: 640px; margin: 96px auto 0; }
     .ai-head .eyebrow { justify-content: center; }
@@ -665,9 +685,9 @@
           <div class="eyebrow">Selected Projects</div>
           <h2 class="section-title">Featured Work</h2>
         </div>
-        <a href="#contact" class="vt">View all projects
+        <button type="button" class="vt" id="allProjBtn" aria-haspopup="dialog">View all projects
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </a>
+        </button>
       </div>
       <div class="work-grid" id="workGrid"><!-- cards rendered from the PROJECTS list in JS --></div>
 
@@ -1081,6 +1101,22 @@
     </div>
   </div>
 
+  <!-- ALL PROJECTS LIST MODAL -->
+  <div class="pm-overlay" id="allProjOverlay" role="dialog" aria-modal="true" aria-labelledby="apTitle" hidden>
+    <div class="ap-dialog">
+      <div class="ap-head">
+        <div>
+          <h3 id="apTitle">All Projects</h3>
+          <span class="ap-count" id="apCount"></span>
+        </div>
+        <button class="ap-close" id="apClose" aria-label="Close">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="ap-list" id="apList"></div>
+    </div>
+  </div>
+
   <script>
     /* =====================================================================
        FEATURED WORK — to add a project, copy a block below and edit it.
@@ -1218,6 +1254,51 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && pm.overlay.classList.contains('open')) closeProject(); });
 
     renderWork();
+
+    // ----- all-projects list modal -----
+    (function(){
+      const ov = document.getElementById('allProjOverlay');
+      const btn = document.getElementById('allProjBtn');
+      const list = document.getElementById('apList');
+      const count = document.getElementById('apCount');
+      if (!ov || !btn || !list) return;
+      let lastFocus = null;
+      count.textContent = PROJECTS.length + (PROJECTS.length === 1 ? ' project' : ' projects');
+      list.innerHTML = PROJECTS.map((p, i) => `
+        <button class="ap-item" style="--accent:${esc(p.accent)}" data-idx="${i}">
+          <img class="ap-thumb" src="${esc(p.image)}" alt="" loading="lazy"/>
+          <span class="ap-info">
+            <span class="ap-cat">${esc(p.category)}</span>
+            <span class="ap-title">${esc(p.title)}</span>
+            <span class="ap-sub">${esc(p.summary)}</span>
+          </span>
+          <span class="ap-go" aria-hidden="true">${ARROW}</span>
+        </button>`).join('');
+      function openList() {
+        lastFocus = document.activeElement;
+        ov.hidden = false;
+        requestAnimationFrame(() => ov.classList.add('open'));
+        document.body.style.overflow = 'hidden';
+        document.getElementById('apClose').focus();
+      }
+      function closeList() {
+        ov.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(() => { ov.hidden = true; }, 320);
+        if (lastFocus) lastFocus.focus();
+      }
+      btn.addEventListener('click', openList);
+      document.getElementById('apClose').addEventListener('click', closeList);
+      ov.addEventListener('click', e => { if (e.target === ov) closeList(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && ov.classList.contains('open')) closeList(); });
+      list.querySelectorAll('.ap-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const p = PROJECTS[+item.dataset.idx];
+          closeList();
+          setTimeout(() => openProject(p), 180);
+        });
+      });
+    })();
 
     // ----- Kia Ora split-text reveal -----
     (function(){
