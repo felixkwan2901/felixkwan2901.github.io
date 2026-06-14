@@ -824,6 +824,7 @@
                 playerRotate(1);
                 if (gameStats) gameStats.rotations++;
             } else if (event.keyCode === 32) { // Space
+                event.preventDefault(); // stop page scroll / re-activating a focused button
                 playerHardDrop();
                 if (gameStats) gameStats.hardDrops++;
             }
@@ -852,12 +853,20 @@
             update();
         }
 
-        // Start button doubles as Resume when a game is paused
-        document.getElementById('start-btn').addEventListener('click', () => {
+        // Start button doubles as Resume when a game is paused.
+        // Blur after click so SPACE/ENTER don't re-trigger the focused button mid-game.
+        document.getElementById('start-btn').addEventListener('click', (e) => {
+            e.currentTarget.blur();
             if (inGame && isPaused) resumeGame(); else startGame();
         });
-        document.getElementById('replay-btn').addEventListener('click', startGame);
-        document.getElementById('pause-btn').addEventListener('click', togglePause);
+        document.getElementById('replay-btn').addEventListener('click', (e) => {
+            e.currentTarget.blur();
+            startGame();
+        });
+        document.getElementById('pause-btn').addEventListener('click', (e) => {
+            e.currentTarget.blur();
+            togglePause();
+        });
 
         draw();
     </script>
