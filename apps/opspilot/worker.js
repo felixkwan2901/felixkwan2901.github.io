@@ -23,6 +23,9 @@ const ALLOWED_ORIGINS = [
   'https://www.kwanfelix.me',
   'https://kwanfelix.me',
   'https://felixkwan2901.github.io',
+  // http:// variants — needed until the site's HTTPS certificate is provisioned.
+  'http://www.kwanfelix.me',
+  'http://kwanfelix.me',
 ];
 
 // Tried in order — if one model's free quota is exhausted (429), fall back to the next.
