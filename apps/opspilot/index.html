@@ -256,7 +256,7 @@ function respond(text){
    question via Gemini (the Worker holds the key server-side). If it's blank
    or the request fails, it falls back to the built-in scripted engine so the
    demo always works. ---- */
-const API_URL = ''; // ← paste your Worker URL here, e.g. 'https://opspilot.<you>.workers.dev'
+const API_URL = 'https://opspilot-api.fkw24.workers.dev'; // Cloudflare Worker (Gemini proxy)
 const history = [];
 
 function escm(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
