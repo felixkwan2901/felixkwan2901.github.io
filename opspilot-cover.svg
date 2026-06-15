@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="OpsPilot AI ops copilot" font-family="'Sora','Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#070b14"/><stop offset="1" stop-color="#0c1322"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#00d68f"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <radialGradient id="gl" cx="0.8" cy="0.2" r="0.7"><stop offset="0" stop-color="#00d68f" stop-opacity="0.18"/><stop offset="1" stop-color="#00d68f" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#gl)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04"><path d="M0 100H800M0 200H800M0 300H800M0 400H800"/><path d="M100 0V500M200 0V500M300 0V500M400 0V500M500 0V500M600 0V500M700 0V500"/></g>
+  <!-- logo -->
+  <g transform="translate(60,56)"><rect width="64" height="64" rx="16" fill="url(#acc)"/><text x="32" y="34" dominant-baseline="central" text-anchor="middle" font-size="26" font-weight="800" fill="#04111f">OP</text></g>
+  <text x="138" y="82" font-size="34" font-weight="800" fill="#eef2f8">OpsPilot <tspan fill="#2af5b3">AI</tspan></text>
+  <text x="140" y="110" font-size="14" letter-spacing="2" font-weight="600" fill="#9fb0c9">RETAIL &amp; PHARMACY OPS COPILOT</text>
+
+  <!-- chat bubbles -->
+  <g>
+    <rect x="60" y="160" width="300" height="46" rx="13" fill="#152138" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="78" y="188" font-size="15" fill="#9fb0c9" font-family="Inter,Arial">What's low on stock?</text>
+    <rect x="300" y="226" width="440" height="78" rx="13" fill="#101a2e" stroke="#00d68f" stroke-opacity="0.3"/>
+    <text x="320" y="254" font-size="13" font-weight="700" fill="#2af5b3" font-family="Inter,Arial">Stock check</text>
+    <text x="320" y="278" font-size="14" fill="#eef2f8" font-family="Inter,Arial">3 items below par — Hand sanitiser OUT,</text>
+    <text x="320" y="296" font-size="14" fill="#eef2f8" font-family="Inter,Arial">Paracetamol &amp; Cough syrup low.</text>
+  </g>
+
+  <!-- KPI tiles -->
+  <g font-family="Inter,Arial">
+    <g transform="translate(60,330)"><rect width="160" height="92" rx="14" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.08"/><text x="18" y="48" font-size="30" font-weight="800" fill="#eef2f8" font-family="Sora">$4,820</text><text x="18" y="70" font-size="12" fill="#647795">Sales today ▲ 8%</text></g>
+    <g transform="translate(232,330)"><rect width="140" height="92" rx="14" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.08"/><text x="18" y="48" font-size="30" font-weight="800" fill="#eef2f8" font-family="Sora">137</text><text x="18" y="70" font-size="12" fill="#647795">Transactions</text></g>
+    <g transform="translate(384,330)"><rect width="150" height="92" rx="14" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.08"/><text x="18" y="48" font-size="30" font-weight="800" fill="#ffb020" font-family="Sora">3</text><text x="18" y="70" font-size="12" fill="#647795">Reorder alerts</text></g>
+  </g>
+  <!-- tag -->
+  <text x="740" y="470" text-anchor="end" font-size="13" font-weight="600" fill="#647795">Concept · Conversational AI · Data-grounded</text>
+</svg>
