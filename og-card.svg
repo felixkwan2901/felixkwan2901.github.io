@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'Sora','Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0e"/>
+      <stop offset="1" stop-color="#141420"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.28" r="0.6">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mono" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d4283a"/>
+      <stop offset="1" stop-color="#b91c2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <path d="M0 90H1200M0 180H1200M0 270H1200M0 360H1200M0 450H1200M0 540H1200"/>
+    <path d="M150 0V630M300 0V630M450 0V630M600 0V630M750 0V630M900 0V630M1050 0V630"/>
+  </g>
+  <!-- monogram -->
+  <g transform="translate(110,140)">
+    <rect width="104" height="104" rx="26" fill="url(#mono)"/>
+    <text x="52" y="55" dominant-baseline="central" text-anchor="middle" font-size="52" font-weight="800" fill="#ffffff">FK</text>
+  </g>
+  <!-- name + title -->
+  <text x="112" y="345" font-size="84" font-weight="800" fill="#f5f6f8" letter-spacing="-1">Felix Kwan</text>
+  <text x="116" y="400" font-size="32" font-weight="600" fill="#60a5fa">Business Information Systems</text>
+  <text x="116" y="442" font-size="26" font-weight="500" fill="#abacb6">University of Canterbury · Christchurch, NZ</text>
+  <!-- skill chips -->
+  <g font-size="21" font-weight="600">
+    <g transform="translate(116,486)"><rect width="146" height="46" rx="23" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.12"/><text x="73" y="29" text-anchor="middle" fill="#e6e7ee">Power BI</text></g>
+    <g transform="translate(278,486)"><rect width="92" height="46" rx="23" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.12"/><text x="46" y="29" text-anchor="middle" fill="#e6e7ee">SQL</text></g>
+    <g transform="translate(386,486)"><rect width="216" height="46" rx="23" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.12"/><text x="108" y="29" text-anchor="middle" fill="#e6e7ee">Data Analytics</text></g>
+    <g transform="translate(618,486)"><rect width="160" height="46" rx="23" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.12"/><text x="80" y="29" text-anchor="middle" fill="#e6e7ee">Leadership</text></g>
+  </g>
+  <text x="1088" y="160" text-anchor="end" font-size="24" font-weight="600" fill="#8b8c98">www.kwanfelix.me</text>
+</svg>
