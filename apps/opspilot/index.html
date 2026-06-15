@@ -251,21 +251,52 @@ function respond(text){
     <p>Pick a chip below or rephrase your question.</p>`};
 }
 
-function botReply(text){
-  // typing indicator
-  const t=el('<div class="typing"><span></span><span></span><span></span></div>','bot');
-  const delay=600+Math.random()*500;
-  setTimeout(()=>{
-    const r=respond(text);
-    t.querySelector('.bubble').innerHTML=r.html;
-    // set bar widths from data-w then animate
-    t.querySelectorAll('.fill[data-w]').forEach(f=>{f.style.width='0';});
-    t.querySelectorAll('.ibar .fill[data-w]').forEach((f,i)=>setTimeout(()=>f.style.width=f.dataset.w,60+i*90));
-    msgs.scrollTop=msgs.scrollHeight;
-  },delay);
+/* ---- Live AI mode ----
+   When API_URL is set to your Cloudflare Worker, the copilot answers ANY
+   question via Gemini (the Worker holds the key server-side). If it's blank
+   or the request fails, it falls back to the built-in scripted engine so the
+   demo always works. ---- */
+const API_URL = ''; // ← paste your Worker URL here, e.g. 'https://opspilot.<you>.workers.dev'
+const history = [];
+
+function escm(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function fmt(t){return escm(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(^|\n)\s*[-*]\s+/g,'$1• ').replace(/\n/g,'<br>');}
+function animateFills(node){node.querySelectorAll('.ibar .fill[data-w]').forEach((f,i)=>{f.style.width='0';setTimeout(()=>f.style.width=f.dataset.w,60+i*90);});}
+
+function scriptedReply(node,text){
+  const r=respond(text);
+  node.querySelector('.bubble').innerHTML=r.html;
+  animateFills(node);
+  msgs.scrollTop=msgs.scrollHeight;
 }
 
-function send(text){if(!text.trim())return;el(text.replace(/</g,'&lt;'),'user');botReply(text);}
+async function botReply(text){
+  const node=el('<div class="typing"><span></span><span></span><span></span></div>','bot');
+  if(!API_URL){
+    setTimeout(()=>scriptedReply(node,text),600+Math.random()*400);
+    return;
+  }
+  try{
+    const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-12)})});
+    if(!res.ok) throw new Error('api '+res.status);
+    const data=await res.json();
+    const reply=(data.text||'').trim();
+    if(!reply) throw new Error('empty');
+    node.querySelector('.bubble').innerHTML=fmt(reply);
+    history.push({role:'assistant',content:reply});
+    msgs.scrollTop=msgs.scrollHeight;
+  }catch(err){
+    scriptedReply(node,text);
+    history.push({role:'assistant',content:'(answered from local store data)'});
+  }
+}
+
+function send(text){
+  if(!text.trim())return;
+  el(escm(text),'user');
+  history.push({role:'user',content:text});
+  botReply(text);
+}
 
 /* suggestion chips */
 const CHIPS=['What’s low on stock?','Returns policy?','How are sales today?','Draft end-of-day report'];
