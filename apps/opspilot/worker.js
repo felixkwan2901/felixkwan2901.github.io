@@ -25,7 +25,8 @@ const ALLOWED_ORIGINS = [
   'https://felixkwan2901.github.io',
 ];
 
-const MODEL = 'gemini-2.0-flash';
+// Tried in order — if one model's free quota is exhausted (429), fall back to the next.
+const MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-2.5-flash', 'gemini-1.5-flash'];
 
 const SYSTEM_PROMPT = `You are OpsPilot AI, a friendly, concise operations copilot for frontline RETAIL & PHARMACY store teams (cashiers, pharmacy assistants, duty managers).
 
@@ -102,29 +103,36 @@ export default {
       generationConfig: { temperature: 0.6, maxOutputTokens: 512, topP: 0.95 },
     };
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${env.GEMINI_API_KEY}`;
+    let lastDetail = '';
+    let lastStatus = 502;
+    for (const model of MODELS) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
+      let resp;
+      try {
+        resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (e) {
+        lastDetail = 'Upstream unreachable';
+        continue;
+      }
 
-    let resp;
-    try {
-      resp = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-    } catch (e) {
-      return json({ error: 'Upstream unreachable' }, 502, cors);
+      if (resp.ok) {
+        const data = await resp.json();
+        const text = (data?.candidates?.[0]?.content?.parts || [])
+          .map(p => p.text || '').join('').trim();
+        if (text) return json({ text, model }, 200, cors);
+        lastDetail = 'Empty response';
+        continue;
+      }
+
+      lastStatus = resp.status;
+      lastDetail = (await resp.text()).slice(0, 300);
+      // 429 = quota for this model: try the next model. Other errors: also try next.
     }
 
-    if (!resp.ok) {
-      const detail = (await resp.text()).slice(0, 300);
-      return json({ error: 'Upstream error', detail }, 502, cors);
-    }
-
-    const data = await resp.json();
-    const text = (data?.candidates?.[0]?.content?.parts || [])
-      .map(p => p.text || '').join('').trim();
-
-    if (!text) return json({ error: 'Empty response' }, 502, cors);
-    return json({ text }, 200, cors);
+    return json({ error: 'All models failed', status: lastStatus, detail: lastDetail }, 502, cors);
   },
 };
