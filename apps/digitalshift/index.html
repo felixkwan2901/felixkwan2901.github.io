@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Unspoken Shift — Tableau Dashboard</title>
+<meta name="description" content="Interactive Tableau dashboard exploring how our closest human connections moved into the digital world, by Felix Kwan."/>
+<style>
+  :root{
+    --bg:#080d1c; --panel:#101a2e; --panel2:#16223a; --line:rgba(255,255,255,.08);
+    --txt:#eef2f8; --mut:#9fb0c9; --dim:#647795; --cyan:#06b6d4; --violet:#a78bfa;
+    --font:'Sora','Segoe UI',system-ui,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(120% 90% at 85% 0,rgba(6,182,212,.12),transparent 55%),var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 64px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(120deg,var(--cyan),var(--violet));display:grid;place-items:center;color:#08111f}
+  .brand h1{font-size:20px;margin:0;font-weight:800}
+  .brand h1 span{color:var(--violet)}
+  .brand p{margin:2px 0 0;font-size:11.5px;letter-spacing:1.4px;color:var(--mut);font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--cyan);transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(120deg,var(--cyan),var(--violet));color:#08111f;border:none}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .intro{margin:14px 0 18px;padding:13px 16px;border-radius:12px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.22);font-size:13.5px;color:#e8edf6}
+  .intro b{color:var(--violet)}
+  .vizbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:10px;position:relative;min-height:640px}
+  tableau-viz, .tableauPlaceholder{width:100%}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--mut);font-size:14px;pointer-events:none}
+  .spin{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.12);border-top-color:var(--cyan);margin:0 auto 12px;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .fallback{margin-top:14px;font-size:13px;color:var(--dim);text-align:center}
+  footer{margin-top:30px;font-size:12px;color:var(--dim);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="8" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M6 8 L18 6 M6 8 L12 18 M18 6 L12 18" stroke-width="1.8"/></svg></div>
+      <div>
+        <h1>The Unspoken <span>Shift</span></h1>
+        <p>TABLEAU · WHEN OUR CLOSEST CONNECTIONS WENT DIGITAL</p>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../">&larr; Back to portfolio</a>
+      <a class="btn primary" href="https://public.tableau.com/app/profile/felix.kwan/viz/TheUnspokenShiftWhenOurClosestConnectionsWentDigital/Dashboard2" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    An interactive <b>Tableau</b> data-storytelling piece on a quietly profound change: how our <b>closest human connections moved into the digital world</b>. The dashboard turns the data into a clear narrative about what we gained — and what shifted — as everyday relationships went online. The live, fully interactive viz is embedded below.
+  </div>
+
+  <div class="vizbox">
+    <div class="loading" id="loading"><div><div class="spin"></div>Loading the live Tableau dashboard…</div></div>
+    <tableau-viz id="viz"
+      src="https://public.tableau.com/views/TheUnspokenShiftWhenOurClosestConnectionsWentDigital/Dashboard2"
+      toolbar="bottom" hide-tabs>
+    </tableau-viz>
+  </div>
+  <p class="fallback">Dashboard not loading? <a href="https://public.tableau.com/app/profile/felix.kwan/viz/TheUnspokenShiftWhenOurClosestConnectionsWentDigital/Dashboard2" target="_blank" rel="noopener" style="color:var(--violet)">Open it directly on Tableau Public ↗</a></p>
+
+  <footer>The Unspoken Shift · Tableau Public dashboard by Felix Kwan · data storytelling on digital connection</footer>
+</div>
+
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+<script>
+  const viz = document.getElementById('viz');
+  const loading = document.getElementById('loading');
+  const hide = () => { if (loading) loading.style.display = 'none'; };
+  if (viz) {
+    viz.addEventListener('firstinteractive', hide);
+    viz.addEventListener('vizloaderror', () => {
+      if (loading) loading.innerHTML = '<div>Couldn’t embed the dashboard here.<br><a href="https://public.tableau.com/app/profile/felix.kwan/viz/TheUnspokenShiftWhenOurClosestConnectionsWentDigital/Dashboard2" target="_blank" rel="noopener" style="color:var(--violet)">Open it on Tableau Public ↗</a></div>';
+    });
+  }
+  setTimeout(hide, 9000);
+</script>
+</body>
+</html>

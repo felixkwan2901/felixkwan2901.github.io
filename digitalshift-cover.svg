@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="The Unspoken Shift Tableau dashboard on digital connection" font-family="'Sora','Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#080d1c"/><stop offset="1" stop-color="#0d1530"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <radialGradient id="gl" cx="0.8" cy="0.2" r="0.75"><stop offset="0" stop-color="#06b6d4" stop-opacity="0.18"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0"/></radialGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.34"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#gl)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04"><path d="M0 100H800M0 200H800M0 300H800M0 400H800"/><path d="M100 0V500M200 0V500M300 0V500M400 0V500M500 0V500M600 0V500M700 0V500"/></g>
+  <!-- logo -->
+  <g transform="translate(60,52)"><rect width="64" height="64" rx="16" fill="url(#acc)"/><g stroke="#08111f" stroke-width="2.6" fill="#08111f"><circle cx="22" cy="24" r="5"/><circle cx="44" cy="20" r="5"/><circle cx="34" cy="44" r="5"/><path d="M22 24 L44 20 M22 24 L34 44 M44 20 L34 44" stroke-width="2.2" fill="none"/></g></g>
+  <text x="138" y="74" font-size="30" font-weight="800" fill="#eef2f8">The Unspoken <tspan fill="#a78bfa">Shift</tspan></text>
+  <text x="140" y="102" font-size="12.5" letter-spacing="2" font-weight="600" fill="#9fb0c9">TABLEAU · WHEN OUR CLOSEST CONNECTIONS WENT DIGITAL</text>
+
+  <!-- area trend: rise of digital communication -->
+  <g transform="translate(60,150)">
+    <text x="0" y="-4" font-size="12" font-weight="700" fill="#a78bfa" font-family="Inter,Arial">SHARE OF CONNECTION THAT IS DIGITAL</text>
+    <rect x="0" y="6" width="440" height="200" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/>
+    <g stroke="#ffffff" stroke-opacity="0.06"><path d="M40 40H420M40 90H420M40 140H420M40 180H420"/></g>
+    <!-- rising area -->
+    <path d="M40 168 C 130 150, 200 120, 280 80 C 340 52, 380 40, 420 32 L 420 180 L 40 180 Z" fill="url(#area)"/>
+    <path d="M40 168 C 130 150, 200 120, 280 80 C 340 52, 380 40, 420 32" fill="none" stroke="#06b6d4" stroke-width="2.6" stroke-linecap="round"/>
+    <g fill="#a78bfa"><circle cx="40" cy="168" r="3.5"/><circle cx="280" cy="80" r="3.5"/><circle cx="420" cy="32" r="3.5"/></g>
+    <text x="40" y="198" font-size="10" fill="#647795" font-family="Inter,Arial">before</text>
+    <text x="370" y="198" font-size="10" fill="#647795" font-family="Inter,Arial">today</text>
+  </g>
+
+  <!-- KPI tiles -->
+  <g font-family="Inter,Arial">
+    <g transform="translate(520,156)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Theme</text><text x="16" y="47" font-size="18" font-weight="800" fill="#06b6d4" font-family="Sora">Human connection</text></g>
+    <g transform="translate(520,222)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Approach</text><text x="16" y="47" font-size="18" font-weight="800" fill="#eef2f8" font-family="Sora">Data storytelling</text></g>
+    <g transform="translate(520,288)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Built in</text><text x="16" y="47" font-size="18" font-weight="800" fill="#a78bfa" font-family="Sora">Tableau Public</text></g>
+  </g>
+
+  <!-- chips -->
+  <g font-family="Inter,Arial" font-size="11" font-weight="600">
+    <g transform="translate(60,372)"><rect width="92" height="24" rx="12" fill="#16223a" stroke="#06b6d4" stroke-opacity="0.4"/><text x="46" y="16" text-anchor="middle" fill="#cdd6e6">Tableau</text></g>
+    <g transform="translate(160,372)"><rect width="118" height="24" rx="12" fill="#16223a" stroke="#a78bfa" stroke-opacity="0.4"/><text x="59" y="16" text-anchor="middle" fill="#cdd6e6">Data storytelling</text></g>
+    <g transform="translate(286,372)"><rect width="110" height="24" rx="12" fill="#16223a" stroke="#06b6d4" stroke-opacity="0.4"/><text x="55" y="16" text-anchor="middle" fill="#cdd6e6">Social insight</text></g>
+  </g>
+
+  <text x="740" y="470" text-anchor="end" font-size="13" font-weight="600" fill="#647795">Interactive Tableau dashboard · live embed</text>
+</svg>
