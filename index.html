@@ -1164,6 +1164,30 @@
       },
       {
         featured: true,
+        accent: '#7c5cff',
+        category: 'Quant ML Concept',
+        title: 'NZX AlphaLab',
+        image: 'nzx-alphalab-cover.svg',
+        alt: 'NZX AlphaLab — machine-learning stock-return prediction and quantitative research platform',
+        summary: 'A quantitative research platform that predicts next-day returns for NZX equities with machine learning. It engineers 30+ technical & statistical features, trains ensemble + LSTM models, backtests trading strategies against buy-and-hold, and stress-tests them with 10,000-path Monte Carlo simulations — all with explainable AI. Includes an interactive mock-up.',
+        stats: [ {n:32,label:'Features engineered'}, {n:10,label:'MC simulations',suffix:'K'}, {n:5,label:'Model types'} ],
+        detail: {
+          meta: 'Concept · Quantitative ML · Backtested & stress-tested',
+          body: 'NZX AlphaLab is a concept for a professional-grade quant research platform that asks an honest question: can machine learning extract a real predictive signal from New Zealand Stock Exchange data? Rather than chasing unrealistic returns, the emphasis is scientific rigour — avoiding look-ahead bias, data leakage and overfitting. I designed the full research workflow end-to-end (data pipeline → feature engineering → modelling → backtesting → robustness testing → explainable AI) and built an interactive mock-up that surfaces the signature artefacts a systematic fund would actually look at.',
+          highlights: [
+            'Feature engineering: 30+ trend, momentum, volatility, Ichimoku, statistical and market-relative features, then SHAP/mutual-information selection.',
+            'Models: Linear baseline, Random Forest, XGBoost & LightGBM ensembles plus an LSTM sequence model, tuned with Optuna.',
+            'Honest validation: walk-forward / expanding-window splits to prevent data leakage — never a random train/test shuffle.',
+            'Backtesting with realistic costs (brokerage, slippage, short costs) and Sharpe / Sortino / Calmar / max-drawdown analytics.',
+            'Monte Carlo robustness: 10,000 bootstrapped simulations producing a fan chart, probability-of-loss and percentile bands.',
+            'Explainable AI: SHAP global & local importance answers "why did the model recommend this stock?".'
+          ],
+          tech: ['Python','XGBoost / LightGBM','TensorFlow (LSTM)','SHAP','Backtesting','FastAPI','Next.js'],
+          links: [ {label:'Try the Demo', url:'apps/alphalab/'} ]
+        }
+      },
+      {
+        featured: true,
         accent: '#3b82f6',
         category: 'Leadership',
         title: 'UC Global Leadership',

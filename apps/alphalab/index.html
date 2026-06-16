@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NZX AlphaLab — Quant Research Demo</title>
+<meta name="description" content="Interactive concept demo of NZX AlphaLab: ML next-day return predictions, strategy backtest, Monte Carlo robustness testing and explainable AI for NZX equities."/>
+<style>
+  :root{
+    --bg:#070b14; --panel:#101a2e; --panel2:#16223a; --line:rgba(255,255,255,.08);
+    --txt:#eef2f8; --mut:#9fb0c9; --dim:#647795;
+    --violet:#7c5cff; --cyan:#22d3ee; --green:#2af5b3; --amber:#ffb020; --red:#ff6b6b;
+    --font:'Sora','Segoe UI',system-ui,Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(120% 90% at 85% 0,rgba(124,92,255,.14),transparent 55%),var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:22px 20px 64px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(120deg,var(--violet),var(--cyan));display:grid;place-items:center;font-weight:800;font-size:22px;color:#0a0f1e}
+  .brand h1{font-size:21px;margin:0;font-weight:800}
+  .brand h1 span{color:#a78bfa}
+  .brand p{margin:2px 0 0;font-size:12px;letter-spacing:1.5px;color:var(--mut);font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--violet);transform:translateY(-1px)}
+  .banner{margin:14px 0 22px;padding:11px 14px;border-radius:11px;background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.25);font-size:13px;color:#cdd6e6}
+  .banner b{color:#c4b5fd}
+  .grid{display:grid;gap:16px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .panel h2{margin:0 0 2px;font-size:15px;font-weight:800}
+  .panel .sub{margin:0 0 14px;font-size:12px;color:var(--dim)}
+  .row{display:grid;gap:16px}
+  @media(min-width:880px){ .row.two{grid-template-columns:1.35fr 1fr} }
+  /* predictions */
+  .preds{display:grid;gap:10px}
+  .pred{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}
+  .pred .tk{font-weight:800;font-size:15px}
+  .pred .nm{font-size:11px;color:var(--dim)}
+  .pred .ret{font-family:var(--mono);font-weight:700;font-size:15px;text-align:right}
+  .pos{color:var(--green)} .neg{color:var(--red)}
+  .sig{font-size:11px;font-weight:800;letter-spacing:.5px;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .sig.long{background:rgba(42,245,179,.14);color:var(--green)}
+  .sig.short{background:rgba(255,107,107,.14);color:var(--red)}
+  .sig.cash{background:rgba(159,176,201,.14);color:var(--mut)}
+  .conf{height:5px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:7px;overflow:hidden;grid-column:1/-1}
+  .conf>i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+  /* metrics */
+  .mets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(min-width:560px){ .mets{grid-template-columns:repeat(3,1fr)} }
+  .met{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .met .v{font-size:22px;font-weight:800;font-family:var(--font)}
+  .met .l{font-size:11px;color:var(--dim);margin-top:2px}
+  canvas{width:100%;display:block}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:10px}
+  .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+  /* shap */
+  .shap{display:grid;gap:9px}
+  .shrow{display:grid;grid-template-columns:150px 1fr 46px;align-items:center;gap:10px;font-size:12px}
+  .shrow .nm{color:var(--mut);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{height:14px;border-radius:5px;background:linear-gradient(90deg,var(--violet),var(--cyan));transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+  .shrow .pc{font-family:var(--mono);color:var(--txt);font-size:11px}
+  .mc-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:12px;color:var(--mut)}
+  .mc-foot b{color:var(--txt)}
+  .pill{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  footer{margin-top:34px;font-size:12px;color:var(--dim);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">&alpha;</div>
+      <div>
+        <h1>NZX <span>AlphaLab</span></h1>
+        <p>ML STOCK-RETURN PREDICTION · QUANT RESEARCH</p>
+      </div>
+    </div>
+    <a class="btn" href="../../">&larr; Back to portfolio</a>
+  </header>
+
+  <div class="banner">
+    <b>Concept demo.</b> This is an interactive mock-up of the NZX AlphaLab research platform. All figures below are <b>simulated</b> for illustration — the production design trains models on real NZX data with walk-forward validation. Nothing here is investment advice.
+  </div>
+
+  <div class="grid" style="gap:16px">
+    <!-- Predictions + metrics -->
+    <div class="row two">
+      <div class="panel">
+        <h2>Next-day return predictions</h2>
+        <p class="sub">Ensemble (XGBoost + LightGBM + LSTM) · signal = long / short / cash by threshold</p>
+        <div class="preds" id="preds"></div>
+        <div class="stack">
+          <span class="pill">Model: ensemble</span>
+          <span class="pill">Long &gt; +0.30%</span>
+          <span class="pill">Short &lt; -0.30%</span>
+          <span class="pill">Refit: walk-forward</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Strategy performance</h2>
+        <p class="sub">Long/short · 2018–2024 test window · costs incl.</p>
+        <div class="mets" id="mets"></div>
+      </div>
+    </div>
+
+    <!-- Equity curve -->
+    <div class="panel">
+      <h2>Backtest equity curve</h2>
+      <p class="sub">Cross-sectional long/short strategy vs NZX50 buy-and-hold · net of brokerage &amp; slippage</p>
+      <canvas id="equity" height="300" aria-label="Equity curve chart"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--green)"></i>AlphaLab strategy</span>
+        <span><i style="background:var(--dim)"></i>Buy &amp; hold (NZX50)</span>
+      </div>
+    </div>
+
+    <!-- Monte Carlo + SHAP -->
+    <div class="row two">
+      <div class="panel">
+        <h2>Monte Carlo robustness</h2>
+        <p class="sub">10,000 bootstrapped path simulations · 5th–95th percentile fan</p>
+        <canvas id="mc" height="260" aria-label="Monte Carlo fan chart"></canvas>
+        <div class="mc-foot">
+          <span>P(loss): <b id="ploss">—</b></span>
+          <span>Median CAGR: <b id="mcag">—</b></span>
+          <span>5th pct: <b id="p5">—</b></span>
+          <span>95th pct: <b id="p95">—</b></span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Explainable AI — SHAP</h2>
+        <p class="sub">Global feature importance · why the model predicts what it does</p>
+        <div class="shap" id="shap"></div>
+        <div class="stack">
+          <span class="pill">Top driver: RSI&nbsp;14</span>
+          <span class="pill">32 features</span>
+          <span class="pill">Corr-filtered</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    NZX AlphaLab · concept research platform · simulated data, not investment advice · built by Felix Kwan
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  // ---- deterministic PRNG so the demo looks identical every load ----
+  let _s = 1337;
+  function rnd(){ _s = (_s*1664525 + 1013904223) >>> 0; return _s/4294967296; }
+  function gauss(){ return (rnd()+rnd()+rnd()+rnd()-2)/2; } // ~N(0,1)-ish
+
+  // ---- 1) Predictions ----
+  const STOCKS = [
+    {tk:'FPH.NZ', nm:'Fisher & Paykel Healthcare', r: 0.83, c:0.78},
+    {tk:'AIA.NZ', nm:'Auckland Intl Airport',      r: 0.41, c:0.62},
+    {tk:'MFT.NZ', nm:'Mainfreight',                 r: 0.12, c:0.44},
+    {tk:'SPK.NZ', nm:'Spark New Zealand',           r:-0.28, c:0.49},
+    {tk:'AIR.NZ', nm:'Air New Zealand',             r:-0.57, c:0.66},
+  ];
+  function sig(r){ if(r>0.30) return ['long','LONG']; if(r<-0.30) return ['short','SHORT']; return ['cash','CASH']; }
+  document.getElementById('preds').innerHTML = STOCKS.map(s=>{
+    const [cls,lbl]=sig(s.r); const sign=s.r>=0?'+':'';
+    return `<div class="pred">
+      <div><div class="tk">${s.tk}</div><div class="nm">${s.nm}</div></div>
+      <div class="ret ${s.r>=0?'pos':'neg'}">${sign}${s.r.toFixed(2)}%</div>
+      <div class="sig ${cls}">${lbl}</div>
+      <div class="conf"><i style="width:${Math.round(s.c*100)}%"></i></div>
+    </div>`;
+  }).join('');
+
+  // ---- 2) Performance metrics ----
+  const METS = [
+    {v:'+18.6%', l:'CAGR (strategy)', c:'var(--green)'},
+    {v:'1.34',   l:'Sharpe ratio',    c:'var(--txt)'},
+    {v:'1.71',   l:'Sortino ratio',   c:'var(--txt)'},
+    {v:'-12.7%', l:'Max drawdown',    c:'var(--amber)'},
+    {v:'58.4%',  l:'Directional acc.',c:'var(--cyan)'},
+    {v:'+7.9%',  l:'Buy & hold CAGR', c:'var(--dim)'},
+  ];
+  document.getElementById('mets').innerHTML = METS.map(m=>
+    `<div class="met"><div class="v" style="color:${m.c}">${m.v}</div><div class="l">${m.l}</div></div>`).join('');
+
+  // ---- helpers for canvas (HiDPI) ----
+  function setup(id, h){
+    const c=document.getElementById(id), dpr=Math.min(window.devicePixelRatio||1,2);
+    const w=c.clientWidth||c.parentElement.clientWidth;
+    c.width=w*dpr; c.height=h*dpr; const x=c.getContext('2d'); x.scale(dpr,dpr);
+    return {x,w,h};
+  }
+
+  // ---- 3) Equity curve ----
+  function drawEquity(){
+    const {x,w,h}=setup('equity',300); const pad={l:46,r:14,t:14,b:24};
+    const N=260; const strat=[1], bh=[1];
+    for(let i=1;i<N;i++){ strat.push(strat[i-1]*(1+0.0009+gauss()*0.011)); bh.push(bh[i-1]*(1+0.0004+gauss()*0.012)); }
+    // normalise to % growth
+    const all=strat.concat(bh); let mn=Math.min(...all), mx=Math.max(...all);
+    const pX=i=>pad.l+(w-pad.l-pad.r)*(i/(N-1));
+    const pY=v=>pad.t+(h-pad.t-pad.b)*(1-(v-mn)/(mx-mn));
+    x.clearRect(0,0,w,h);
+    // grid + y labels
+    x.font='11px Sora'; x.textAlign='right'; x.textBaseline='middle';
+    for(let g=0;g<=4;g++){ const v=mn+(mx-mn)*g/4, yy=pY(v);
+      x.strokeStyle='rgba(255,255,255,.05)'; x.beginPath(); x.moveTo(pad.l,yy); x.lineTo(w-pad.r,yy); x.stroke();
+      x.fillStyle='#647795'; x.fillText(((v-1)*100).toFixed(0)+'%',pad.l-8,yy); }
+    function line(arr,col,wd,fill){
+      x.beginPath(); arr.forEach((v,i)=>{ i?x.lineTo(pX(i),pY(v)):x.moveTo(pX(i),pY(v)); });
+      if(fill){ x.lineTo(pX(N-1),pY(mn)); x.lineTo(pX(0),pY(mn)); x.closePath();
+        const grd=x.createLinearGradient(0,pad.t,0,h-pad.b); grd.addColorStop(0,'rgba(42,245,179,.22)'); grd.addColorStop(1,'rgba(42,245,179,0)');
+        x.fillStyle=grd; x.fill(); }
+      else{ x.strokeStyle=col; x.lineWidth=wd; x.lineJoin='round'; x.stroke(); }
+    }
+    line(strat,'',1,true);
+    line(bh,'#647795',1.6,false);
+    line(strat,'#2af5b3',2.2,false);
+    // x labels (years)
+    x.fillStyle='#647795'; x.textAlign='center'; x.textBaseline='top';
+    ['2018','2020','2022','2024'].forEach((yr,i)=> x.fillText(yr, pad.l+(w-pad.l-pad.r)*i/3, h-pad.b+6));
+  }
+
+  // ---- 4) Monte Carlo fan chart ----
+  function drawMC(){
+    const {x,w,h}=setup('mc',260); const pad={l:42,r:12,t:12,b:20};
+    const SIMS=320, STEPS=120; // visual sample of a 10k run
+    const paths=[];
+    for(let s=0;s<SIMS;s++){ const p=[1]; for(let i=1;i<STEPS;i++){ p.push(p[i-1]*(1+0.0008+gauss()*0.013)); } paths.push(p); }
+    // percentiles per step
+    const pct=(arr,q)=>{ const a=arr.slice().sort((m,n)=>m-n); return a[Math.floor(q*(a.length-1))]; };
+    const med=[],lo=[],hi=[],finals=[];
+    for(let i=0;i<STEPS;i++){ const col=paths.map(p=>p[i]); med.push(pct(col,.5)); lo.push(pct(col,.05)); hi.push(pct(col,.95)); }
+    paths.forEach(p=>finals.push(p[STEPS-1]));
+    let mn=Math.min(...lo)*0.99, mx=Math.max(...hi)*1.01;
+    const pX=i=>pad.l+(w-pad.l-pad.r)*(i/(STEPS-1));
+    const pY=v=>pad.t+(h-pad.t-pad.b)*(1-(v-mn)/(mx-mn));
+    x.clearRect(0,0,w,h);
+    x.font='11px Sora'; x.textAlign='right'; x.textBaseline='middle';
+    for(let g=0;g<=4;g++){ const v=mn+(mx-mn)*g/4, yy=pY(v);
+      x.strokeStyle='rgba(255,255,255,.05)'; x.beginPath(); x.moveTo(pad.l,yy); x.lineTo(w-pad.r,yy); x.stroke();
+      x.fillStyle='#647795'; x.fillText(((v-1)*100).toFixed(0)+'%',pad.l-8,yy); }
+    // a few faint sample paths
+    x.lineWidth=1;
+    for(let s=0;s<26;s++){ const p=paths[s*7%SIMS]; x.beginPath(); p.forEach((v,i)=>{ i?x.lineTo(pX(i),pY(v)):x.moveTo(pX(i),pY(v)); });
+      x.strokeStyle='rgba(124,92,255,.12)'; x.stroke(); }
+    // fan band 5-95
+    x.beginPath(); hi.forEach((v,i)=>{ i?x.lineTo(pX(i),pY(v)):x.moveTo(pX(i),pY(v)); });
+    for(let i=STEPS-1;i>=0;i--){ x.lineTo(pX(i),pY(lo[i])); } x.closePath();
+    const grd=x.createLinearGradient(0,pad.t,0,h-pad.b); grd.addColorStop(0,'rgba(34,211,238,.28)'); grd.addColorStop(1,'rgba(34,211,238,.05)');
+    x.fillStyle=grd; x.fill();
+    // median
+    x.beginPath(); med.forEach((v,i)=>{ i?x.lineTo(pX(i),pY(v)):x.moveTo(pX(i),pY(v)); });
+    x.strokeStyle='#22d3ee'; x.lineWidth=2.2; x.stroke();
+    // breakeven line
+    x.setLineDash([4,4]); x.beginPath(); x.moveTo(pad.l,pY(1)); x.lineTo(w-pad.r,pY(1)); x.strokeStyle='rgba(255,176,32,.5)'; x.lineWidth=1; x.stroke(); x.setLineDash([]);
+    // stats
+    const loss = finals.filter(v=>v<1).length/finals.length;
+    const yrs = STEPS/52; const cagr=v=>(Math.pow(v,1/yrs)-1)*100;
+    document.getElementById('ploss').textContent=(loss*100).toFixed(1)+'%';
+    document.getElementById('mcag').textContent='+'+cagr(pct(finals,.5)).toFixed(1)+'%';
+    document.getElementById('p5').textContent=cagr(pct(finals,.05)).toFixed(1)+'%';
+    document.getElementById('p95').textContent='+'+cagr(pct(finals,.95)).toFixed(1)+'%';
+  }
+
+  // ---- 5) SHAP ----
+  const SHAP=[
+    {f:'RSI 14', v:100}, {f:'MACD histogram', v:78}, {f:'20d volatility', v:61},
+    {f:'Rel. strength vs NZX50', v:47}, {f:'Volume momentum', v:39},
+    {f:'Bollinger width', v:31}, {f:'Lagged return (5d)', v:24}, {f:'Hurst exponent', v:18},
+  ];
+  document.getElementById('shap').innerHTML = SHAP.map(s=>
+    `<div class="shrow"><span class="nm">${s.f}</span><div class="bar" data-w="${s.v}"></div><span class="pc">${(s.v/100*0.21).toFixed(3)}</span></div>`).join('');
+
+  function animShap(){ document.querySelectorAll('.bar').forEach((b,i)=>{ setTimeout(()=>{ b.style.transform='scaleX('+(b.dataset.w/100)+')'; }, 80*i); }); }
+
+  function render(){ drawEquity(); drawMC(); }
+  render(); animShap();
+  let t; window.addEventListener('resize',()=>{ clearTimeout(t); t=setTimeout(render,180); });
+})();
+</script>
+</body>
+</html>
