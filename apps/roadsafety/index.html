@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NZ Road Safety Analytics — Tableau Dashboard</title>
+<meta name="description" content="Interactive Tableau dashboard analysing New Zealand serious road injury rates per capita from 2000 to 2024, by Felix Kwan."/>
+<style>
+  :root{
+    --bg:#0a1020; --panel:#101a2e; --panel2:#16223a; --line:rgba(255,255,255,.08);
+    --txt:#eef2f8; --mut:#9fb0c9; --dim:#647795; --orange:#f97316; --amber:#fbbf24;
+    --font:'Sora','Segoe UI',system-ui,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(120% 90% at 85% 0,rgba(249,115,22,.12),transparent 55%),var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 64px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(120deg,var(--orange),var(--amber));display:grid;place-items:center;color:#1a1208}
+  .brand h1{font-size:20px;margin:0;font-weight:800}
+  .brand h1 span{color:var(--amber)}
+  .brand p{margin:2px 0 0;font-size:11.5px;letter-spacing:1.4px;color:var(--mut);font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--orange);transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(120deg,var(--orange),var(--amber));color:#1a1208;border:none}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .intro{margin:14px 0 18px;padding:13px 16px;border-radius:12px;background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.22);font-size:13.5px;color:#e8edf6}
+  .intro b{color:var(--amber)}
+  .vizbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:10px;position:relative;min-height:640px}
+  tableau-viz, .tableauPlaceholder{width:100%}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--mut);font-size:14px;pointer-events:none}
+  .spin{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.12);border-top-color:var(--amber);margin:0 auto 12px;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .fallback{margin-top:14px;font-size:13px;color:var(--dim);text-align:center}
+  footer{margin-top:30px;font-size:12px;color:var(--dim);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20 L12 4 L19 20 M8 14 H16"/></svg></div>
+      <div>
+        <h1>NZ Road Safety <span>Analytics</span></h1>
+        <p>TABLEAU · SERIOUS INJURY RATES PER CAPITA · 2000–2024</p>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../">&larr; Back to portfolio</a>
+      <a class="btn primary" href="https://public.tableau.com/app/profile/felix.kwan/viz/NewZealandSeriousRoadInjuryRatesperCapitaFrom2000until2024/Dashboard1" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
+    </div>
+  </header>
+
+  <div class="intro">
+    An interactive <b>Tableau</b> dashboard exploring <b>New Zealand serious road-injury rates per capita</b> from 2000 to 2024 — normalising raw injury counts by population to compare trends fairly across years and regions. Built and published on Tableau Public; the live, fully interactive viz is embedded below.
+  </div>
+
+  <div class="vizbox">
+    <div class="loading" id="loading"><div><div class="spin"></div>Loading the live Tableau dashboard…</div></div>
+    <tableau-viz id="viz"
+      src="https://public.tableau.com/views/NewZealandSeriousRoadInjuryRatesperCapitaFrom2000until2024/Dashboard1"
+      toolbar="bottom" hide-tabs>
+    </tableau-viz>
+  </div>
+  <p class="fallback">Dashboard not loading? <a href="https://public.tableau.com/app/profile/felix.kwan/viz/NewZealandSeriousRoadInjuryRatesperCapitaFrom2000until2024/Dashboard1" target="_blank" rel="noopener" style="color:var(--amber)">Open it directly on Tableau Public ↗</a></p>
+
+  <footer>NZ Road Safety Analytics · Tableau Public dashboard by Felix Kwan · data normalised per capita</footer>
+</div>
+
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+<script>
+  // hide the loader once the viz fires its first interactive event (or after a timeout fallback)
+  const viz = document.getElementById('viz');
+  const loading = document.getElementById('loading');
+  const hide = () => { if (loading) loading.style.display = 'none'; };
+  if (viz) {
+    viz.addEventListener('firstinteractive', hide);
+    viz.addEventListener('vizloaderror', () => {
+      if (loading) loading.innerHTML = '<div>Couldn’t embed the dashboard here.<br><a href="https://public.tableau.com/app/profile/felix.kwan/viz/NewZealandSeriousRoadInjuryRatesperCapitaFrom2000until2024/Dashboard1" target="_blank" rel="noopener" style="color:var(--amber)">Open it on Tableau Public ↗</a></div>';
+    });
+  }
+  setTimeout(hide, 9000);
+</script>
+</body>
+</html>

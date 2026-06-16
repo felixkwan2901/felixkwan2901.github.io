@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="New Zealand serious road injury rates Tableau dashboard" font-family="'Sora','Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a1020"/><stop offset="1" stop-color="#0f1a2e"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#fbbf24"/></linearGradient>
+    <radialGradient id="gl" cx="0.82" cy="0.18" r="0.7"><stop offset="0" stop-color="#f97316" stop-opacity="0.16"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.32"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#gl)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04"><path d="M0 100H800M0 200H800M0 300H800M0 400H800"/><path d="M100 0V500M200 0V500M300 0V500M400 0V500M500 0V500M600 0V500M700 0V500"/></g>
+  <!-- logo -->
+  <g transform="translate(60,52)"><rect width="64" height="64" rx="16" fill="url(#acc)"/><path d="M22 44 L32 18 L42 44 M26 36 H38" stroke="#1a1208" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <text x="138" y="76" font-size="29" font-weight="800" fill="#eef2f8">NZ Road Safety <tspan fill="#fbbf24">Analytics</tspan></text>
+  <text x="140" y="104" font-size="13" letter-spacing="2" font-weight="600" fill="#9fb0c9">TABLEAU · SERIOUS INJURY RATES PER CAPITA · 2000–2024</text>
+
+  <!-- trend line chart (declining injury rate) -->
+  <g transform="translate(60,150)">
+    <text x="0" y="-4" font-size="12" font-weight="700" fill="#fbbf24" font-family="Inter,Arial">SERIOUS INJURIES PER 100K</text>
+    <rect x="0" y="6" width="440" height="200" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/>
+    <!-- axes -->
+    <g stroke="#ffffff" stroke-opacity="0.06"><path d="M40 40H420M40 90H420M40 140H420M40 180H420"/></g>
+    <!-- area + line -->
+    <path d="M40 70 C 110 60, 160 110, 220 96 C 290 80, 350 150, 420 130 L 420 180 L 40 180 Z" fill="url(#area)"/>
+    <path d="M40 70 C 110 60, 160 110, 220 96 C 290 80, 350 150, 420 130" fill="none" stroke="#f97316" stroke-width="2.6" stroke-linecap="round"/>
+    <!-- points -->
+    <g fill="#fbbf24"><circle cx="40" cy="70" r="3.5"/><circle cx="220" cy="96" r="3.5"/><circle cx="420" cy="130" r="3.5"/></g>
+    <text x="40" y="198" font-size="10" fill="#647795" font-family="Inter,Arial">2000</text>
+    <text x="210" y="198" font-size="10" fill="#647795" font-family="Inter,Arial">2012</text>
+    <text x="398" y="198" font-size="10" fill="#647795" font-family="Inter,Arial">2024</text>
+  </g>
+
+  <!-- KPI tiles -->
+  <g font-family="Inter,Arial">
+    <g transform="translate(520,156)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Years analysed</text><text x="16" y="47" font-size="20" font-weight="800" fill="#eef2f8" font-family="Sora">25</text></g>
+    <g transform="translate(520,222)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Geography</text><text x="16" y="47" font-size="20" font-weight="800" fill="#fbbf24" font-family="Sora">National + regional</text></g>
+    <g transform="translate(520,288)"><rect width="220" height="58" rx="12" fill="#101a2e" stroke="#ffffff" stroke-opacity="0.07"/><text x="16" y="26" font-size="11" fill="#647795">Normalised by</text><text x="16" y="47" font-size="20" font-weight="800" fill="#eef2f8" font-family="Sora">Population (per capita)</text></g>
+  </g>
+
+  <!-- chips -->
+  <g font-family="Inter,Arial" font-size="11" font-weight="600">
+    <g transform="translate(60,372)"><rect width="92" height="24" rx="12" fill="#16223a" stroke="#f97316" stroke-opacity="0.4"/><text x="46" y="16" text-anchor="middle" fill="#cdd6e6">Tableau</text></g>
+    <g transform="translate(160,372)"><rect width="118" height="24" rx="12" fill="#16223a" stroke="#fbbf24" stroke-opacity="0.4"/><text x="59" y="16" text-anchor="middle" fill="#cdd6e6">Data storytelling</text></g>
+    <g transform="translate(286,372)"><rect width="96" height="24" rx="12" fill="#16223a" stroke="#f97316" stroke-opacity="0.4"/><text x="48" y="16" text-anchor="middle" fill="#cdd6e6">Public data</text></g>
+  </g>
+
+  <text x="740" y="470" text-anchor="end" font-size="13" font-weight="600" fill="#647795">Interactive Tableau dashboard · live embed</text>
+</svg>
