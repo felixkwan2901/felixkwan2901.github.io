@@ -438,6 +438,19 @@
     .cert-badge { flex-shrink: 0; align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb,var(--accent) 14%,transparent); border: 1px solid color-mix(in srgb,var(--accent) 35%,transparent); }
 
     /* about */
+    /* About section */
+    .about-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: start; margin-top: 32px; }
+    .about-lead p { color: var(--text-2); font-size: 1.04rem; line-height: 1.7; margin-bottom: 16px; }
+    .about-lead b { color: var(--text-1); font-weight: 700; }
+    .about-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+    .about-focus { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .focus-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px; transition: transform .35s cubic-bezier(.2,.7,.3,1), border-color .35s; }
+    .focus-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--fc,#3b82f6) 45%, var(--border)); }
+    .focus-ic { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; color: var(--fc,#3b82f6); background: color-mix(in srgb, var(--fc,#3b82f6) 14%, transparent); margin-bottom: 12px; }
+    .focus-card h3 { font-size: .98rem; font-weight: 700; margin-bottom: 5px; }
+    .focus-card p { font-size: .82rem; color: var(--text-3); line-height: 1.5; }
+    @media (max-width: 860px) { .about-wrap { grid-template-columns: 1fr; gap: 32px; } }
+    @media (max-width: 460px) { .about-focus { grid-template-columns: 1fr; } }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
     .about-text p { color: var(--text-2); font-size: 1.05rem; margin-bottom: 16px; }
     .about-text strong { color: var(--text); font-weight: 600; }
@@ -628,6 +641,7 @@
     <div class="inner">
       <a href="#home" class="brand">Felix Kwan</a>
       <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
         <a href="#work">Work</a>
         <a href="#achievements">Awards</a>
         <a href="#experience">Experience</a>
@@ -716,6 +730,51 @@
       </div>
     </div>
   </header>
+
+  <!-- ABOUT -->
+  <section class="pad pad-tight-b" id="about">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">About Me</div>
+        <h2 class="section-title">Turning data into decisions</h2>
+      </div>
+      <div class="about-wrap">
+        <div class="about-lead reveal">
+          <p>Kia ora — I'm Felix, a <b>Business Information Systems</b> student at the University of Canterbury who sits right at the intersection of <b>data, finance and technology</b>. I like taking messy, real-world problems and turning them into something clear and useful — a machine-learning model, an interactive dashboard, or a tool that gives a team back hours of their week.</p>
+          <p>That curiosity has taken me from winning <b>two national student trading competitions</b> to designing and building working AI products like <b>OpsPilot</b> and <b>NZX AlphaLab</b>. I care just as much about doing things <b>honestly</b> as doing them impressively — my favourite projects are rigorous under the hood, not just shiny on the surface.</p>
+          <p>Away from the screen I lead a multimedia team at my church, mentor students, and volunteer across my community. I'm currently looking for <b>internships and graduate roles in data, analytics or quantitative finance</b> where I can keep learning and make a real impact.</p>
+          <div class="about-cta">
+            <a href="#work" class="btn btn-primary magnetic">See my projects
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+            <a href="cv.pdf" download="Felix-Pratamajaya-Kwan-CV.pdf" class="btn btn-ghost magnetic">Download CV</a>
+          </div>
+        </div>
+        <div class="about-focus reveal">
+          <div class="focus-card" style="--fc:#3b82f6">
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+            <h3>Data &amp; Analytics</h3>
+            <p>Turning raw data into clear stories — SQL, Tableau, Power BI and Python.</p>
+          </div>
+          <div class="focus-card" style="--fc:#00d68f">
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/></svg></div>
+            <h3>Machine Learning &amp; AI</h3>
+            <p>Building real, useful AI — from predictive models to conversational copilots.</p>
+          </div>
+          <div class="focus-card" style="--fc:#7c5cff">
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg></div>
+            <h3>Quant &amp; Finance</h3>
+            <p>Markets, risk and rigorous, honest analysis — two national comp wins.</p>
+          </div>
+          <div class="focus-card" style="--fc:#ef4444">
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
+            <h3>Leadership &amp; Community</h3>
+            <p>Mentoring, leading volunteer teams, and bringing people together.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- FEATURED WORK -->
   <section class="pad pad-tight-b" id="work">
