@@ -451,6 +451,12 @@
     .focus-card p { font-size: .82rem; color: var(--text-3); line-height: 1.5; }
     @media (max-width: 860px) { .about-wrap { grid-template-columns: 1fr; gap: 32px; } }
     @media (max-width: 460px) { .about-focus { grid-template-columns: 1fr; } }
+    /* animated per-character heading reveal */
+    .fx-char { display: inline-block; opacity: 0; transform: translateY(.5em) scale(.94); filter: blur(6px); will-change: transform, opacity, filter; }
+    .fx-char.fx-space { width: .28em; }
+    .fx-split.go .fx-char { animation: fxRise .6s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes fxRise { to { opacity: 1; transform: none; filter: blur(0); } }
+    @media (prefers-reduced-motion: reduce) { .fx-char { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; } }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
     .about-text p { color: var(--text-2); font-size: 1.05rem; margin-bottom: 16px; }
     .about-text strong { color: var(--text); font-weight: 600; }
@@ -738,7 +744,7 @@
     <div class="wrap">
       <div class="reveal">
         <div class="eyebrow">About Me</div>
-        <h2 class="section-title">Turning data into decisions</h2>
+        <h2 class="section-title fx-split" id="aboutTitle">Turning data into decisions</h2>
       </div>
       <div class="about-wrap">
         <div class="about-lead reveal">
@@ -759,14 +765,14 @@
             <p>Turning raw data into clear stories — SQL, Tableau, Power BI and Python.</p>
           </div>
           <div class="focus-card" style="--fc:#00d68f">
-            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/></svg></div>
-            <h3>Machine Learning &amp; AI</h3>
-            <p>Building real, useful AI — from predictive models to conversational copilots.</p>
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+            <h3>Business Information Systems</h3>
+            <p>Bridging business and technology — the systems, data and processes that help organisations run.</p>
           </div>
           <div class="focus-card" style="--fc:#7c5cff">
-            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg></div>
-            <h3>Quant &amp; Finance</h3>
-            <p>Markets, risk and rigorous, honest analysis — two national comp wins.</p>
+            <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v3l2 2M21 21l-4.3-4.3"/></svg></div>
+            <h3>Strategy &amp; Research</h3>
+            <p>Market research, competitor analysis and business strategy — turning insight into decisions.</p>
           </div>
           <div class="focus-card" style="--fc:#ef4444">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
@@ -1370,6 +1376,33 @@
     // init static carousels (volunteer, achievements) once DOM is ready
     if (document.readyState !== 'loading') initCarousels();
     else document.addEventListener('DOMContentLoaded', initCarousels);
+
+    // ----- animated per-character heading reveal -----
+    function initSplitText() {
+      document.querySelectorAll('.fx-split').forEach(el => {
+        if (el.dataset.split) return;
+        el.dataset.split = '1';
+        const text = el.textContent;
+        el.setAttribute('aria-label', text);
+        el.textContent = '';
+        let i = 0;
+        for (const ch of text) {
+          const s = document.createElement('span');
+          s.className = 'fx-char' + (/[a-z0-9]/i.test(ch) ? '' : ' fx-space');
+          s.setAttribute('aria-hidden', 'true');
+          s.textContent = ch === ' ' ? ' ' : ch;
+          s.style.animationDelay = (i * 0.035) + 's';
+          el.appendChild(s);
+          i++;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { el.classList.add('go'); io.disconnect(); } });
+        }, { threshold: 0.35 });
+        io.observe(el);
+      });
+    }
+    if (document.readyState !== 'loading') initSplitText();
+    else document.addEventListener('DOMContentLoaded', initSplitText);
 
     // ----- project detail modal -----
     const pm = {
