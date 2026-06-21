@@ -478,6 +478,9 @@
     .tl-photo .pic { height: 150px; border-radius: 2px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(140deg, color-mix(in srgb,var(--accent) 60%, #0d0d12), #0d0d12); }
     .tl-photo .pic img { width: 100%; height: 100%; object-fit: cover; }
     .tl-photo .pic svg { width: 48px; height: 48px; color: #fff; opacity: .92; }
+    /* show whole image (zoomed out) instead of cropping to fill */
+    .tl-photo .pic img.fit-contain { object-fit: contain; background: #f4f4f5; }
+    .work-img img.fit-contain { object-fit: contain; background: #0d1424; }
     .tl-photo .tcap { position: absolute; bottom: 7px; left: 0; right: 0; text-align: center; font-family: 'Caveat',cursive; font-size: 1.12rem; color: #3a3a3a; }
     .tl-photo .ttape { position: absolute; top: -11px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 72px; height: 22px; background: var(--tape); border-radius: 2px; box-shadow: 0 2px 6px rgba(0,0,0,.22); }
     .tl-card { padding: 22px 25px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); transition: all .3s; position: relative; overflow: hidden; }
@@ -951,7 +954,7 @@
 
         <div class="tl-item reveal" style="--accent:#f59e0b">
           <div class="tl-rail"><span class="tl-tape">2022<br/>2025</span><span class="tl-dot"></span></div>
-          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="multisarana.jpg" alt="MultiSarana Teknik online store" loading="lazy"/></div><span class="tcap">Multi Sarana</span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="multisarana.jpg" class="fit-contain" alt="MultiSarana Teknik online store" loading="lazy"/></div><span class="tcap">Multi Sarana</span></div>
           <div class="tl-card">
             <h3>Assistant Manager</h3>
             <div class="tl-org">CV. Multi Sarana · Bandung, Indonesia</div>
@@ -968,7 +971,7 @@
 
         <div class="tl-item reveal" style="--accent:#14b8a6">
           <div class="tl-rail"><span class="tl-tape">2020<br/>2022</span><span class="tl-dot"></span></div>
-          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="allianz.jpg" alt="Felix during his role at Allianz Life Indonesia" loading="lazy"/></div><span class="tcap">Allianz Life</span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="allianz.jpg" class="fit-contain" alt="Felix during his role at Allianz Life Indonesia" loading="lazy"/></div><span class="tcap">Allianz Life</span></div>
           <div class="tl-card">
             <h3>Insurance Staff → Business Partner</h3>
             <div class="tl-org">PT. Allianz Life Indonesia Tbk · Bandung</div>
@@ -1059,7 +1062,7 @@
           </div>
         </div>
         <div class="work-card tilt reveal" style="--accent:#f59e0b">
-          <div class="work-img"><img src="rugby.jpg" alt="Super Round Rugby event crew" loading="lazy"/></div>
+          <div class="work-img"><img src="rugby.jpg" class="fit-contain" alt="Super Round Rugby event crew" loading="lazy"/></div>
           <div class="work-body">
             <div class="wc-cat">Events</div>
             <h3>Super Round Rugby Event</h3>
