@@ -486,6 +486,8 @@
     .tl-photo .pic svg { width: 48px; height: 48px; color: #fff; opacity: .92; }
     /* bias the crop toward the top so portrait photos show the face/subject */
     .tl-photo .pic img.pos-top { object-position: center 22%; }
+    /* bias the crop down so the people (not the sky) are in frame */
+    .work-img img.pos-low { object-position: center 72%; }
     .tl-photo .tcap { position: absolute; bottom: 7px; left: 0; right: 0; text-align: center; font-family: 'Caveat',cursive; font-size: 1.12rem; color: #3a3a3a; }
     .tl-photo .ttape { position: absolute; top: -11px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 72px; height: 22px; background: var(--tape); border-radius: 2px; box-shadow: 0 2px 6px rgba(0,0,0,.22); }
     .tl-card { padding: 22px 25px; border-radius: 16px; background: var(--panel); border: 1px solid var(--border); transition: all .3s; position: relative; overflow: hidden; }
@@ -924,7 +926,7 @@
       <div class="timeline">
 
         <div class="tl-item reveal" style="--accent:#3b82f6">
-          <div class="tl-rail"><span class="tl-tape">2025<br/>Present</span><span class="tl-dot"></span></div>
+          <div class="tl-rail"><span class="tl-tape">2026<br/>Present</span><span class="tl-dot"></span></div>
           <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="hero-bg.jpg" alt="Tuakana student community" loading="lazy"/></div><span class="tcap">Tuakana</span></div>
           <div class="tl-card">
             <h3>Tuakana — Evaluation &amp; Student Insight</h3>
@@ -1067,7 +1069,7 @@
           </div>
         </div>
         <div class="work-card tilt reveal" style="--accent:#f59e0b">
-          <div class="work-img"><img src="rugby.jpg" alt="Super Round Rugby event crew" loading="lazy"/></div>
+          <div class="work-img"><img src="rugby.jpg" class="pos-low" alt="Super Round Rugby event crew" loading="lazy"/></div>
           <div class="work-body">
             <div class="wc-cat">Events</div>
             <h3>Super Round Rugby Event</h3>
