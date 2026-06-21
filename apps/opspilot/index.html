@@ -110,6 +110,8 @@
   .inv .nm{color:var(--text2)}
   .live{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--teal2)}
   .live .dot{width:7px;height:7px}
+  .ai-live{margin-left:auto;font-size:.66rem;font-weight:700;letter-spacing:.3px;padding:3px 9px;border-radius:999px;white-space:nowrap;background:rgba(148,163,184,.16);color:var(--text3)}
+  .ai-live.on{background:rgba(45,212,191,.16);color:var(--teal2)}
 
   @media(max-width:860px){.grid{grid-template-columns:1fr}.side{order:-1}.chat{height:520px}}
 </style>
@@ -137,6 +139,7 @@
       <div class="chat-head">
         <span class="dot"></span>
         <div><div class="t">OpsPilot Assistant</div><div class="s">Grounded in your store's inventory, sales &amp; policy data</div></div>
+        <span class="ai-live" id="opsLive">● scripted</span>
       </div>
       <div class="msgs" id="msgs"></div>
       <div class="chips" id="chips"></div>
@@ -277,13 +280,15 @@ async function botReply(text){
     return;
   }
   try{
-    const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-12)})});
+    const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:'opspilot',messages:history.slice(-12)})});
     if(!res.ok) throw new Error('api '+res.status);
     const data=await res.json();
     const reply=(data.text||'').trim();
     if(!reply) throw new Error('empty');
     node.querySelector('.bubble').innerHTML=fmt(reply);
     history.push({role:'assistant',content:reply});
+    const live=document.getElementById('opsLive');
+    if(live){ live.textContent='● live AI'; live.classList.add('on'); }
     msgs.scrollTop=msgs.scrollHeight;
   }catch(err){
     scriptedReply(node,text);
