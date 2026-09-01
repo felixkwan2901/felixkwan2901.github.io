@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Operations dashboard — job tracking and BPMN swimlane workflow (illustrative, no client data)" font-family="'Sora','Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#080d1c"/><stop offset="1" stop-color="#101a34"/></linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <radialGradient id="gl" cx="0.85" cy="0.15" r="0.8"><stop offset="0" stop-color="#3b82f6" stop-opacity="0.18"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#gl)"/>
+
+  <!-- grid -->
+  <g stroke="#ffffff" stroke-opacity="0.04">
+    <path d="M0 100h800M0 200h800M0 300h800M0 400h800"/>
+    <path d="M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500"/>
+  </g>
+
+  <!-- header -->
+  <g>
+    <rect x="44" y="42" width="30" height="30" rx="9" fill="url(#acc)"/>
+    <text x="88" y="57" fill="#f5f6f8" font-size="19" font-weight="700">Operations Dashboard</text>
+    <text x="88" y="76" fill="#71727e" font-size="12.5" letter-spacing="1.6">JOB TRACKING · WORKFLOW STATUS · PWA</text>
+    <rect x="646" y="46" width="110" height="26" rx="13" fill="#3b82f6" fill-opacity="0.12" stroke="#3b82f6" stroke-opacity="0.3"/>
+    <circle cx="666" cy="59" r="4" fill="#22d3ee"/>
+    <text x="678" y="63.5" fill="#60a5fa" font-size="11" font-weight="600">LIVE DATA</text>
+  </g>
+
+  <!-- KPI tiles (deliberately unlabelled — no client figures) -->
+  <g>
+    <rect x="44" y="104" width="170" height="86" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.09"/>
+    <text x="62" y="130" fill="#71727e" font-size="11" letter-spacing="1.2">ACTIVE JOBS</text>
+    <rect x="62" y="142" width="66" height="20" rx="5" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="62" y="170" width="98" height="6" rx="3" fill="#3b82f6" fill-opacity="0.5"/>
+
+    <rect x="230" y="104" width="170" height="86" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.09"/>
+    <text x="248" y="130" fill="#71727e" font-size="11" letter-spacing="1.2">IN PROGRESS</text>
+    <rect x="248" y="142" width="52" height="20" rx="5" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="248" y="170" width="72" height="6" rx="3" fill="#22d3ee" fill-opacity="0.5"/>
+
+    <rect x="416" y="104" width="170" height="86" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.09"/>
+    <text x="434" y="130" fill="#71727e" font-size="11" letter-spacing="1.2">AWAITING SIGN-OFF</text>
+    <rect x="434" y="142" width="44" height="20" rx="5" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="434" y="170" width="54" height="6" rx="3" fill="#f59e0b" fill-opacity="0.5"/>
+
+    <rect x="602" y="104" width="154" height="86" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.09"/>
+    <text x="620" y="130" fill="#71727e" font-size="11" letter-spacing="1.2">COMPLETED</text>
+    <rect x="620" y="142" width="58" height="20" rx="5" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="620" y="170" width="86" height="6" rx="3" fill="#34d399" fill-opacity="0.5"/>
+  </g>
+
+  <!-- BPMN swimlanes -->
+  <g>
+    <text x="44" y="228" fill="#abacb6" font-size="13" font-weight="600">BPMN Swimlane Workflow</text>
+
+    <g>
+      <rect x="44" y="242" width="712" height="56" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="62" y="275" fill="#71727e" font-size="11.5" letter-spacing="1">QUOTE</text>
+      <rect x="150" y="258" width="92" height="24" rx="7" fill="#3b82f6" fill-opacity="0.30"/>
+      <rect x="256" y="258" width="72" height="24" rx="7" fill="#3b82f6" fill-opacity="0.18"/>
+      <rect x="342" y="258" width="58" height="24" rx="7" fill="#ffffff" fill-opacity="0.07"/>
+    </g>
+
+    <g>
+      <rect x="44" y="306" width="712" height="56" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="62" y="339" fill="#71727e" font-size="11.5" letter-spacing="1">ON SITE</text>
+      <rect x="150" y="322" width="128" height="24" rx="7" fill="#22d3ee" fill-opacity="0.28"/>
+      <rect x="292" y="322" width="96" height="24" rx="7" fill="#22d3ee" fill-opacity="0.16"/>
+      <rect x="402" y="322" width="64" height="24" rx="7" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="480" y="322" width="80" height="24" rx="7" fill="#ffffff" fill-opacity="0.05"/>
+    </g>
+
+    <g>
+      <rect x="44" y="370" width="712" height="56" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="62" y="403" fill="#71727e" font-size="11.5" letter-spacing="1">INVOICE</text>
+      <rect x="150" y="386" width="74" height="24" rx="7" fill="#34d399" fill-opacity="0.26"/>
+      <rect x="238" y="386" width="110" height="24" rx="7" fill="#34d399" fill-opacity="0.14"/>
+      <rect x="362" y="386" width="52" height="24" rx="7" fill="#ffffff" fill-opacity="0.06"/>
+    </g>
+  </g>
+
+  <text x="44" y="466" fill="#5a5b66" font-size="10.5" letter-spacing="0.6">Illustrative layout — no client data shown</text>
+  <rect x="640" y="452" width="116" height="4" rx="2" fill="url(#acc)" opacity="0.7"/>
+</svg>
