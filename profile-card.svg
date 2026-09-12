@@ -1322,21 +1322,23 @@
 <text x="568.4" y="414.5" fill="#c9d1d9">kwanfelix.me</text>
 <text x="476.4" y="431.0" fill="#e05a68" class="b">GitHub</text>
 <text x="568.4" y="431.0" fill="#c9d1d9">github.com/felixkwan2901</text>
-<rect x="476.4" y="449.5" width="22" height="12" fill="#1f2430" rx="2"/>
-<rect x="500.4" y="449.5" width="22" height="12" fill="#e05a68" rx="2"/>
-<rect x="524.4" y="449.5" width="22" height="12" fill="#7fb069" rx="2"/>
-<rect x="548.4" y="449.5" width="22" height="12" fill="#e0b25a" rx="2"/>
-<rect x="572.4" y="449.5" width="22" height="12" fill="#5a8fe0" rx="2"/>
-<rect x="596.4" y="449.5" width="22" height="12" fill="#a678d6" rx="2"/>
-<rect x="620.4" y="449.5" width="22" height="12" fill="#5ac8d6" rx="2"/>
-<rect x="644.4" y="449.5" width="22" height="12" fill="#c9d1d9" rx="2"/>
-<rect x="476.4" y="464.5" width="22" height="12" fill="#3d4450" rx="2"/>
-<rect x="500.4" y="464.5" width="22" height="12" fill="#f07a86" rx="2"/>
-<rect x="524.4" y="464.5" width="22" height="12" fill="#9fd08a" rx="2"/>
-<rect x="548.4" y="464.5" width="22" height="12" fill="#f0cc7a" rx="2"/>
-<rect x="572.4" y="464.5" width="22" height="12" fill="#7aa9f0" rx="2"/>
-<rect x="596.4" y="464.5" width="22" height="12" fill="#c298ee" rx="2"/>
-<rect x="620.4" y="464.5" width="22" height="12" fill="#7ae0ee" rx="2"/>
-<rect x="644.4" y="464.5" width="22" height="12" fill="#ffffff" rx="2"/>
+<text x="476.4" y="447.5" fill="#e05a68" class="b">Email</text>
+<text x="568.4" y="447.5" fill="#c9d1d9">felix.kwan@canterbury.ac.nz</text>
+<rect x="476.4" y="466.0" width="22" height="12" fill="#1f2430" rx="2"/>
+<rect x="500.4" y="466.0" width="22" height="12" fill="#e05a68" rx="2"/>
+<rect x="524.4" y="466.0" width="22" height="12" fill="#7fb069" rx="2"/>
+<rect x="548.4" y="466.0" width="22" height="12" fill="#e0b25a" rx="2"/>
+<rect x="572.4" y="466.0" width="22" height="12" fill="#5a8fe0" rx="2"/>
+<rect x="596.4" y="466.0" width="22" height="12" fill="#a678d6" rx="2"/>
+<rect x="620.4" y="466.0" width="22" height="12" fill="#5ac8d6" rx="2"/>
+<rect x="644.4" y="466.0" width="22" height="12" fill="#c9d1d9" rx="2"/>
+<rect x="476.4" y="481.0" width="22" height="12" fill="#3d4450" rx="2"/>
+<rect x="500.4" y="481.0" width="22" height="12" fill="#f07a86" rx="2"/>
+<rect x="524.4" y="481.0" width="22" height="12" fill="#9fd08a" rx="2"/>
+<rect x="548.4" y="481.0" width="22" height="12" fill="#f0cc7a" rx="2"/>
+<rect x="572.4" y="481.0" width="22" height="12" fill="#7aa9f0" rx="2"/>
+<rect x="596.4" y="481.0" width="22" height="12" fill="#c298ee" rx="2"/>
+<rect x="620.4" y="481.0" width="22" height="12" fill="#7ae0ee" rx="2"/>
+<rect x="644.4" y="481.0" width="22" height="12" fill="#ffffff" rx="2"/>
 <text x="24" y="515" fill="#7fb069" class="b">felix@canterbury</text><text x="130" y="515" fill="#c9d1d9">:~$</text><rect x="156" y="506" width="7" height="11" fill="#e0b25a"/>
 </svg>
