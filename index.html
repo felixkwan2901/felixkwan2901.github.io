@@ -290,6 +290,7 @@
     .wc-cat { display: inline-block; font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent,#3b82f6); background: color-mix(in srgb, var(--accent,#3b82f6) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent,#3b82f6) 26%, transparent); padding: 4px 9px; border-radius: 999px; margin-bottom: 10px; }
     .work-body h3 { font-size: 1.04rem; font-weight: 700; margin-bottom: 6px; padding-right: 40px; }
     .work-body p { font-size: .8rem; color: var(--text-3); line-height: 1.5; }
+    .work-stats:empty { display: none; }
     .work-stats { display: flex; gap: 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
     .wstat { display: flex; flex-direction: column; line-height: 1.1; }
     .wnum { font-family: 'Sora'; font-size: 1.25rem; font-weight: 800; color: var(--accent,#3b82f6); }
@@ -927,9 +928,8 @@
       </div>
       <div class="about-wrap">
         <div class="about-lead reveal">
-          <p>Kia ora — I'm Felix, a <b>Master of Business Information Systems</b> student at the University of Canterbury with a passion for <b class="hl" style="--d:.3s">data, finance, AI, and business strategy</b>. I enjoy turning complex problems into practical solutions through analytics, technology, and data-driven decision-making.</p>
-          <p>Most recently, as a <b class="hl" style="--d:.9s">Business Systems Analyst Intern</b> at <b>Cassidy Davies Electrical</b>, I designed and deployed a live operations dashboard tracking job costs, margins and claim progress, and automated the reporting pipeline behind it — cutting a two-day manual export down to under an hour. My wider background spans <b>insurance, marketing, business operations, and retail management</b>, giving me a strong understanding of how organisations create value and where technology can make a real impact. Alongside my studies, I have developed expertise in financial markets, winning both the <b class="hl" style="--d:1.5s">University of Canterbury Trading Competition</b> and the <b>Tiger Brokers New Zealand Tertiary Student Sim-Trading Competition</b>.</p>
-          <p>Through the <b>UC Virtual Internship</b>, I worked with <b>Fuel50</b>, a New Zealand HR technology company, conducting market research, competitor analysis, and evaluating future SaaS pricing strategies, including emerging AI-powered business models. I have also worked directly with New Zealand organisations through the <b>Global Impact Industry Project</b> and <b>Global Leadership Programme</b>, gaining valuable experience in client engagement, strategic problem-solving, and New Zealand business culture. Outside of work and study, I lead a multimedia team at my church, mentor fellow students, and enjoy building projects that combine AI, analytics, and business innovation.</p>
+          <p>I'm Felix, a <b>Master of Business Information Systems</b> student at the University of Canterbury. I turn messy data into <b class="hl" style="--d:.3s">tools people actually use</b>.</p>
+          <p>At <b>Cassidy Davies Electrical</b> I built a live operations dashboard that cut a <b class="hl" style="--d:.9s">two-day report to under an hour</b>. I've also consulted for <b>Syft Technologies</b> on entering China and for <b>Fuel50</b> on AI-era SaaS pricing, and won two trading competitions.</p>
           <div class="about-cta">
             <a href="#work" class="btn btn-primary magnetic">See my projects
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -941,22 +941,22 @@
           <div class="focus-card" style="--fc:#3b82f6">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
             <h3>Data &amp; Analytics</h3>
-            <p>Turning raw data into clear stories — SQL, Tableau, Power BI and Python.</p>
+            <p>SQL, Power BI, Tableau, Python.</p>
           </div>
           <div class="focus-card" style="--fc:#00d68f">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-            <h3>Business Information Systems</h3>
-            <p>Bridging business and technology — the systems, data and processes that help organisations run.</p>
+            <h3>Business Systems</h3>
+            <p>Dashboards and automation that replace spreadsheets.</p>
           </div>
           <div class="focus-card" style="--fc:#f59e0b">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v3l2 2M21 21l-4.3-4.3"/></svg></div>
             <h3>Strategy &amp; Research</h3>
-            <p>Market research, competitor analysis and business strategy — turning insight into decisions.</p>
+            <p>Market research and competitor analysis.</p>
           </div>
           <div class="focus-card" style="--fc:#ef4444">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
             <h3>Leadership &amp; Community</h3>
-            <p>Mentoring, leading volunteer teams, and bringing people together.</p>
+            <p>Peer mentor and volunteer team lead.</p>
           </div>
         </div>
       </div>
@@ -1380,48 +1380,83 @@
     const PROJECTS = [
       {
         featured: true,
-        accent: '#00d68f',
-        category: 'AI Product Concept',
-        title: 'OpsPilot AI',
-        image: 'opspilot-cover.svg',
-        alt: 'OpsPilot AI — conversational ops copilot for retail and pharmacy teams',
-        summary: 'A conversational copilot for frontline retail & pharmacy teams. It answers operational questions instantly, surfaces live inventory & sales insights, and auto-drafts end-of-day reports — all grounded in the company’s own data. Includes a working interactive mock-up.',
-        stats: [ {n:4,label:'Core workflows'}, {n:3,label:'Data sources'}, {n:0,label:'Dependencies'} ],
+        accent: '#0ea5e9',
+        category: 'Operations Dashboard',
+        title: 'Cassidy Davies Ops Dashboard',
+        image: 'cde-dashboard-card.jpg',
+        alt: 'Operations dashboard built for Cassidy Davies Electrical',
+        summary: 'A live web dashboard tracking job costs, margins and claim progress, replacing manual spreadsheet reporting across the business.',
+        stats: [ {n:30,label:'Jobs tracked'}, {n:26,label:'Margin target',suffix:'%'}, {n:0,label:'Manual exports'} ],
         detail: {
-          meta: 'Concept · Conversational AI · Data-grounded',
-          body: 'Frontline retail and pharmacy teams lose hours each week to repetitive stock checks, policy look-ups, and manual end-of-day reporting. OpsPilot AI is a concept for a conversational copilot that removes that friction — staff simply ask a question and get an instant, data-grounded answer. I designed the product end-to-end (problem framing, user workflows, data model and UI) and built a working interactive mock-up so the experience can be felt, not just described.',
+          meta: 'Cassidy Davies Electrical · Internship · In daily use',
+          body: 'Built during my Business Systems Analyst internship. The office used to export and rebuild job reports by hand every week. The dashboard pulls the job data automatically and shows every active job\u2019s cost, margin and claim status in one place.',
           highlights: [
-            'Problem framing: identified four high-friction frontline workflows — stock checks, policy look-ups, sales insights and EOD reporting.',
-            'Data-grounded answers: every response cites its source (inventory system, POS feed, store handbook) rather than free-form guessing.',
-            'Live ops view: real-time KPI panel (sales, transactions, basket size, reorder alerts) alongside the chat.',
-            'Auto-drafted reports: compiles the end-of-day summary from POS + inventory data, ready to send to the duty manager.'
+            'Job directory with cost vs quote, GP per hour and margin trend for every active job.',
+            'Flags jobs that are over budget or losing margin, so managers see problems early.',
+            'Automated data pipeline cut a two-day reporting cycle to under an hour.',
+            'Installable as a phone app for managers on the go.'
           ],
-          tech: ['Product Design','Conversational UX','Data Modelling','JavaScript'],
-          links: [ {label:'Try the Demo', url:'apps/opspilot/'} ]
+          tech: ['React','Vite','Cloudflare Workers','Excel','PWA']
         }
       },
       {
         featured: true,
-        accent: '#0ea5e9',
-        category: 'Quant ML Concept',
-        title: 'NZX AlphaLab',
-        image: 'nzx-alphalab-cover.svg',
-        alt: 'NZX AlphaLab — machine-learning stock-return prediction and quantitative research platform',
-        summary: 'A quantitative research platform that predicts next-day returns for NZX equities with machine learning. It engineers 30+ technical & statistical features, trains ensemble + LSTM models, backtests trading strategies against buy-and-hold, and stress-tests them with 10,000-path Monte Carlo simulations — all with explainable AI. Includes an interactive mock-up.',
-        stats: [ {n:32,label:'Features engineered'}, {n:10,label:'MC simulations',suffix:'K'}, {n:5,label:'Model types'} ],
+        accent: '#22c55e',
+        category: 'Field Service App',
+        title: 'CDE Field',
+        image: 'cde-field-cover.svg',
+        alt: 'CDE Field — on-site task progress app for electricians',
+        summary: 'A phone app for electricians on site: pick your name, see your jobs and log task progress that flows straight to the office dashboard.',
+        stats: [ {n:2,label:'User roles'}, {n:1,label:'Shared backend'}, {n:0,label:'App store needed'} ],
         detail: {
-          meta: 'Concept · Quantitative ML · Backtested & stress-tested',
-          body: 'NZX AlphaLab is a concept for a professional-grade quant research platform that asks an honest question: can machine learning extract a real predictive signal from New Zealand Stock Exchange data? Rather than chasing unrealistic returns, the emphasis is scientific rigour — avoiding look-ahead bias, data leakage and overfitting. I designed the full research workflow end-to-end (data pipeline → feature engineering → modelling → backtesting → robustness testing → explainable AI) and built an interactive mock-up that surfaces the signature artefacts a systematic fund would actually look at.',
+          meta: 'Cassidy Davies Electrical · Prototype · Installable PWA',
+          body: 'A companion to the operations dashboard. Electricians record progress against each install task from their phone, and the office sees it on the job page straight away, with no phone calls or end-of-day paperwork.',
           highlights: [
-            'Feature engineering: 30+ trend, momentum, volatility, Ichimoku, statistical and market-relative features, then SHAP/mutual-information selection.',
-            'Models: Linear baseline, Random Forest, XGBoost & LightGBM ensembles plus an LSTM sequence model, tuned with Optuna.',
-            'Honest validation: walk-forward / expanding-window splits to prevent data leakage — never a random train/test shuffle.',
-            'Backtesting with realistic costs (brokerage, slippage, short costs) and Sharpe / Sortino / Calmar / max-drawdown analytics.',
-            'Monte Carlo robustness: 10,000 bootstrapped simulations producing a fan chart, probability-of-loss and percentile bands.',
-            'Explainable AI: SHAP global & local importance answers "why did the model recommend this stock?".'
+            'Two views: \u201cI\u2019m on site\u201d for the crew and \u201cI\u2019m managing\u201d for supervisors.',
+            'Progress percentages write through to the same data store the dashboard reads.',
+            'Works as an installable phone app, with no app store needed.'
           ],
-          tech: ['Python','XGBoost / LightGBM','TensorFlow (LSTM)','SHAP','Backtesting','FastAPI','Next.js'],
-          links: [ {label:'Try the Demo', url:'apps/alphalab/'} ]
+          tech: ['React','Vite','PWA','Cloudflare KV']
+        }
+      },
+      {
+        featured: true,
+        accent: '#3b82f6',
+        category: 'Consulting · Market Entry',
+        title: 'Syft Technologies — China Market Entry',
+        image: 'syft-cover.jpg',
+        alt: 'Syft Technologies market-entry project cover',
+        summary: 'Consultant to Syft Technologies, a Christchurch trace-gas analysis company, on how to enter the Chinese market.',
+        stats: [],
+        detail: {
+          meta: 'UC Global Impact Industry Project · Consultant',
+          body: 'Worked as a consultant with Syft Technologies, a Christchurch company that makes real-time trace-gas analysers used from aerospace research to global industry, to assess and plan its entry into the Chinese market.',
+          highlights: [
+            'Researched the Chinese market, competitors and customer segments for Syft\u2019s instruments.',
+            'Assessed entry options and the risks and requirements of each.',
+            'Presented market-entry recommendations to the Syft team.'
+          ],
+          tech: ['Market Research','Competitor Analysis','Market-Entry Strategy','Client Engagement']
+        }
+      },
+      {
+        featured: true,
+        accent: '#f59e0b',
+        category: 'Consulting · SaaS Pricing',
+        title: 'Fuel50 — AI-Era SaaS Pricing',
+        image: 'fuel50-cover.jpg',
+        alt: 'Designing a Future-Ready Pricing Model for Fuel50 — UC Virtual Internship project report',
+        summary: 'Consultant and team lead helping Fuel50, a NZ HR-tech company, design a new SaaS pricing model for AI-powered features.',
+        stats: [],
+        detail: {
+          meta: 'UC Virtual Internship 2026 · Consultant & team lead',
+          body: 'Through the UC Virtual Internship I led a team consulting for Fuel50, a New Zealand HR-technology company, on how its SaaS pricing should change as AI features become a core part of the product.',
+          highlights: [
+            'Market research and competitor analysis of how HR-tech and SaaS companies price AI features.',
+            'Evaluated pricing models for AI use, from per-seat to usage-based and hybrid.',
+            'Recommended a future-ready pricing model to the Fuel50 team.'
+          ],
+          tech: ['SaaS Pricing','Market Research','Competitor Analysis','AI Business Models','Team Leadership']
         }
       },
       {
