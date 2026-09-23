@@ -788,6 +788,11 @@
     #volunteer .work-img img { filter: none; }
     /* the grid box can't resolve height:100%, so pin images to it; object-fit/position then work */
     .work-img > img { position: absolute; inset: 0; width: 100%; height: 100%; }
+    /* no-crop photos: whole image shown, spare space filled with a blurred copy of itself */
+    .fit-blur { position: relative; overflow: hidden; }
+    .fit-blur::before { content: ''; position: absolute; inset: -30px; background: var(--bg) center / cover no-repeat; filter: blur(22px) brightness(.55) saturate(1.1); }
+    .carousel-track.vol-track .work-img { height: 240px; }
+    .fit-blur > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain !important; z-index: 1; }
     .work-card:hover .work-img img, .ap-item:hover .ap-thumb, .lanyard:hover, .lanyard.grabbing,
     .skill:hover .si img, .ai-stack img:hover, .cert-card:hover .cert-logo { filter: none; }
     /* timeline, editorial: plain date column, framed photo, no tape or notes */
@@ -1881,6 +1886,14 @@
         }
       });
     })();
+
+    // show volunteer & journey photos uncropped, backed by a blurred copy of the same photo
+    document.querySelectorAll('#volunteer .work-img, .tl-photo .pic').forEach(box => {
+      const img = box.querySelector('img');
+      if (!img) return;
+      box.classList.add('fit-blur');
+      box.style.setProperty('--bg', `url("${img.getAttribute('src')}")`);
+    });
 
     // Text Rotate (fancycomponents.dev): letters roll out the top, the next phrase rolls in from below
     (function(){
