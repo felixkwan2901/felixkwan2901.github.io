@@ -32,7 +32,7 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23b91c2c'/><text x='50' y='50' dominant-baseline='central' text-anchor='middle' font-family='Sora,Inter,sans-serif' font-size='52' font-weight='800' fill='%23ffffff'>FK</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=Caveat:wght@500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@300..800&family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Caveat:wght@500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -99,7 +99,7 @@
     .bg-orbs { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
     .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: .45; }
     .orb-1 { width: 560px; height: 560px; background: radial-gradient(circle,#1d4ed8,transparent 70%); top: -180px; left: -140px; animation: float1 20s ease-in-out infinite; }
-    .orb-2 { width: 480px; height: 480px; background: radial-gradient(circle,#7c3aed,transparent 70%); bottom: -160px; right: -160px; opacity: .3; animation: float2 24s ease-in-out infinite; }
+    .orb-2 { width: 480px; height: 480px; background: radial-gradient(circle,#1e3a8a,transparent 70%); bottom: -160px; right: -160px; opacity: .22; animation: float2 24s ease-in-out infinite; }
     @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,-50px)} }
     @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,40px)} }
 
@@ -143,8 +143,8 @@
     .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, var(--bg) 28%, transparent 78%), linear-gradient(to top, var(--bg) 4%, transparent 45%), linear-gradient(to bottom, var(--bg) 2%, transparent 22%); }
     .hero-aurora { position: absolute; inset: -20% -10% auto -10%; height: 130%; z-index: 1; pointer-events: none; opacity: .55; filter: blur(48px); background:
         radial-gradient(40% 50% at 18% 28%, rgba(59,130,246,.45), transparent 70%),
-        radial-gradient(38% 46% at 75% 22%, rgba(139,92,246,.40), transparent 70%),
-        radial-gradient(42% 48% at 55% 70%, rgba(236,72,153,.32), transparent 72%);
+        radial-gradient(38% 46% at 75% 22%, rgba(30,64,175,.30), transparent 70%),
+        radial-gradient(42% 48% at 55% 70%, rgba(14,116,144,.18), transparent 72%);
       background-size: 200% 200%; animation: aurora 18s ease-in-out infinite; }
     @keyframes aurora { 0%,100% { background-position: 0% 50%, 100% 50%, 50% 100%; } 50% { background-position: 100% 50%, 0% 50%, 50% 0%; } }
     .hero-type { font-size: clamp(1rem,2vw,1.22rem); font-weight: 600; color: var(--text-2); margin: -4px 0 16px; min-height: 1.6em; }
@@ -153,7 +153,7 @@
     @keyframes twblink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
     .hero-stats { display: flex; gap: 30px; margin-top: 34px; flex-wrap: wrap; }
     .hstat { display: flex; flex-direction: column; gap: 2px; }
-    .hnum { font-family: 'Sora', sans-serif; font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; line-height: 1; background: linear-gradient(135deg,var(--blue-2),#8b5cf6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hnum { font-family: 'Sora', sans-serif; font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; line-height: 1; color: var(--text); }
     .hlbl { font-size: .78rem; color: var(--text-2); font-weight: 500; letter-spacing: .01em; }
     .hero .wrap { position: relative; z-index: 2; }
     .hero .side-index { z-index: 2; }
@@ -283,7 +283,7 @@
     .work-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.3,1); }
     .work-card:hover .work-img img { transform: scale(1.07); }
     .work-img .ph { font-size: 2.6rem; }
-    .work-img.grad-1 { background: linear-gradient(135deg,#1e3a8a,#312e81); }
+    .work-img.grad-1 { background: linear-gradient(135deg,#1e3a8a,#1e293b); }
     .work-img.grad-2 { background: linear-gradient(135deg,#0f766e,#155e75); }
     .work-feat { position: absolute; top: 10px; left: 10px; z-index: 2; background: var(--uc-red); color: #fff; font-size: .6rem; font-weight: 800; letter-spacing: .1em; padding: 4px 8px; border-radius: 6px; }
     .work-body { padding: 20px 18px 18px; position: relative; }
@@ -350,9 +350,9 @@
     .ai-head { text-align: center; max-width: 640px; margin: 96px auto 0; }
     .ai-head .eyebrow { justify-content: center; }
     .ai-head .section-sub { margin-inline: auto; }
-    .gradient-text { background: linear-gradient(95deg,#60a5fa,#a78bfa 55%,#f0abfc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .gradient-text { color: var(--blue-2); }
     .ai-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 28px; max-width: 1000px; margin: 52px auto 0; }
-    .ai-card { position: relative; border-radius: 22px; background: var(--panel); border: 1px solid var(--border); overflow: hidden; transition: transform .4s cubic-bezier(.2,.7,.3,1), box-shadow .4s; transform-style: preserve-3d; will-change: transform; --c1:#3b82f6; --c2:#8b5cf6; }
+    .ai-card { position: relative; border-radius: 22px; background: var(--panel); border: 1px solid var(--border); overflow: hidden; transition: transform .4s cubic-bezier(.2,.7,.3,1), box-shadow .4s; transform-style: preserve-3d; will-change: transform; --c1:#3b82f6; --c2:#0ea5e9; }
     /* animated gradient glow border */
     .ai-card::before { content: ""; position: absolute; inset: -1px; border-radius: 23px; padding: 1.5px; background: linear-gradient(130deg, var(--c1), var(--c2), var(--c1)); background-size: 220% 220%; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .55; animation: aiborder 6s ease infinite; transition: opacity .4s; pointer-events: none; }
     .ai-card:hover::before { opacity: 1; }
@@ -452,11 +452,6 @@
     @media (max-width: 860px) { .about-wrap { grid-template-columns: 1fr; gap: 32px; } }
     @media (max-width: 460px) { .about-focus { grid-template-columns: 1fr; } }
     /* animated per-character heading reveal */
-    .fx-char { display: inline-block; opacity: 0; transform: translateY(.5em) scale(.94); filter: blur(6px); will-change: transform, opacity, filter; }
-    .fx-char.fx-space { width: .28em; }
-    .fx-split.go .fx-char { animation: fxRise .6s cubic-bezier(.2,.8,.2,1) both; }
-    @keyframes fxRise { to { opacity: 1; transform: none; filter: blur(0); } }
-    @media (prefers-reduced-motion: reduce) { .fx-char { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; } }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
     .about-text p { color: var(--text-2); font-size: 1.05rem; margin-bottom: 16px; }
     .about-text strong { color: var(--text); font-weight: 600; }
@@ -545,7 +540,7 @@
     .cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb,var(--blue) 22%,transparent); }
     .cf-field input.invalid, .cf-field textarea.invalid { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.18); }
     .cf-bottom { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .cf-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 13px; border: none; cursor: pointer; font: inherit; font-weight: 700; font-size: .95rem; color: #fff; background: linear-gradient(135deg,#3b82f6,#8b5cf6); box-shadow: 0 10px 26px color-mix(in srgb,var(--blue) 35%,transparent); transition: transform .25s, box-shadow .25s, opacity .25s; }
+    .cf-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 13px; border: none; cursor: pointer; font: inherit; font-weight: 700; font-size: .95rem; color: #fff; background: linear-gradient(135deg,var(--blue),#2563eb); box-shadow: 0 10px 26px color-mix(in srgb,var(--blue) 35%,transparent); transition: transform .25s, box-shadow .25s, opacity .25s; }
     .cf-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px color-mix(in srgb,var(--blue) 45%,transparent); }
     .cf-btn:disabled { opacity: .7; cursor: progress; transform: none; }
     .cf-btn-spin { width: 17px; height: 17px; display: none; animation: cfspin .7s linear infinite; }
@@ -568,7 +563,7 @@
     .reveal.visible { opacity: 1; transform: none; }
     /* ===== extra motion (reactbits-inspired) ===== */
     /* scroll progress bar */
-    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 200; background: linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899); box-shadow: 0 0 12px rgba(139,92,246,.6); transition: width .1s linear; }
+    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 200; background: var(--blue); box-shadow: 0 0 10px rgba(59,130,246,.5); transition: width .1s linear; }
     .to-top { position: fixed; right: 26px; bottom: 26px; z-index: 190; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--border); background: color-mix(in srgb,var(--bg) 78%,transparent); backdrop-filter: blur(14px); color: var(--text); cursor: pointer; opacity: 0; transform: translateY(16px) scale(.85); pointer-events: none; transition: opacity .3s, transform .3s, box-shadow .3s; box-shadow: 0 8px 26px rgba(0,0,0,.28); }
     .to-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
     .to-top:hover { box-shadow: 0 10px 30px color-mix(in srgb,var(--blue) 45%,transparent); transform: translateY(-3px) scale(1.05); }
@@ -591,6 +586,59 @@
     .wave { display: inline-block; transform-origin: 70% 70%; }
     .kia.played .wave { animation: wave 2.6s ease-in-out .6s infinite; }
     @keyframes wave { 0%,55%,100%{transform:rotate(0)} 10%{transform:rotate(16deg)} 20%{transform:rotate(-10deg)} 30%{transform:rotate(16deg)} 40%{transform:rotate(-6deg)} 50%{transform:rotate(12deg)} }
+
+    /* ===== fancycomponents.dev-inspired effects (vanilla ports) ===== */
+    /* Text Rotate — hero role pill */
+    .trot { display: inline-flex; position: relative; overflow: hidden; vertical-align: baseline; padding: 3px 11px; border-radius: 9px; white-space: nowrap; color: #fff; font-weight: 700; background: var(--blue); box-shadow: 0 6px 18px -8px rgba(59,130,246,.8); transition: width .5s cubic-bezier(.34,1.25,.64,1); }
+    .trot-word { display: inline-flex; }
+    .trot-ch { display: inline-block; }
+    .trot-word.in .trot-ch { animation: trotIn .55s cubic-bezier(.34,1.45,.64,1) both; animation-delay: calc(var(--i) * 22ms); }
+    .trot-word.out { position: absolute; left: 11px; top: 3px; }
+    .trot-word.out .trot-ch { animation: trotOut .35s cubic-bezier(.55,0,.75,0) both; animation-delay: calc(var(--i) * 14ms); }
+    @keyframes trotIn { from { transform: translateY(115%); } to { transform: none; } }
+    @keyframes trotOut { to { transform: translateY(-125%); } }
+
+    /* Letter Swap Hover — nav links */
+    .ls { display: inline-flex; overflow: hidden; line-height: 1.25; vertical-align: bottom; }
+    .ls-c { display: inline-block; position: relative; white-space: pre; transition: transform .38s cubic-bezier(.65,0,.35,1); transition-delay: calc(var(--i) * 18ms); }
+    .ls-c::after { content: attr(data-c); position: absolute; left: 0; top: 100%; color: var(--blue-2); }
+    a:hover > .ls .ls-c, a:focus-visible > .ls .ls-c { transform: translateY(-100%); }
+
+    /* Vertical Cut Reveal — section titles */
+    .fx-word { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+    .fx-char { display: inline-block; transform: translateY(105%); will-change: transform; }
+    .fx-split.go .fx-char { animation: fxCut .75s cubic-bezier(.22,1.2,.36,1) both; }
+    @keyframes fxCut { to { transform: none; } }
+
+    /* Text Highlighter — About key phrases */
+    .about-lead b.hl { background: linear-gradient(color-mix(in srgb,var(--blue) 40%,transparent),color-mix(in srgb,var(--blue) 40%,transparent)) left 88% / 0% 42% no-repeat; padding: 0 2px; border-radius: 3px; transition: background-size 1s cubic-bezier(.65,0,.35,1) var(--d,0s); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .about-lead.visible b.hl { background-size: 100% 42%; }
+
+    /* Simple Marquee — scroll-velocity reactive band */
+    .mq-band { position: relative; padding: 26px 0 8px; overflow: hidden; display: grid; gap: 14px; -webkit-mask: linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); mask: linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); }
+    .mq-row { display: flex; width: max-content; will-change: transform; }
+    .mq-seq { display: flex; align-items: center; flex-shrink: 0; gap: 34px; padding-right: 34px; }
+    .mq-row:not(.mq-tools) span { font-family: 'Sora',sans-serif; font-weight: 800; font-size: clamp(1.7rem,4.2vw,3.1rem); letter-spacing: -.03em; white-space: nowrap; color: var(--text); }
+    .mq-row:not(.mq-tools) span.mq-o { color: var(--text-3); }
+    .mq-row i { font-style: normal; color: var(--blue-2); font-size: 1.3rem; }
+    .mq-tools span { display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px 9px 11px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel); font-size: .88rem; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+    .mq-tools img { width: 22px; height: 22px; object-fit: contain; }
+
+    /* Variable Font Cursor Proximity — contact heading */
+    #proxTitle { font-weight: 400; }
+    .vfp-w { display: inline-block; white-space: nowrap; }
+    .vfp-c { display: inline-block; font-weight: var(--w,400); transition: font-weight .12s linear; }
+
+    /* Underline To Background — footer links */
+    .footer-links a { position: relative; padding: 2px 4px; margin: -2px -4px; border-radius: 4px; background: linear-gradient(var(--blue),var(--blue)) left bottom / 100% 1px no-repeat; transition: background-size .35s cubic-bezier(.65,0,.35,1), color .25s; }
+    .footer-links a:hover, .footer-links a:focus-visible { background-size: 100% 100%; color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .trot { transition: none; } .trot-word.in .trot-ch { animation: none; }
+      .ls-c { transition: none; } a:hover > .ls .ls-c { transform: none; }
+      .fx-char { transform: none !important; animation: none !important; }
+      .about-lead b.hl { transition: none; }
+    }
 
     @media (prefers-reduced-motion: reduce) { .reveal{opacity:1;transform:none;transition:none} .orb{animation:none} .hero h1{animation:none;-webkit-text-fill-color:#fff} .scroll-progress{display:none} .word-rise{opacity:1;transform:none;animation:none} .split-char{opacity:1;transform:none;animation:none} .wave{animation:none} .hero-aurora{animation:none} .tw-caret{animation:none} .ach-glint{animation:none} }
 
@@ -637,6 +685,120 @@
       .photo-2, .note { display: none; }
       .collage { height: 400px; }
     }
+    /* =====================================================================
+       THEME LAYER — dark monochrome editorial (Replit "Elias Vance" style)
+       Flat black, white serif display type, greyscale imagery that
+       colours in on hover, thin rules, sharp corners. No glows/gradients.
+       Delete this block to return to the previous look.
+       ===================================================================== */
+    :root {
+      --bg: #0a0a0a; --bg-soft: #111111;
+      --panel: rgba(255,255,255,0.025); --panel-2: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.11); --border-2: rgba(255,255,255,0.22);
+      --text: #f2f2f0; --text-1: #f2f2f0; --text-2: #a3a3a0; --text-3: #6b6b68;
+      --blue: #f2f2f0; --blue-2: #ffffff; --ink: #f2f2f0; --on-ink: #0a0a0a;
+      --glow: transparent; --tape: rgba(200,200,195,.35); --paper: #ecebe7;
+      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --r: 3px;
+    }
+    [data-theme="light"] {
+      --bg: #f4f3ef; --bg-soft: #ecebe6;
+      --panel: rgba(0,0,0,0.02); --panel-2: rgba(0,0,0,0.045);
+      --border: rgba(0,0,0,0.12); --border-2: rgba(0,0,0,0.24);
+      --text: #0d0d0d; --text-1: #0d0d0d; --text-2: #4d4d4a; --text-3: #85857f;
+      --blue: #0d0d0d; --blue-2: #000000; --ink: #0d0d0d; --on-ink: #f4f3ef;
+      --glow: transparent;
+    }
+    /* every per-card colour collapses to ink */
+    [style*="--accent"], [style*="--c:"], [style*="--fc"], .pm-dialog, .ap-item, .ai-card, .work-card, .cert-card, .tl-item {
+      --accent: var(--ink) !important; --c: var(--ink) !important; --cb: transparent !important; --fc: var(--ink) !important;
+      --c1: var(--ink) !important; --c2: var(--ink) !important;
+    }
+    ::selection { background: var(--ink); color: var(--on-ink); }
+
+    /* kill the ambient "AI" glow */
+    .bg-orbs, .hero-aurora, .contact-card::before, .ai-particles, .ach-glint { display: none !important; }
+    .hero-bg { filter: grayscale(1) contrast(1.1); opacity: .16; }
+    .scroll-progress { background: var(--ink); box-shadow: none; height: 2px; }
+
+    /* type: serif display, quiet uppercase labels */
+    h1, h2, .section-title, .contact-card h2, .cert-head, .pm-body h3, .ap-head h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.015em; }
+    .section-title { font-size: clamp(2.2rem,5vw,3.6rem); line-height: 1.02; }
+    .hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(3.6rem,9vw,7rem); letter-spacing: -0.03em; line-height: .92; animation: none; background: none; -webkit-text-fill-color: currentColor; color: var(--text); }
+    [data-theme="light"] .hero h1 { background: none; -webkit-text-fill-color: currentColor; }
+    .kia { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--text-2); }
+    .brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: .86rem; letter-spacing: .32em; text-transform: uppercase; }
+    .eyebrow { color: var(--text-3); letter-spacing: .28em; font-weight: 600; font-size: .7rem; }
+    .eyebrow::before { background: var(--text-3); width: 36px; }
+    .hand-sub { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.35rem; color: var(--text-2); }
+    .hero .role b, .about-lead b, .chip b, .footer-inner .fc b { color: var(--text); }
+    .hnum, .ach-num, .wnum { font-family: var(--serif); font-weight: 400; background: none; -webkit-text-fill-color: currentColor; color: var(--text); }
+    .hnum { font-size: clamp(2rem,4vw,2.8rem); }
+    .tl-card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.55rem; color: var(--text); }
+    .tl-feat .fnum, .ach-rank { font-family: var(--serif); font-weight: 500; }
+    #proxTitle { font-family: 'Sora', sans-serif; font-weight: 300; }
+    .vfp-c { font-weight: var(--w,300); }
+
+    /* marquee: big serif italics, alternating grey */
+    .mq-row:not(.mq-tools) span { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.02em; }
+    .mq-row i { color: var(--text-3); font-size: .9rem; }
+    .mq-tools img { filter: grayscale(1); opacity: .85; transition: filter .3s, opacity .3s; }
+    .mq-tools span:hover img { filter: none; opacity: 1; }
+
+    /* shapes: sharp corners, hairline borders, no coloured shadows */
+    .work-card, .ai-card, .ai-card::before, .ach-card, .cert-card, .focus-card, .tl-card, .skill, .contact-card, .roles, .lead-card,
+    .pm-dialog, .ap-dialog, .pm-hero, .ap-head, .ap-item, .cert-ic, .focus-ic, .role-cell .ic, .skill .si, .ai-mock, .ai-stack, .ai-impact,
+    .cf-field input, .cf-field textarea, .contact-link, .work-img, nav .inner, .theme-btn, .menu-btn, .resume-btn { border-radius: var(--r) !important; }
+    .work-card:hover, .ai-card:hover, .ach-card:hover, .cert-card:hover, .skill:hover, .tl-card:hover { box-shadow: none; border-color: var(--border-2); }
+    .ai-card::before { opacity: .25; animation: none; }
+    .contact-card { background: var(--panel); }
+    .tl-card::before { width: 1px; opacity: .5; }
+    .timeline::before { background: linear-gradient(180deg, var(--border-2), transparent); width: 1px; left: 48px; }
+    .tl-dot { border-width: 1px; box-shadow: none; background: var(--ink); width: 9px; height: 9px; left: 44px; top: 9px; }
+    .wc-cat, .pm-cat, .tl-tags span, .cert-badge, .pm-tech span { border-radius: 2px; background: transparent; color: var(--text-2); border-color: var(--border-2); }
+    .work-feat { background: var(--ink); color: var(--on-ink); border-radius: 2px; }
+    .cdot.active { background: var(--ink); }
+    .carousel-track { scrollbar-color: var(--border-2) transparent; }
+    .carousel-track::-webkit-scrollbar-thumb { background: var(--border-2); }
+    .skill .si, .focus-ic, .cert-ic { background: transparent; border: 1px solid var(--border); }
+    .role-cell:hover .ic { background: var(--ink); color: var(--on-ink); box-shadow: none; }
+    .cf-field input:focus, .cf-field textarea:focus { border-color: var(--ink); box-shadow: none; }
+
+    /* buttons: flat ink, uppercase, squared */
+    .btn, .cf-btn, .ai-cta, .pm-links a { border-radius: 2px; text-transform: uppercase; letter-spacing: .14em; font-size: .74rem; font-weight: 600; }
+    .btn { padding: 15px 24px; }
+    .btn-primary, .cf-btn, .ai-cta, .pm-links a { background: var(--ink); color: var(--on-ink); box-shadow: none; }
+    .btn-primary:hover, .cf-btn:hover, .ai-cta:hover { box-shadow: none; opacity: .88; }
+    .btn-ghost { background: transparent; border-color: var(--border-2); }
+    .btn-ghost:hover { background: var(--panel-2); }
+
+    /* achievements header: black plate instead of gold gradient */
+    .ach-top, .ach-top-2 { background: var(--bg-soft); border-bottom: 1px solid var(--border); }
+    .ach-top .trophy { color: var(--text); filter: none; width: 38px; }
+    .ach-rank { color: var(--text); text-shadow: none; }
+    .ai-shot { background: var(--bg-soft); animation: none; border-bottom: 1px solid var(--border); }
+    .ai-shot::after { display: none; }
+    .ai-impact { background: transparent; border-color: var(--border); }
+
+    /* imagery: black & white, colour returns on hover.
+       Exceptions kept in full colour: profile polaroids (.polaroid), experience photos (.tl-photo) and volunteer photos (#volunteer). */
+    .work-img img, .pm-hero img, .ap-thumb, .lanyard, .skill .si img, .ai-stack img, .cert-logo {
+      filter: grayscale(1) contrast(1.05); transition: filter .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);
+    }
+    #volunteer .work-img img { filter: none; }
+    .work-card:hover .work-img img, .ap-item:hover .ap-thumb, .lanyard:hover, .lanyard.grabbing,
+    .skill:hover .si img, .ai-stack img:hover, .cert-card:hover .cert-logo { filter: none; }
+    .tl-photo .pic { background: var(--bg-soft); }
+    .tl-tape { background: #d9d8d3; color: #2a2a28; }
+    .tl-note { background: var(--panel); }
+
+    /* fancy effects, monochrome */
+    .trot { background: var(--ink); color: var(--on-ink); border-radius: 2px; box-shadow: none; }
+    .about-lead b.hl { background-image: linear-gradient(color-mix(in srgb,var(--ink) 22%,transparent),color-mix(in srgb,var(--ink) 22%,transparent)); }
+    .footer-links a { background-image: linear-gradient(var(--ink),var(--ink)); }
+    .footer-links a:hover, .footer-links a:focus-visible { color: var(--on-ink); }
+    .ls-c::after { color: var(--text); }
+    .nav-links a::after { height: 1px; }
   </style>
 </head>
 <body>
@@ -684,7 +846,7 @@
           <div class="kia">Kia Ora! 👋</div>
           <h1>Felix<br/>Kwan</h1>
           <p class="role"><b>Business Information Systems</b> Student<br/>University of Canterbury</p>
-          <p class="hero-type">I'm a <span class="tw" id="typewriter"></span><span class="tw-caret" aria-hidden="true"></span></p>
+          <p class="hero-type">I'm a <span class="trot" id="textRotate" role="text"></span></p>
           <p class="tagline">I use technology, data and leadership to solve problems and create meaningful impact in my community.</p>
           <div class="hero-cta">
             <a href="#work" class="btn btn-primary magnetic">View My Work
@@ -733,13 +895,28 @@
 
       <!-- role strip -->
       <div class="roles reveal">
+        <div class="role-cell" style="--c:#22c55e;--cb:rgba(34,197,94,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div><div><div class="rt">Cassidy Davies</div><div class="rd">Business Systems Analyst</div></div></div>
         <div class="role-cell" style="--c:#3b82f6;--cb:rgba(59,130,246,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="rt">Tuakana</div><div class="rd">Peer Mentor</div></div></div>
         <div class="role-cell" style="--c:#06b6d4;--cb:rgba(6,182,212,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg></div><div><div class="rt">Culture Connect</div><div class="rd">Indonesian Rep</div></div></div>
-        <div class="role-cell" style="--c:#8b5cf6;--cb:rgba(139,92,246,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M10 8l5 3-5 3V8z"/></svg></div><div><div class="rt">IFGF Church</div><div class="rd">Multimedia Leader</div></div></div>
+        <div class="role-cell" style="--c:#f59e0b;--cb:rgba(245,158,11,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M10 8l5 3-5 3V8z"/></svg></div><div><div class="rt">IFGF Church</div><div class="rd">Multimedia Leader</div></div></div>
         <div class="role-cell" style="--c:#ef4444;--cb:rgba(239,68,68,.14)"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></div><div><div class="rt">Community</div><div class="rd">Volunteer</div></div></div>
       </div>
     </div>
   </header>
+
+  <!-- MARQUEE (fancy: simple marquee, scroll-velocity reactive) -->
+  <div class="mq-band" aria-hidden="true">
+    <div class="mq-row" data-marquee data-speed="0.6">
+      <div class="mq-seq">
+        <span>Data Analytics</span><i>✦</i><span class="mq-o">Business Systems</span><i>✦</i><span>Strategy</span><i>✦</i><span class="mq-o">Automation</span><i>✦</i><span>Dashboards</span><i>✦</i><span class="mq-o">AI &amp; Innovation</span><i>✦</i><span>Leadership</span><i>✦</i>
+      </div>
+    </div>
+    <div class="mq-row mq-tools" data-marquee data-speed="-0.45">
+      <div class="mq-seq">
+        <span><img src="icons/_microsoft-power-bi.svg" alt=""/>Power BI</span><span><img src="icons/_sql.svg" alt=""/>SQL</span><span><img src="icons/_python.svg" alt=""/>Python</span><span><img src="icons/_tableau.svg" alt=""/>Tableau</span><span><img src="icons/_microsoft-excel.svg" alt=""/>Excel</span><span><img src="icons/_servicenow.svg" alt=""/>ServiceNow</span><span><img src="icons/_openai.svg" alt=""/>OpenAI</span><span><img src="icons/_figma.svg" alt=""/>Figma</span><span><img src="icons/_javascript.svg" alt=""/>JavaScript</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ABOUT -->
   <section class="pad pad-tight-b" id="about">
@@ -750,8 +927,8 @@
       </div>
       <div class="about-wrap">
         <div class="about-lead reveal">
-          <p>Kia ora — I'm Felix, a <b>Master of Business Information Systems</b> student at the University of Canterbury with a passion for <b>data, finance, AI, and business strategy</b>. I enjoy turning complex problems into practical solutions through analytics, technology, and data-driven decision-making.</p>
-          <p>My professional background spans <b>insurance, marketing, business operations, and retail management</b>, giving me a strong understanding of how organisations create value and where technology can make a real impact. Alongside my studies, I have developed expertise in financial markets, winning both the <b>University of Canterbury Trading Competition</b> and the <b>Tiger Brokers New Zealand Tertiary Student Sim-Trading Competition</b>.</p>
+          <p>Kia ora — I'm Felix, a <b>Master of Business Information Systems</b> student at the University of Canterbury with a passion for <b class="hl" style="--d:.3s">data, finance, AI, and business strategy</b>. I enjoy turning complex problems into practical solutions through analytics, technology, and data-driven decision-making.</p>
+          <p>Most recently, as a <b class="hl" style="--d:.9s">Business Systems Analyst Intern</b> at <b>Cassidy Davies Electrical</b>, I designed and deployed a live operations dashboard tracking job costs, margins and claim progress, and automated the reporting pipeline behind it — cutting a two-day manual export down to under an hour. My wider background spans <b>insurance, marketing, business operations, and retail management</b>, giving me a strong understanding of how organisations create value and where technology can make a real impact. Alongside my studies, I have developed expertise in financial markets, winning both the <b class="hl" style="--d:1.5s">University of Canterbury Trading Competition</b> and the <b>Tiger Brokers New Zealand Tertiary Student Sim-Trading Competition</b>.</p>
           <p>Through the <b>UC Virtual Internship</b>, I worked with <b>Fuel50</b>, a New Zealand HR technology company, conducting market research, competitor analysis, and evaluating future SaaS pricing strategies, including emerging AI-powered business models. I have also worked directly with New Zealand organisations through the <b>Global Impact Industry Project</b> and <b>Global Leadership Programme</b>, gaining valuable experience in client engagement, strategic problem-solving, and New Zealand business culture. Outside of work and study, I lead a multimedia team at my church, mentor fellow students, and enjoy building projects that combine AI, analytics, and business innovation.</p>
           <div class="about-cta">
             <a href="#work" class="btn btn-primary magnetic">See my projects
@@ -771,7 +948,7 @@
             <h3>Business Information Systems</h3>
             <p>Bridging business and technology — the systems, data and processes that help organisations run.</p>
           </div>
-          <div class="focus-card" style="--fc:#7c5cff">
+          <div class="focus-card" style="--fc:#f59e0b">
             <div class="focus-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v3l2 2M21 21l-4.3-4.3"/></svg></div>
             <h3>Strategy &amp; Research</h3>
             <p>Market research, competitor analysis and business strategy — turning insight into decisions.</p>
@@ -925,6 +1102,23 @@
       </div>
       <div class="timeline">
 
+        <div class="tl-item reveal" style="--accent:#0ea5e9">
+          <div class="tl-rail"><span class="tl-tape">2026<br/>Present</span><span class="tl-dot"></span></div>
+          <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="cde-dashboard-cover.jpg" alt="Operations dashboard built at Cassidy Davies Electrical" loading="lazy"/></div><span class="tcap">Cassidy Davies</span></div>
+          <div class="tl-card">
+            <h3>Business Systems Analyst Intern</h3>
+            <div class="tl-org">Cassidy Davies Electrical · Belfast, Christchurch</div>
+            <p>Designed and deployed a live web-based operations dashboard tracking job costs, profit margins and claim progress — replacing manual spreadsheet reporting across the business, and automating the data pipeline behind it.</p>
+            <div class="tl-feats">
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg><div class="fnum">Live Dashboard</div><div class="flbl">Job costs &amp; margins</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div class="fnum">2 days → 60 min</div><div class="flbl">Reporting cycle cut</div></div>
+              <div class="tl-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><div class="fnum">Python &amp; OCR</div><div class="flbl">Automated data entry</div></div>
+            </div>
+            <div class="tl-tags"><span>Business Analysis</span><span>Automation</span><span>Dashboards</span></div>
+          </div>
+          <div class="tl-note">Turning spreadsheets into systems people actually use.</div>
+        </div>
+
         <div class="tl-item reveal" style="--accent:#3b82f6">
           <div class="tl-rail"><span class="tl-tape">2026<br/>Present</span><span class="tl-dot"></span></div>
           <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="hero-bg.jpg" alt="Tuakana student community" loading="lazy"/></div><span class="tcap">Tuakana</span></div>
@@ -993,7 +1187,7 @@
           <div class="tl-note">Turning client insight into real results.</div>
         </div>
 
-        <div class="tl-item reveal" style="--accent:#ec4899">
+        <div class="tl-item reveal" style="--accent:#ef4444">
           <div class="tl-rail"><span class="tl-tape">2017<br/>2020</span><span class="tl-dot"></span></div>
           <div class="tl-photo"><span class="ttape"></span><div class="pic"><img src="chitose.jpg" alt="Felix presenting at PT Chitose International" loading="lazy"/></div><span class="tcap">Chitose Intl</span></div>
           <div class="tl-card">
@@ -1091,7 +1285,7 @@
     <div class="wrap">
       <div class="contact-card reveal">
         <div class="eyebrow" style="justify-content:center;">Get In Touch</div>
-        <h2>Let's build something together</h2>
+        <h2 id="proxTitle">Let's build something together</h2>
         <p>Open to internships, graduate roles, and collaborations in business information systems, data, and technology — in New Zealand and beyond.</p>
         <div class="contact-links">
           <a href="mailto:kwanfelixp@gmail.com" class="contact-link"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 6.5l7.5 5 7.5-5M3 5h14a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z" stroke-linecap="round"/></svg> Email</a>
@@ -1208,7 +1402,7 @@
       },
       {
         featured: true,
-        accent: '#7c5cff',
+        accent: '#0ea5e9',
         category: 'Quant ML Concept',
         title: 'NZX AlphaLab',
         image: 'nzx-alphalab-cover.svg',
@@ -1380,23 +1574,30 @@
     else document.addEventListener('DOMContentLoaded', initCarousels);
 
     // ----- animated per-character heading reveal -----
+    // Vertical Cut Reveal (fancycomponents.dev): each word is a mask, letters slide up from below
     function initSplitText() {
+      document.querySelectorAll('.section-title').forEach(el => el.classList.add('fx-split'));
       document.querySelectorAll('.fx-split').forEach(el => {
         if (el.dataset.split) return;
         el.dataset.split = '1';
-        const text = el.textContent;
+        const text = el.textContent.trim();
         el.setAttribute('aria-label', text);
         el.textContent = '';
         let i = 0;
-        for (const ch of text) {
-          const s = document.createElement('span');
-          s.className = 'fx-char' + (/[a-z0-9]/i.test(ch) ? '' : ' fx-space');
-          s.setAttribute('aria-hidden', 'true');
-          s.textContent = ch === ' ' ? ' ' : ch;
-          s.style.animationDelay = (i * 0.035) + 's';
-          el.appendChild(s);
-          i++;
-        }
+        text.split(/\s+/).forEach((word, wi) => {
+          if (wi) el.appendChild(document.createTextNode(' '));
+          const w = document.createElement('span');
+          w.className = 'fx-word';
+          w.setAttribute('aria-hidden', 'true');
+          for (const ch of word) {
+            const c = document.createElement('span');
+            c.className = 'fx-char';
+            c.textContent = ch;
+            c.style.animationDelay = (i++ * 0.028) + 's';
+            w.appendChild(c);
+          }
+          el.appendChild(w);
+        });
         const io = new IntersectionObserver((entries) => {
           entries.forEach(e => { if (e.isIntersecting) { el.classList.add('go'); io.disconnect(); } });
         }, { threshold: 0.35 });
@@ -1671,26 +1872,152 @@
       });
     })();
 
-    // typewriter rotating roles in the hero
+    // Text Rotate (fancycomponents.dev): letters roll out the top, the next phrase rolls in from below
     (function(){
-      const el = document.getElementById('typewriter');
-      if (!el) return;
+      const box = document.getElementById('textRotate');
+      if (!box) return;
       const phrases = ['Data Analyst in the making','Systems Thinker','Community Builder','Problem Solver','Lifelong Learner'];
+      const make = (txt) => {
+        const w = document.createElement('span');
+        w.className = 'trot-word';
+        w.setAttribute('aria-hidden', 'true');
+        [...txt].forEach((ch, i) => {
+          const c = document.createElement('span');
+          c.className = 'trot-ch';
+          c.textContent = ch === ' ' ? '\u00a0' : ch;
+          c.style.setProperty('--i', i);
+          w.appendChild(c);
+        });
+        return w;
+      };
+      let pi = 0, cur = make(phrases[0]);
+      box.appendChild(cur);
+      box.setAttribute('aria-label', phrases[0]);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      setInterval(() => {
+        if (document.hidden) return;
+        pi = (pi + 1) % phrases.length;
+        box.style.width = box.offsetWidth + 'px';
+        const old = cur;
+        old.classList.remove('in');
+        old.classList.add('out');
+        cur = make(phrases[pi]);
+        cur.classList.add('in');
+        box.appendChild(cur);
+        box.setAttribute('aria-label', phrases[pi]);
+        const pad = box.offsetWidth - box.clientWidth + parseFloat(getComputedStyle(box).paddingLeft) * 2;
+        box.style.width = (cur.offsetWidth + pad) + 'px';
+        setTimeout(() => old.remove(), 700);
+      }, 2600);
+    })();
+
+    // Letter Swap Hover (fancycomponents.dev): nav letters slide up and are replaced by a copy
+    document.querySelectorAll('#navLinks a').forEach(a => {
+      const text = a.textContent.trim();
+      a.setAttribute('aria-label', text);
+      const wrap = document.createElement('span');
+      wrap.className = 'ls';
+      wrap.setAttribute('aria-hidden', 'true');
+      [...text].forEach((ch, i) => {
+        const c = document.createElement('span');
+        c.className = 'ls-c';
+        c.textContent = ch;
+        c.dataset.c = ch;
+        c.style.setProperty('--i', i);
+        wrap.appendChild(c);
+      });
+      a.textContent = '';
+      a.appendChild(wrap);
+    });
+
+    // Scramble In (fancycomponents.dev): eyebrows decode from random glyphs when they scroll in
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=<>';
+      const scramble = (el) => {
+        const final = el.textContent;
+        el.setAttribute('aria-label', final);
+        let frame = 0;
+        const total = final.length * 2 + 6;
+        const t = setInterval(() => {
+          const revealed = Math.max(0, Math.floor((frame - 6) / 2));
+          el.textContent = [...final].map((ch, i) => i < revealed || ch === ' ' ? ch : glyphs[(Math.random() * glyphs.length) | 0]).join('');
+          if (++frame > total) { clearInterval(t); el.textContent = final; }
+        }, 34);
+      };
+      const ob = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { ob.unobserve(e.target); scramble(e.target); } });
+      }, { threshold: 0.6 });
+      document.querySelectorAll('.eyebrow').forEach(el => ob.observe(el));
+    })();
+
+    // Simple Marquee (fancycomponents.dev): infinite rows that speed up and flip direction with scroll velocity
+    (function(){
+      const rows = Array.from(document.querySelectorAll('[data-marquee]'));
+      if (!rows.length) return;
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) { el.textContent = phrases[0]; return; }
-      let pi = 0, ci = 0, deleting = false;
-      function tick(){
-        const word = phrases[pi];
-        el.textContent = word.slice(0, ci);
-        if (!deleting){
-          if (ci < word.length){ ci++; setTimeout(tick, 70 + Math.random()*50); }
-          else { deleting = true; setTimeout(tick, 1500); }
-        } else {
-          if (ci > 0){ ci--; setTimeout(tick, 38); }
-          else { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 320); }
-        }
+      const state = rows.map(row => {
+        const seq = row.querySelector('.mq-seq');
+        // clone enough copies to cover wide screens twice over
+        const copies = Math.max(2, Math.ceil((window.innerWidth * 2) / Math.max(seq.offsetWidth, 1)));
+        for (let i = 1; i < copies; i++) row.appendChild(seq.cloneNode(true));
+        return { row, seq, base: parseFloat(row.dataset.speed) || 0.5, x: 0, dir: 1 };
+      });
+      if (reduce) return;
+      let lastY = window.scrollY, boost = 0, visible = true;
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(rows[0].parentElement);
+      function loop(){
+        const y = window.scrollY, dy = y - lastY; lastY = y;
+        boost += (Math.min(Math.abs(dy), 80) * 0.12 - boost) * 0.12;
+        if (visible) state.forEach(s => {
+          if (dy) s.dir = dy > 0 ? 1 : -1;
+          const w = s.seq.offsetWidth;
+          s.x -= s.base * s.dir * (1 + boost);
+          if (s.x <= -w) s.x += w;
+          if (s.x > 0) s.x -= w;
+          s.row.style.transform = `translate3d(${s.x}px,0,0)`;
+        });
+        requestAnimationFrame(loop);
       }
-      tick();
+      requestAnimationFrame(loop);
+    })();
+
+    // Variable Font Cursor Proximity (fancycomponents.dev): letters near the cursor get heavier
+    (function(){
+      const el = document.getElementById('proxTitle');
+      if (!el || !window.matchMedia('(pointer:fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const text = el.textContent.trim();
+      el.setAttribute('aria-label', text);
+      el.textContent = '';
+      const chars = [];
+      text.split(' ').forEach((word, wi) => {
+        if (wi) el.appendChild(document.createTextNode(' '));
+        const w = document.createElement('span');
+        w.className = 'vfp-w';
+        w.setAttribute('aria-hidden', 'true');
+        for (const ch of word) {
+          const c = document.createElement('span');
+          c.className = 'vfp-c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        }
+        el.appendChild(w);
+      });
+      const area = el.closest('.contact-card') || el;
+      const R = 170, MIN = 400, MAX = 800;
+      let raf = 0, mx = -1e4, my = -1e4;
+      const paint = () => {
+        raf = 0;
+        chars.forEach(c => {
+          const r = c.getBoundingClientRect();
+          const d = Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2));
+          const k = Math.max(0, 1 - d / R);
+          c.style.setProperty('--w', Math.round(MIN + (MAX - MIN) * k * k * (3 - 2 * k)));
+        });
+      };
+      area.addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(paint); });
+      area.addEventListener('pointerleave', () => { mx = my = -1e4; if (!raf) raf = requestAnimationFrame(paint); });
     })();
 
     // draggable lanyard — pull it and watch it spring back
