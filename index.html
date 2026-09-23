@@ -786,6 +786,8 @@
       filter: grayscale(1) contrast(1.05); transition: filter .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);
     }
     #volunteer .work-img img { filter: none; }
+    /* the grid box can't resolve height:100%, so pin images to it; object-fit/position then work */
+    .work-img > img { position: absolute; inset: 0; width: 100%; height: 100%; }
     .work-card:hover .work-img img, .ap-item:hover .ap-thumb, .lanyard:hover, .lanyard.grabbing,
     .skill:hover .si img, .ai-stack img:hover, .cert-card:hover .cert-logo { filter: none; }
     /* timeline, editorial: plain date column, framed photo, no tape or notes */
@@ -1208,6 +1210,15 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="carousel-track vol-track">
+        <a class="work-card tilt reveal" style="--accent:#ec4899;display:block" href="https://www.linkedin.com/feed/update/urn:li:activity:7505438509651058688/" target="_blank" rel="noopener" aria-label="Passport to Ōtautahi 2026 — read the LinkedIn post">
+          <div class="work-img"><img src="passport-otautahi.webp" style="object-position:50% 78%" alt="Volunteer team at Passport to Ōtautahi and Spring in Ōtautahi 2026" loading="lazy"/></div>
+          <div class="work-body">
+            <div class="wc-cat">Leadership</div>
+            <h3>Passport to Ōtautahi 2026</h3>
+            <p>Asian Family Services · Team Leader for pre-event promotion at a multicultural wellbeing festival for almost 600 people.</p>
+            <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
         <div class="work-card tilt reveal" style="--accent:#3b82f6">
           <div class="work-img"><img src="multimedia.webp" alt="Multimedia Team Leader at IFGF Christchurch" loading="lazy"/></div>
           <div class="work-body">
