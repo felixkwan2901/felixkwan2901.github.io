@@ -1214,6 +1214,33 @@
     const PROJECTS = [
       {
         featured: true,
+        accent: '#d4a95a',
+        category: 'Automation · Web · Game',
+        title: 'diam.dan.percaya',
+        image: 'diam-dan-percaya-cover.webp',
+        alt: 'A fan of quote cards from the diam.dan.percaya Instagram account',
+        summary: 'A daily devotional Instagram account that posts itself. A Python pipeline designs every post and GitHub Actions publishes it on schedule. Every post also lands in a 3D web archive, next to a small verse game.',
+        stats: [ {n:78,label:'Posts archived'}, {n:168,label:'Verses in game'}, {n:0,label:'Manual uploads'} ],
+        detail: {
+          meta: 'Personal project · @diam.dan.percaya · Live',
+          body: 'diam.dan.percaya (“be still and trust”) shares one Bible verse and one short line, every day. I didn’t want to spend each night designing and uploading posts, so I automated the whole thing. I write a week of content as plain text. Python renders every image in a consistent style, and a GitHub Actions job publishes each post through the Instagram API at the right time. The web archive brings every post together in one place, and Roti Hidup (“Bread of Life”) lets visitors break a loaf of bread to get a verse for the day.',
+          highlights: [
+            'Hands-free publishing: a scheduled GitHub Actions job checks every 15 minutes and posts whatever is due through the Instagram API.',
+            'No double posts: a log records everything already published, and anything more than 6 hours late is skipped instead of flooding the feed.',
+            'Three rotating post formats (serif quote carousels, “notification from God” scenes and bold colour cards) are all generated from text.',
+            'Web archive: every post sits on a 3D photo sphere you can drag and zoom, with a flat grid view one tap away.',
+            'Roti Hidup: tap the loaf, it breaks with a crumb animation and gives you a verse. Collect twelve to fill all the baskets (John 6:13).'
+          ],
+          tech: ['Python','Pillow','GitHub Actions','Instagram Graph API','JavaScript','CSS 3D'],
+          links: [
+            {label:'Explore the archive', url:'diam.dan.percaya/'},
+            {label:'Play Roti Hidup', url:'diam.dan.percaya/roti.html'},
+            {label:'@diam.dan.percaya on Instagram', url:'https://www.instagram.com/diam.dan.percaya/'}
+          ]
+        }
+      },
+      {
+        featured: true,
         accent: '#0ea5e9',
         category: 'Operations Dashboard',
         title: 'Cassidy Davies Ops Dashboard',
