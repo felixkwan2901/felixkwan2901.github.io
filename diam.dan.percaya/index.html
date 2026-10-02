@@ -136,6 +136,39 @@ body.gridview #stage{opacity:0;filter:blur(14px);pointer-events:none}
 }
 #grid figure.tall{aspect-ratio:4/5}
 #grid figure.square{aspect-ratio:1/1}
+#grid figure.reel{aspect-ratio:9/16}
+.gsec{max-width:1680px;margin:0 auto clamp(40px, 6vw, 72px)}
+.gsec h3{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:16px;
+  font-family:var(--serif);font-weight:400;font-size:clamp(22px, 2.4vw, 34px);letter-spacing:-.005em;
+}
+.gsec h3 span{font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.card.reel figure::before, #grid figure.reel::before{
+  content:"";position:absolute;z-index:2;top:9px;right:9px;width:0;height:0;
+  border-left:9px solid rgba(255,255,255,.92);border-top:6px solid transparent;border-bottom:6px solid transparent;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.6));pointer-events:none;
+}
+
+/* ---------- folder switcher ---------- */
+.sets{
+  position:fixed;left:0;right:0;z-index:58;
+  top:calc(var(--pad) * .8 + var(--safe-top) + 54px);
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+  padding:2px calc(var(--pad) + var(--safe-right)) 2px calc(var(--pad) + var(--safe-left));
+}
+.sets::-webkit-scrollbar{display:none}
+.sets::before, .sets::after{content:"";flex:1 1 0}
+.sets button{
+  flex:none;white-space:nowrap;min-height:38px;padding:9px 15px;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,242,239,.7);
+  border:1px solid rgba(244,242,239,.22);border-radius:999px;background:rgba(0,0,0,.4);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:color .3s, border-color .3s, background .3s;
+}
+.sets button:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+.sets button sup{font-size:8.5px;letter-spacing:.05em;margin-left:6px;opacity:.6;vertical-align:top}
+.sets button.on{background:#f4f2ef;color:#000;border-color:#f4f2ef}
+body.revealed.lit .sets{opacity:0;pointer-events:none}
 #grid img{width:100%;height:100%;object-fit:cover;opacity:.82;transition:transform .8s var(--ease), opacity .8s var(--ease)}
 #grid figure:hover img{transform:scale(1.05);opacity:1}
 #grid figcaption{
@@ -280,6 +313,10 @@ body.lit #lit{opacity:1;pointer-events:auto}
   background:#0b0b0b;box-shadow:0 30px 90px rgba(0,0,0,.75);
 }
 .shot img{width:100%;height:100%;object-fit:cover;border-radius:2px}
+.shot video{display:none;width:100%;height:100%;object-fit:cover;border-radius:2px;background:#000}
+.shot.isvideo video{display:block}
+.shot.isvideo img{display:none}
+.shot.isvideo .close{z-index:2}
 .close{
   position:absolute;top:12px;right:14px;
   font-size:12.5px;min-width:44px;min-height:44px;padding:10px 14px;
@@ -394,6 +431,13 @@ body.lit #lit{opacity:1;pointer-events:auto}
   .plate{width:min(58vw, (100dvh - 80px) * var(--ar, 1.5))}
   header{padding-top:calc(8px + var(--safe-top))}
 }
+/* the folder switcher sits under the header, so the grid starts below it */
+#grid{padding-top:calc(var(--pad) * .8 + var(--safe-top) + 112px)}
+.gsec{scroll-margin-top:calc(var(--pad) * .8 + var(--safe-top) + 112px)}
+@media (max-height:520px) and (orientation:landscape){
+  .sets{top:calc(8px + var(--safe-top) + 46px)}
+  #grid{padding-top:calc(var(--safe-top) + 104px)}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.14s !important}
 }
@@ -412,7 +456,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
 
 <div class="vig"></div>
 
-<div id="grid"><div class="rows"></div></div>
+<div id="grid"><div id="gridSections"></div></div>
 
 <header class="chrome">
   <a class="wordmark" href="#" aria-label="diam.dan.percaya">diam<em>.dan.percaya</em></a>
@@ -422,12 +466,14 @@ body.lit #lit{opacity:1;pointer-events:auto}
   </button>
 </header>
 
+<nav class="sets chrome" id="sets" aria-label="Folders"></nav>
+
 <aside class="bio chrome">
   <div class="who">
     <img id="avatar" src="avatar.jpg" alt="diam.dan.percaya">
     <b>diam.dan.percaya</b>
   </div>
-  <p>Short daily reminders to be still and trust. Replace this line with a sentence about the account.</p>
+  <p>Renungan harian dalam gambar: satu ayat dan satu kalimat pendek, dari pagi sampai malam.</p>
 </aside>
 
 <div class="colophon chrome">Archive 2026</div>
@@ -440,6 +486,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
   <nav>
     <a href="#" data-grid>The Archive</a>
     <a href="roti.html" data-external>Roti Hidup</a>
+    <a href="stand-firm.html" data-external>Stand Firm</a>
     <a href="#" data-about>About</a>
     <a href="https://www.instagram.com/diam.dan.percaya/" target="_blank" rel="noopener" data-external>Contact</a>
   </nav>
@@ -467,6 +514,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
   <div class="plate">
     <div class="shot">
       <img id="litImg" alt="">
+      <video id="litVid" playsinline controls loop preload="none"></video>
       <button class="close" data-close>Close</button>
     </div>
   </div>
@@ -487,37 +535,42 @@ body.lit #lit{opacity:1;pointer-events:auto}
 
 <div id="dot"></div>
 
+<script src="collections.js?v=b1492c99"></script>
 <script>
 (() => {
   /* ---------- content ---------- */
   const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/';
   const FILM = CDN + 'hf_20260922_195107_ed3f055a-3a13-4a71-b743-e10310454246.mp4';
 
-  // Posts per day, in posting order. Counts are slides per slot: [pagi, siang, sore, petang, malam].
-  const SLOTS = ['pagi', 'siang', 'sore', 'petang', 'malam'];
-  const DAYS = [
-    [1, 5, 1, 4, 1],
-    [1, 5, 1, 4, 1],
-    [1, 5, 1, 1, 1],
-    [1, 5, 1, 4, 1],
-    [1, 5, 1, 1, 1],
-    [1, 5, 1, 1, 4],
-    [1, 5, 1, 4, 1]
-  ];
-  const SHOTS = [];
-  DAYS.forEach((counts, d) => SLOTS.forEach((slot, k) => {
-    for (let n = 1; n <= counts[k]; n++) {
-      const file = `hari${d + 1}_${slot}_${n}.jpg`;
-      SHOTS.push({
-        thumb: 'thumbs/' + file,
-        full: 'full/' + file,
-        shape: 'tall',          // 'tall' (portrait), 'square' or 'wide'
-        ar: 1080 / 1350,
-        alt: 'diam.dan.percaya post'
-      });
+  // Built by arsip_site.py from output/tenang* and output/reels/tenang.
+  const COLS = (window.COLLECTIONS || []).filter(c => c.items.length);
+  const BYID = {};
+  COLS.forEach(c => {
+    BYID[c.id] = c;
+    c.items.forEach((it, i) => {
+      it.col = c.id;
+      it.idx = i;
+      it.shape = it.v ? 'reel' : it.ar < .95 ? 'tall' : it.ar < 1.2 ? 'square' : 'wide';
+    });
+  });
+  const ALL = 'semua';
+  const SPHERE_MAX = 90;
+  const TOTAL_ITEMS = COLS.reduce((n, c) => n + c.items.length, 0);
+
+  // "Semua": an even sample from every folder, interleaved so each folder spreads over the sphere.
+  function mixed() {
+    const per = Math.max(1, Math.floor(SPHERE_MAX / COLS.length));
+    const lists = COLS.map(c => {
+      const n = Math.min(per, c.items.length);
+      return Array.from({ length: n }, (_, k) => c.items[Math.floor(k * c.items.length / n)]);
+    });
+    const out = [];
+    for (let k = 0; out.length < lists.reduce((a, l) => a + l.length, 0); k++) {
+      lists.forEach(l => { if (k < l.length) out.push(l[k]); });
     }
-  }));
-  const N = SHOTS.length;
+    return out;
+  }
+  const itemsFor = id => id === ALL ? mixed() : BYID[id].items.slice(0, SPHERE_MAX);
 
   /* ---------- helpers ---------- */
   const $ = s => document.querySelector(s);
@@ -528,53 +581,52 @@ body.lit #lit{opacity:1;pointer-events:auto}
   const coarse = matchMedia('(pointer:coarse)').matches;
 
   const stage = $('#stage'), world = $('#world'), orb = $('#orb'), headline = $('#headline');
-  const gridRows = $('#grid .rows');
-  const lit = $('#lit'), plate = $('.plate'), shot = $('.shot'), litImg = $('#litImg');
+  const grid = $('#grid'), gridSections = $('#gridSections'), sets = $('#sets');
+  const lit = $('#lit'), plate = $('.plate'), shot = $('.shot'), litImg = $('#litImg'), litVid = $('#litVid');
   const intro = $('#intro'), film = $('#film'), splash = $('#splash'), bar = $('#bar');
   const menuBtn = $('#menuBtn');
 
-  /* ---------- build sphere + grid ---------- */
+  /* ---------- sphere ---------- */
   const GA = Math.PI * (3 - Math.sqrt(5));
-  const VEC = [], cards = [], cardImgs = [], gridFigs = [], gridImgs = [];
-  for (let i = 0; i < N; i++) {
-    const y = 1 - (i / (N - 1)) * 2;
-    const rad = Math.sqrt(Math.max(0, 1 - y * y));
-    const theta = i * GA;
-    const x = Math.cos(theta) * rad;
-    const z = Math.sin(theta) * rad;
-    VEC.push({ x, y, z, lat: Math.asin(y) / DEG, lon: Math.atan2(x, z) / DEG });
+  let N = 0, VEC = [], cards = [], firstBuild = true;
 
-    const s = SHOTS[i];
-    const card = document.createElement('div');
-    card.className = 'card' + (s.shape === 'tall' ? ' tall' : s.shape === 'square' ? ' square' : '');
-    card.dataset.idx = i;
-    const fig = document.createElement('figure');
-    const img = document.createElement('img');
-    img.alt = s.alt;
-    img.draggable = false;
-    img.addEventListener('load', () => img.classList.add('in'));
-    fig.appendChild(img);
-    card.appendChild(fig);
-    orb.appendChild(card);
-    cards.push(card);
-    cardImgs.push(img);
-    card._o = -1; card._d = -1;
+  function buildSphere(items) {
+    orb.textContent = '';
+    N = items.length;
+    VEC = []; cards = [];
+    for (let i = 0; i < N; i++) {
+      const y = N > 1 ? 1 - (i / (N - 1)) * 2 : 0;
+      const rad = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = i * GA;
+      const x = Math.cos(theta) * rad;
+      const z = Math.sin(theta) * rad;
+      VEC.push({ x, y, z, lat: Math.asin(y) / DEG, lon: Math.atan2(x, z) / DEG });
 
-    const gf = document.createElement('figure');
-    if (s.shape === 'tall') gf.className = 'tall';
-    else if (s.shape === 'square') gf.className = 'square';
-    gf.dataset.idx = i;
-    const gi = document.createElement('img');
-    gi.alt = s.alt;
-    gi.loading = 'lazy';
-    gf.appendChild(gi);
-    gridRows.appendChild(gf);
-    gridFigs.push(gf);
-    gridImgs.push(gi);
+      const it = items[i];
+      const card = document.createElement('div');
+      card.className = 'card ' + it.shape;
+      card.dataset.idx = i;
+      card._item = it;
+      card._o = -1; card._d = -1;
+      const fig = document.createElement('figure');
+      const img = document.createElement('img');
+      img.alt = 'diam.dan.percaya post';
+      img.draggable = false;
+      const counts = firstBuild;
+      img.addEventListener('load', () => { img.classList.add('in'); if (counts) report(); }, { once: true });
+      if (counts) img.addEventListener('error', report, { once: true });
+      img.src = it.t;
+      fig.appendChild(img);
+      card.appendChild(fig);
+      orb.appendChild(card);
+      cards.push(card);
+    }
+    firstBuild = false;
+    layout();
   }
 
   /* ---------- layout ---------- */
-  let R = 300, CW = 120, PERSP = 1150, lastW = 0, lastH = 0;
+  let R = 300, CW = 120, PERSP = 1150, HZ = .62, lastW = 0, lastH = 0;
   function layout() {
     const w = innerWidth, h = innerHeight;
     lastW = w; lastH = h;
@@ -583,22 +635,24 @@ body.lit #lit{opacity:1;pointer-events:auto}
     const floor = w <= 380 ? 108 : w <= 640 ? 120 : 155;
     R = Math.max(floor, Math.min(480, h * hr, w * wr));
     const scale = w <= 380 ? .44 : w <= 640 ? .46 : .47;
-    // The spec sizes cards for 21 shots; shrink by area so more shots still fit the sphere.
-    const density = Math.min(1, Math.sqrt(21 / N));
-    CW = Math.round(Math.max(N > 21 ? 52 : 72, R * scale * density));
+    // Size cards from the gap between Fibonacci neighbours (~3.545R/sqrt(N)) so their corners never
+    // cut through each other. For the original 21 landscape cards this lands on the spec's R * .47.
+    let arMin = 1.5;
+    for (let i = 0; i < N; i++) arMin = Math.min(arMin, Math.max(.8, cards[i]._item.ar));
+    const diag = Math.sqrt(1 + 1 / (arMin * arMin));
+    CW = Math.round(Math.max(40, Math.min(R * scale, 2.55 * R / (Math.sqrt(Math.max(1, N)) * diag))));
+    // Title depth: with 21 cards about four sit in front of it; keep that count for bigger sets.
+    HZ = 1 - 2 * Math.min(.19, 4 / Math.max(1, N));
     PERSP = w <= 380 ? 620 : w <= 640 ? 760 : w <= 900 ? 920 : 1150;
     root.style.setProperty('--persp', PERSP + 'px');
     root.style.setProperty('--cw', CW + 'px');
     for (let i = 0; i < N; i++) {
-      const c = cards[i], v = VEC[i], shape = SHOTS[i].shape;
-      let hgt, mt;
-      if (shape === 'tall') { hgt = CW * 1.25; mt = CW * -0.625; }
-      else if (shape === 'square') { hgt = CW; mt = CW * -0.5; }
-      else { hgt = CW / 1.5; mt = -CW / 3; }
+      const c = cards[i], v = VEC[i];
+      const hgt = CW / Math.max(.8, c._item.ar);  // reels are cropped to 4:5 on the sphere so they don't cut through neighbours
       c.style.width = CW + 'px';
       c.style.height = hgt + 'px';
       c.style.marginLeft = (-CW / 2) + 'px';
-      c.style.marginTop = mt + 'px';
+      c.style.marginTop = (-hgt / 2) + 'px';
       c.style.transform = `translate3d(${(v.x * R).toFixed(2)}px, ${(-v.y * R).toFixed(2)}px, ${(v.z * R).toFixed(2)}px) rotateY(${v.lon.toFixed(3)}deg) rotateX(${v.lat.toFixed(3)}deg)`;
     }
   }
@@ -612,7 +666,35 @@ body.lit #lit{opacity:1;pointer-events:auto}
     visualViewport.addEventListener('resize', () => onResize(false));
     visualViewport.addEventListener('scroll', () => onResize(false));
   }
-  layout();
+
+  /* ---------- folder switcher ---------- */
+  const SETS = [{ id: ALL, name: 'Semua', n: TOTAL_ITEMS }].concat(COLS.map(c => ({ id: c.id, name: c.name, n: c.items.length })));
+  let current = '';
+  SETS.forEach(s => {
+    const b = document.createElement('button');
+    b.dataset.set = s.id;
+    b.innerHTML = `${s.name}<sup>${s.n}</sup>`;
+    sets.appendChild(b);
+  });
+  function setFolder(id, opts = {}) {
+    if (!(id === ALL || BYID[id])) id = ALL;
+    sets.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.set === id));
+    if (body.classList.contains('gridview')) jumpTo(id);
+    if (!opts.silent) { try { history.replaceState(null, '', id === ALL ? location.pathname : '#' + id); } catch (_) {} }
+    if (id === current) return;
+    current = id;
+    if (opts.instant) { buildSphere(itemsFor(id)); return; }
+    orb.style.transition = 'opacity .35s ease';
+    orb.style.opacity = '0';
+    setTimeout(() => {
+      buildSphere(itemsFor(id));
+      orb.style.opacity = '1';
+    }, 360);
+  }
+  sets.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (b) setFolder(b.dataset.set);
+  });
 
   /* ---------- camera loop ---------- */
   let spin = 0, tilt = -4, camZ = 0, dragX = 0, dragY = 0, velX = 0, velY = 0;
@@ -628,14 +710,13 @@ body.lit #lit{opacity:1;pointer-events:auto}
     }
     dragY = clamp(dragY, -PITCH - tilt, PITCH - tilt);
 
-    const maxScroll = innerHeight * .16;
-    const p = clamp(scrollY / maxScroll, 0, 1);
+    const p = clamp(scrollY / (innerHeight * .16), 0, 1);
     const target = p * Math.min(64, R * .12);
     camZ += (target - camZ) * .075;
 
     const sx = tilt + dragY, sy = spin + dragX;
     world.style.transform = `translateZ(${camZ.toFixed(2)}px) rotateY(${sy.toFixed(3)}deg) rotateX(${sx.toFixed(3)}deg)`;
-    headline.style.transform = `rotateX(${(-sx).toFixed(3)}deg) rotateY(${(-sy).toFixed(3)}deg) translateZ(${(R * .62).toFixed(2)}px)`;
+    headline.style.transform = `rotateX(${(-sx).toFixed(3)}deg) rotateY(${(-sy).toFixed(3)}deg) translateZ(${(R * HZ).toFixed(2)}px)`;
     headline.style.opacity = Math.max(0, 1 - p * .55).toFixed(3);
 
     const isDeep = p > .35;
@@ -647,9 +728,8 @@ body.lit #lit{opacity:1;pointer-events:auto}
     const near = PERSP * .66;
     for (let i = 0; i < N; i++) {
       const v = VEC[i];
-      const px = v.x, py = -v.y, pz = v.z;
-      const z1 = py * sX + pz * cX;          // rotateX(sx)
-      const zf = -px * sY + z1 * cY;         // then rotateY(sy)
+      const z1 = -v.y * sX + v.z * cX;        // rotateX(sx)
+      const zf = -v.x * sY + z1 * cY;         // then rotateY(sy)
       const base = .14 + .86 * Math.pow((zf + 1) / 2, .85);
       let dim = shade * (1 - base);
       let fade = 1;
@@ -666,7 +746,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
     }
     requestAnimationFrame(frame);
   }
-  frame();
 
   addEventListener('scroll', () => {
     const max = innerHeight * .16;
@@ -707,58 +786,27 @@ body.lit #lit{opacity:1;pointer-events:auto}
     const p = ptr; ptr = null;
     dragging = false;
     if (performance.now() - p.lt > 90) { velX = velY = 0; }
-    if (!cancelled && !p.cancel && p.moved < SLOP && p.card) {
+    if (!cancelled && !p.cancel && p.moved < SLOP && p.card && p.card.isConnected) {
       velX = velY = 0;
-      openShot(+p.card.dataset.idx, p.card);
+      openShot(p.card._item, p.card, +p.card.dataset.idx);
     }
   }
   stage.addEventListener('pointerup', e => endPointer(e, false));
   stage.addEventListener('pointercancel', e => endPointer(e, true));
 
-  /* ---------- image loading ---------- */
-  const decodeMax = () => { const w = innerWidth; return w <= 380 ? 420 : w <= 640 ? 520 : w <= 900 ? 640 : 760; };
-  let loaded = 0;
-  const TOTAL = N + 1;
+  /* ---------- splash ---------- */
+  let loaded = 0, TOTAL = 1;
   function report() {
     loaded++;
     bar.style.transform = `scaleX(${Math.min(1, loaded / TOTAL)})`;
     if (loaded >= TOTAL) maybeEndSplash();
   }
-  function apply(i, url) {
-    SHOTS[i].dec = url;
-    cardImgs[i].src = url;
-    gridImgs[i].src = url;
-  }
-  function loadThumb(i) {
-    const s = SHOTS[i];
-    const probe = new Image();
-    probe.crossOrigin = 'anonymous';
-    probe.decoding = 'async';
-    probe.onload = () => {
-      const cap = decodeMax();
-      if (probe.naturalWidth <= cap) { apply(i, s.thumb); report(); return; }
-      try {
-        const c = document.createElement('canvas');
-        c.width = cap;
-        c.height = Math.round(probe.naturalHeight * cap / probe.naturalWidth);
-        c.getContext('2d').drawImage(probe, 0, 0, c.width, c.height);
-        c.toBlob(b => { apply(i, b ? URL.createObjectURL(b) : s.thumb); report(); }, 'image/webp', .88);
-      } catch (_) { apply(i, s.thumb); report(); }
-    };
-    probe.onerror = () => { apply(i, s.thumb); report(); };
-    probe.src = s.thumb;
-  }
-  for (let i = 0; i < N; i++) loadThumb(i);
-
-  /* ---------- splash ---------- */
   const born = performance.now();
   let splashUp = true, splashEnding = false, filmReported = false;
   function maybeEndSplash() {
-    if (splashEnding) return;
-    const wait = Math.max(0, 1150 - (performance.now() - born));
-    if (loaded < TOTAL) return;
+    if (splashEnding || loaded < TOTAL) return;
     splashEnding = true;
-    setTimeout(endSplash, wait);
+    setTimeout(endSplash, Math.max(0, 1150 - (performance.now() - born)));
   }
   function endSplash() {
     splashEnding = true;
@@ -771,6 +819,14 @@ body.lit #lit{opacity:1;pointer-events:auto}
     }, 380);
   }
   setTimeout(() => { if (!splashEnding) endSplash(); }, 9000);
+
+  const startId = decodeURIComponent(location.hash.slice(1)) || ALL;
+  const startItems = itemsFor(BYID[startId] ? startId : ALL);
+  TOTAL = startItems.length + 1;
+  current = BYID[startId] ? startId : ALL;
+  sets.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.set === current));
+  buildSphere(startItems);
+  frame();
 
   /* ---------- film ---------- */
   let revealed = false, filmStarted = false, revealTimer = 0, novideo = false;
@@ -844,14 +900,49 @@ body.lit #lit{opacity:1;pointer-events:auto}
     }, 1000);
   }
 
-  /* ---------- grid view ---------- */
+  /* ---------- grid view: one section per folder ---------- */
+  let gridBuilt = false;
+  function buildGrid() {
+    if (gridBuilt) return;
+    gridBuilt = true;
+    COLS.forEach(c => {
+      const sec = document.createElement('section');
+      sec.className = 'gsec';
+      sec.id = 'g-' + c.id;
+      const h = document.createElement('h3');
+      h.innerHTML = `${c.name}<span>${c.items.length} ${c.id === 'reels' ? 'reels' : 'posts'}</span>`;
+      const rows = document.createElement('div');
+      rows.className = 'rows';
+      c.items.forEach(it => {
+        const f = document.createElement('figure');
+        f.className = it.shape;
+        f.dataset.col = c.id;
+        f.dataset.idx = it.idx;
+        const im = document.createElement('img');
+        im.alt = 'diam.dan.percaya post';
+        im.loading = 'lazy';
+        im.decoding = 'async';
+        im.src = it.t;
+        f.appendChild(im);
+        rows.appendChild(f);
+      });
+      sec.append(h, rows);
+      gridSections.appendChild(sec);
+    });
+  }
+  function jumpTo(id) {
+    const el = id === ALL ? null : document.getElementById('g-' + id);
+    grid.scrollTo({ top: el ? el.offsetTop - parseFloat(getComputedStyle(grid).paddingTop) + 8 : 0, behavior: 'smooth' });
+  }
   function setGrid(on) {
+    if (on) buildGrid();
     body.classList.toggle('gridview', on);
+    if (on) requestAnimationFrame(() => jumpTo(current));
   }
   $('#gridBtn').addEventListener('click', () => setGrid(!body.classList.contains('gridview')));
-  gridRows.addEventListener('click', e => {
+  gridSections.addEventListener('click', e => {
     const f = e.target.closest('figure');
-    if (f) openShot(+f.dataset.idx, f);
+    if (f) openShot(BYID[f.dataset.col].items[+f.dataset.idx], f, -1);
   });
 
   /* ---------- lightbox ---------- */
@@ -866,16 +957,24 @@ body.lit #lit{opacity:1;pointer-events:auto}
     const sc = Math.max(.04, r.width / sr.width);
     return `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${sc.toFixed(4)})`;
   }
-  function openShot(i, src) {
+  function openShot(it, src, cardIdx) {
     if (litOpen) return;
-    const s = SHOTS[i];
     const my = ++token;
-    litImg.src = s.dec || s.thumb;
-    litImg.alt = s.alt;
-    plate.style.setProperty('--ar', s.ar);
-    const full = new Image();
-    full.onload = () => { if (my === token && litOpen) litImg.src = s.full; };
-    full.src = s.full;
+    plate.style.setProperty('--ar', it.ar);
+    shot.classList.toggle('isvideo', !!it.v);
+    if (it.v) {
+      litImg.removeAttribute('src');
+      litVid.poster = it.t;
+      litVid.src = it.v;
+      litVid.muted = false;
+      const pr = litVid.play();
+      if (pr && pr.catch) pr.catch(() => { litVid.muted = true; litVid.play().catch(() => {}); });
+    } else {
+      litImg.src = it.t;
+      const full = new Image();
+      full.onload = () => { if (my === token && litOpen) litImg.src = it.f; };
+      full.src = it.f;
+    }
 
     litOpen = true;
     litSrc = src;
@@ -886,11 +985,10 @@ body.lit #lit{opacity:1;pointer-events:auto}
     plate.style.transition = 'none';
     plate.style.transform = 'none';
     plate.style.opacity = '1';
-    const t = flipFrom(src);
-    plate.style.transform = t;
+    plate.style.transform = flipFrom(src);
     plate.style.opacity = '0';
     void plate.offsetWidth;
-    focused = i;
+    focused = cardIdx;
     body.classList.add('lit');
     plate.style.transition = '';
     plate.style.transform = '';
@@ -901,17 +999,18 @@ body.lit #lit{opacity:1;pointer-events:auto}
     litOpen = false;
     focused = -1;
     token++;
+    litVid.pause();
     body.classList.remove('lit');
     lit.setAttribute('aria-hidden', 'true');
     root.style.overflow = '';
     const src = litSrc;
     litSrc = null;
-    if (src && src.isConnected) {
-      plate.style.transform = flipFrom(src);
-    }
+    if (src && src.isConnected) plate.style.transform = flipFrom(src);
     plate.style.opacity = '0';
     setTimeout(() => {
       if (litOpen) return;
+      litVid.removeAttribute('src');
+      litVid.load();
       plate.style.transition = 'none';
       plate.style.transform = '';
       plate.style.opacity = '';
@@ -921,12 +1020,18 @@ body.lit #lit{opacity:1;pointer-events:auto}
   }
   lit.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeShot(); });
 
-  /* ---------- menu ---------- */
+  /* ---------- menu + about ---------- */
   function setMenu(open) {
     body.classList.toggle('menuopen', open);
     menuBtn.setAttribute('aria-expanded', String(open));
     menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     $('#menu').setAttribute('aria-hidden', String(!open));
+  }
+  const about = $('#about');
+  function setAbout(open) {
+    body.classList.toggle('aboutopen', open);
+    about.setAttribute('aria-hidden', String(!open));
+    if (open) about.scrollTop = 0;
   }
   menuBtn.addEventListener('click', () => setMenu(!body.classList.contains('menuopen')));
   $('#menu nav').addEventListener('click', e => {
@@ -937,13 +1042,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
     if (a.hasAttribute('data-grid')) setGrid(true);
     if (a.hasAttribute('data-about')) setAbout(true);
   });
-
-  const about = $('#about');
-  function setAbout(open) {
-    body.classList.toggle('aboutopen', open);
-    about.setAttribute('aria-hidden', String(!open));
-    if (open) about.scrollTop = 0;
-  }
   about.addEventListener('click', e => { if (e.target.closest('[data-close-about]')) setAbout(false); });
   $('.wordmark').addEventListener('click', e => {
     e.preventDefault();
