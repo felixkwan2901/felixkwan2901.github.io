@@ -59,12 +59,6 @@ a{-webkit-tap-highlight-color:transparent}
   transform-style:preserve-3d;
   will-change:transform;
 }
-#orb{
-  position:absolute; top:0; left:0;
-  width:0; height:0;
-  transform-style:preserve-3d;
-  transform:none;
-}
 #headline{
   position:absolute; top:0; left:0;
   width:var(--hw);
@@ -430,7 +424,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
 
 <div id="stage">
   <div id="world">
-    <div id="orb"></div>
     <h1 id="headline"><span class="inner"><span style="--i:0">Be</span> <span style="--i:1">Still</span> <span style="--i:2">and</span> <span style="--i:3">Trust</span></span></h1>
   </div>
 </div>
@@ -558,7 +551,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
   const DEG = Math.PI / 180;
   const coarse = matchMedia('(pointer:coarse)').matches;
 
-  const stage = $('#stage'), world = $('#world'), orb = $('#orb'), headline = $('#headline');
+  const stage = $('#stage'), world = $('#world'), headline = $('#headline');
   const grid = $('#grid'), gridSections = $('#gridSections'), sets = $('#sets');
   const lit = $('#lit'), plate = $('.plate'), shot = $('.shot'), litImg = $('#litImg'), litVid = $('#litVid');
   const splash = $('#splash'), bar = $('#bar');
@@ -569,7 +562,9 @@ body.lit #lit{opacity:1;pointer-events:auto}
   let N = 0, VEC = [], cards = [], firstBuild = true;
 
   function buildSphere(items) {
-    orb.textContent = '';
+    // Cards live directly in #world: Safari flattens a nested preserve-3d wrapper that has no
+    // size or transform of its own, which squashed the sphere into a flat disc.
+    cards.forEach(c => c.remove());
     N = items.length;
     VEC = []; cards = [];
     for (let i = 0; i < N; i++) {
@@ -596,7 +591,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
       img.src = it.m || it.t;
       fig.appendChild(img);
       card.appendChild(fig);
-      orb.appendChild(card);
+      world.appendChild(card);
       cards.push(card);
     }
     firstBuild = false;
@@ -662,7 +657,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
     if (id === current) return;
     current = id;
     if (opts.instant) { buildSphere(itemsFor(id)); return; }
-    // Fade the cards, never #orb itself: opacity on a preserve-3d parent flattens it in Safari.
+    // Fade the cards, never a 3D parent: opacity on a preserve-3d parent flattens it in Safari.
     fadeTarget = 0;
     clearTimeout(swapTimer);
     swapTimer = setTimeout(() => {
