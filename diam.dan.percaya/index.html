@@ -46,9 +46,13 @@ a{-webkit-tap-highlight-color:transparent}
   position:fixed;inset:0;z-index:10;
   perspective:var(--persp);perspective-origin:50% 50%;
   overflow:hidden;touch-action:none;
-  transition:opacity .6s var(--ease), filter .6s var(--ease);
+  transition:opacity .6s var(--ease);
 }
-@media (pointer:coarse){#stage{touch-action:pan-y}}
+@media (pointer:coarse){
+  #stage{touch-action:pan-y}
+  /* Safari on iOS flattens the whole 3D scene while any element inside it carries a filter */
+  #headline .inner span{filter:none}
+}
 #world{
   position:absolute; top:50%; left:50%;
   width:0; height:0;
@@ -59,7 +63,6 @@ a{-webkit-tap-highlight-color:transparent}
   position:absolute; top:0; left:0;
   width:0; height:0;
   transform-style:preserve-3d;
-  opacity:1;
   transform:none;
 }
 #headline{
@@ -87,7 +90,7 @@ a{-webkit-tap-highlight-color:transparent}
   display:inline-block;opacity:0;transform:translateY(.42em);filter:blur(7px);
 }
 body.revealed #headline .inner span{
-  opacity:1;transform:none;filter:blur(0);
+  opacity:1;transform:none;filter:none;
   transition:opacity 1.05s var(--ease) calc(.9s + var(--i) * .085s),
              transform 1.15s var(--ease) calc(.9s + var(--i) * .085s),
              filter 1.05s var(--ease) calc(.9s + var(--i) * .085s);
@@ -125,7 +128,7 @@ body.gridview .vig, body.lit .vig{opacity:0}
   transition:opacity .6s var(--ease);
 }
 body.gridview #grid{opacity:1;pointer-events:auto}
-body.gridview #stage{opacity:0;filter:blur(14px);pointer-events:none}
+body.gridview #stage{opacity:0;pointer-events:none}
 #grid .rows{
   display:grid;grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:clamp(10px, 1.4vw, 20px);max-width:1680px;margin:0 auto;
@@ -146,7 +149,7 @@ body.gridview #stage{opacity:0;filter:blur(14px);pointer-events:none}
 .card.reel figure::before, #grid figure.reel::before{
   content:"";position:absolute;z-index:2;top:9px;right:9px;width:0;height:0;
   border-left:9px solid rgba(255,255,255,.92);border-top:6px solid transparent;border-bottom:6px solid transparent;
-  filter:drop-shadow(0 1px 3px rgba(0,0,0,.6));pointer-events:none;
+  pointer-events:none;
 }
 
 /* ---------- folder switcher ---------- */
@@ -161,8 +164,7 @@ body.gridview #stage{opacity:0;filter:blur(14px);pointer-events:none}
 .sets button{
   flex:none;white-space:nowrap;min-height:38px;padding:9px 15px;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,242,239,.7);
-  border:1px solid rgba(244,242,239,.22);border-radius:999px;background:rgba(0,0,0,.4);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(244,242,239,.22);border-radius:999px;background:rgba(0,0,0,.62);
   transition:color .3s, border-color .3s, background .3s;
 }
 .sets button:hover{color:#fff;border-color:rgba(255,255,255,.6)}
@@ -507,7 +509,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
 
 <div id="dot"></div>
 
-<script src="collections.js?v=b1492c99"></script>
+<script src="collections.js?v=701a5542"></script>
 <script>
 (() => {
   /* ---------- content ---------- */
@@ -524,15 +526,21 @@ body.lit #lit{opacity:1;pointer-events:auto}
     });
   });
   const ALL = 'semua';
-  const SPHERE_MAX = 90;
+  // Phones run out of GPU memory with too many 3D cards, and Safari then flattens the sphere.
+  const SPHERE_MAX = matchMedia('(pointer:coarse)').matches ? 48 : 90;
   const TOTAL_ITEMS = COLS.reduce((n, c) => n + c.items.length, 0);
 
-  // "Semua": an even sample from every folder, interleaved so each folder spreads over the sphere.
+  // Even sample of a list, used when a set is bigger than the sphere can hold.
+  function sample(list, max) {
+    if (list.length <= max) return list.slice();
+    return Array.from({ length: max }, (_, k) => list[Math.floor(k * list.length / max)]);
+  }
+  // "Semua": the picks marked best in each folder, interleaved so each folder spreads over the sphere.
   function mixed() {
     const per = Math.max(1, Math.floor(SPHERE_MAX / COLS.length));
     const lists = COLS.map(c => {
-      const n = Math.min(per, c.items.length);
-      return Array.from({ length: n }, (_, k) => c.items[Math.floor(k * c.items.length / n)]);
+      const best = c.items.filter(it => it.best);
+      return best.length ? best.slice(0, per) : sample(c.items, Math.min(per, 6));
     });
     const out = [];
     for (let k = 0; out.length < lists.reduce((a, l) => a + l.length, 0); k++) {
@@ -540,7 +548,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
     }
     return out;
   }
-  const itemsFor = id => id === ALL ? mixed() : BYID[id].items.slice(0, SPHERE_MAX);
+  const itemsFor = id => id === ALL ? mixed() : sample(BYID[id].items, SPHERE_MAX);
 
   /* ---------- helpers ---------- */
   const $ = s => document.querySelector(s);
@@ -585,7 +593,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
       const counts = firstBuild;
       img.addEventListener('load', () => { img.classList.add('in'); if (counts) report(); }, { once: true });
       if (counts) img.addEventListener('error', report, { once: true });
-      img.src = it.t;
+      img.src = it.m || it.t;
       fig.appendChild(img);
       card.appendChild(fig);
       orb.appendChild(card);
@@ -654,12 +662,14 @@ body.lit #lit{opacity:1;pointer-events:auto}
     if (id === current) return;
     current = id;
     if (opts.instant) { buildSphere(itemsFor(id)); return; }
-    orb.style.transition = 'opacity .35s ease';
-    orb.style.opacity = '0';
-    setTimeout(() => {
+    // Fade the cards, never #orb itself: opacity on a preserve-3d parent flattens it in Safari.
+    fadeTarget = 0;
+    clearTimeout(swapTimer);
+    swapTimer = setTimeout(() => {
       buildSphere(itemsFor(id));
-      orb.style.opacity = '1';
-    }, 360);
+      fadeMul = 0;
+      fadeTarget = 1;
+    }, 320);
   }
   sets.addEventListener('click', e => {
     const b = e.target.closest('button');
@@ -670,6 +680,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
   let spin = 0, tilt = -4, camZ = 0, dragX = 0, dragY = 0, velX = 0, velY = 0;
   const PITCH = 32;
   let focused = -1, dragging = false, litOpen = false, deep = false;
+  let fadeMul = 1, fadeTarget = 1, swapTimer = 0;
 
   function frame() {
     if (!dragging && !litOpen) {
@@ -688,6 +699,9 @@ body.lit #lit{opacity:1;pointer-events:auto}
     world.style.transform = `translateZ(${camZ.toFixed(2)}px) rotateY(${sy.toFixed(3)}deg) rotateX(${sx.toFixed(3)}deg)`;
     headline.style.transform = `rotateX(${(-sx).toFixed(3)}deg) rotateY(${(-sy).toFixed(3)}deg) translateZ(${(R * HZ).toFixed(2)}px)`;
     headline.style.opacity = Math.max(0, 1 - p * .55).toFixed(3);
+
+    fadeMul += (fadeTarget - fadeMul) * .2;
+    if (Math.abs(fadeTarget - fadeMul) < .004) fadeMul = fadeTarget;
 
     const isDeep = p > .35;
     if (isDeep !== deep) { deep = isDeep; body.classList.toggle('deep', deep); }
@@ -710,7 +724,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
         if (i === focused) fade = 0;
       }
       const c = cards[i];
-      const d = Math.round(dim * 1000) / 1000, o = Math.round(fade * 1000) / 1000;
+      const d = Math.round(dim * 1000) / 1000, o = Math.round(fade * fadeMul * 1000) / 1000;
       if (d !== c._d) { c._d = d; c.style.setProperty('--d', d); }
       if (o !== c._o) { c._o = o; c.style.opacity = o; }
     }
