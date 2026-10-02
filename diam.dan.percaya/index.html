@@ -333,27 +333,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
 .where{font-size:13px;color:rgba(244,242,239,.62)}
 .note{font-size:13.5px;line-height:1.55;color:rgba(244,242,239,.92)}
 
-/* ---------- intro film ---------- */
-#intro{position:fixed;inset:0;z-index:200;background:#000;display:grid;place-items:center;overflow:hidden}
-#film{width:100%;height:100%;object-fit:cover}
-#intro .veil{position:absolute;inset:0;background:#000;opacity:0;transition:opacity 1.15s ease}
-#intro.closing .veil{opacity:1}
-#intro.gone{opacity:0;pointer-events:none;transition:opacity .5s linear}
-.skip{
-  position:absolute;right:calc(var(--pad) + var(--safe-right));bottom:calc(var(--pad) + var(--safe-bottom));
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,242,239,.6);
-  min-height:44px;padding:10px 18px;border:1px solid rgba(244,242,239,.25);border-radius:999px;
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  transition:color .3s, border-color .3s, opacity .4s;
-}
-.skip:hover{color:#fff;border-color:rgba(255,255,255,.7)}
-#intro.closing .skip{opacity:0}
-#intro .fallback{
-  position:absolute;inset:0;opacity:0;transition:opacity .8s ease;
-  background:radial-gradient(circle at 50% 46%, #14301a 0%, #060c07 42%, #000 72%);
-}
-#intro.novideo .fallback{opacity:1}
-
 /* ---------- splash ---------- */
 #splash{
   position:fixed;inset:0;z-index:250;background:#000;
@@ -520,13 +499,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
   </div>
 </div>
 
-<div id="intro">
-  <video id="film" muted playsinline preload="auto" disablepictureinpicture></video>
-  <div class="fallback"></div>
-  <div class="veil"></div>
-  <button class="skip" id="skip">Skip</button>
-</div>
-
 <div id="splash">
   <div class="mark">diam<em>.dan.percaya</em></div>
   <div class="bar"><s id="bar"></s></div>
@@ -539,8 +511,6 @@ body.lit #lit{opacity:1;pointer-events:auto}
 <script>
 (() => {
   /* ---------- content ---------- */
-  const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/';
-  const FILM = CDN + 'hf_20260922_195107_ed3f055a-3a13-4a71-b743-e10310454246.mp4';
 
   // Built by arsip_site.py from output/tenang* and output/reels/tenang.
   const COLS = (window.COLLECTIONS || []).filter(c => c.items.length);
@@ -583,7 +553,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
   const stage = $('#stage'), world = $('#world'), orb = $('#orb'), headline = $('#headline');
   const grid = $('#grid'), gridSections = $('#gridSections'), sets = $('#sets');
   const lit = $('#lit'), plate = $('.plate'), shot = $('.shot'), litImg = $('#litImg'), litVid = $('#litVid');
-  const intro = $('#intro'), film = $('#film'), splash = $('#splash'), bar = $('#bar');
+  const splash = $('#splash'), bar = $('#bar');
   const menuBtn = $('#menuBtn');
 
   /* ---------- sphere ---------- */
@@ -802,7 +772,7 @@ body.lit #lit{opacity:1;pointer-events:auto}
     if (loaded >= TOTAL) maybeEndSplash();
   }
   const born = performance.now();
-  let splashUp = true, splashEnding = false, filmReported = false;
+  let splashEnding = false;
   function maybeEndSplash() {
     if (splashEnding || loaded < TOTAL) return;
     splashEnding = true;
@@ -813,91 +783,33 @@ body.lit #lit{opacity:1;pointer-events:auto}
     bar.style.transform = 'scaleX(1)';
     setTimeout(() => {
       splash.classList.add('out');
-      splashUp = false;
       setTimeout(() => splash.remove(), 950);
-      startFilm();
+      reveal();
     }, 380);
   }
   setTimeout(() => { if (!splashEnding) endSplash(); }, 9000);
 
   const startId = decodeURIComponent(location.hash.slice(1)) || ALL;
   const startItems = itemsFor(BYID[startId] ? startId : ALL);
-  TOTAL = startItems.length + 1;
+  TOTAL = startItems.length;
   current = BYID[startId] ? startId : ALL;
   sets.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.set === current));
   buildSphere(startItems);
   frame();
 
-  /* ---------- film ---------- */
-  let revealed = false, filmStarted = false, revealTimer = 0, novideo = false;
+  /* ---------- reveal (straight from the splash into the sphere) ---------- */
+  let revealed = false;
   root.style.overflow = 'hidden';
-  film.muted = true;
-  film.defaultMuted = true;
-  film.playsInline = true;
-  film.setAttribute('playsinline', '');
-  film.setAttribute('webkit-playsinline', '');
-  film.setAttribute('muted', '');
-  function filmReport() { if (!filmReported) { filmReported = true; report(); } }
-  film.addEventListener('canplaythrough', filmReport);
-  film.addEventListener('loadeddata', filmReport);
-  film.addEventListener('error', () => {
-    filmReport();
-    novideo = true;
-    intro.classList.add('novideo');
-    if (!splashUp) setTimeout(reveal, 1300);
-  });
-  film.addEventListener('play', () => { film.playbackRate = 2; });
-  film.addEventListener('playing', () => {
-    film.playbackRate = 2;
-    clearTimeout(revealTimer);
-    const left = (film.duration || 0) - film.currentTime - .45;
-    revealTimer = setTimeout(reveal, Math.max(300, (left / 2) * 1000));
-  });
-  film.addEventListener('ended', reveal);
-  film.src = FILM;
-  film.load();
-
-  function tryPlay() {
-    if (revealed) return;
-    film.playbackRate = 2;
-    const pr = film.play();
-    if (pr && pr.catch) pr.catch(() => {});
-  }
-  function gesture() {
-    tryPlay();
-    removeEventListener('pointerdown', gesture);
-    removeEventListener('keydown', gesture);
-    removeEventListener('touchstart', gesture);
-  }
-  function startFilm() {
-    if (filmStarted) return;
-    filmStarted = true;
-    if (novideo) { setTimeout(reveal, 1300); return; }
-    if (film.currentTime > .05) film.currentTime = 0;
-    tryPlay();
-    addEventListener('pointerdown', gesture);
-    addEventListener('keydown', gesture);
-    addEventListener('touchstart', gesture, { passive: true });
-    setTimeout(() => { if (film.paused) reveal(); }, 2600);
-    setTimeout(reveal, 14000);
-  }
-  $('#skip').addEventListener('click', reveal);
-
   function reveal() {
     if (revealed) return;
     revealed = true;
-    clearTimeout(revealTimer);
-    intro.classList.add('closing');
     body.classList.remove('locked');
     root.style.overflow = '';
     layout();
-    requestAnimationFrame(layout);
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       layout();
       body.classList.add('revealed');
-      intro.classList.add('gone');
-      setTimeout(() => { film.pause(); intro.remove(); }, 700);
-    }, 1000);
+    });
   }
 
   /* ---------- grid view: one section per folder ---------- */
