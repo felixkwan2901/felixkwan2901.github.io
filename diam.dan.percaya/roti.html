@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roti Hidup — diam.dan.percaya</title>
+<meta name="description" content="Pecahkan roti, terima satu ayat Alkitab (TB) secara acak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<style>
+:root{
+  --bg:#000;
+  --ink:#f4f2ef;
+  --dim:#8c8783;
+  --line:rgba(244,242,239,.28);
+  --crust:#c98b4a;
+  --crust-dark:#8a5326;
+  --crumb:#f0d3a3;
+  --pad:clamp(14px, 2.6vw, 34px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --safe-top:env(safe-area-inset-top, 0px);
+  --safe-right:env(safe-area-inset-right, 0px);
+  --safe-bottom:env(safe-area-inset-bottom, 0px);
+  --safe-left:env(safe-area-inset-left, 0px);
+  --serif:"Playfair Display", "Times New Roman", serif;
+  --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:#000}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;
+  -webkit-font-smoothing:antialiased;min-height:100vh;min-height:100dvh;overflow-x:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+a{color:inherit;-webkit-tap-highlight-color:transparent}
+
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:60;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:calc(var(--pad) * .8 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * .35) calc(var(--pad) + var(--safe-left));
+}
+.wordmark{font-family:var(--serif);font-size:clamp(19px, 2.1vw, 27px);line-height:1;text-decoration:none;white-space:nowrap}
+.wordmark em{font-style:normal}
+.back{font-size:clamp(12px, 1.25vw, 15px);text-decoration:none;opacity:.72;min-height:44px;display:flex;align-items:center}
+.back:hover{opacity:1}
+
+main{
+  min-height:100vh;min-height:100dvh;
+  display:grid;place-items:center;align-content:center;gap:clamp(18px, 3vh, 30px);
+  padding:calc(90px + var(--safe-top)) var(--pad) calc(110px + var(--safe-bottom));
+  text-align:center;
+  background:radial-gradient(ellipse 70% 60% at 50% 48%, rgba(201,139,74,.10), transparent 70%);
+}
+.kicker{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:rgba(244,242,239,.42)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px, 6vw, 68px);line-height:1.04;letter-spacing:-.01em}
+.sub{font-size:13.5px;color:rgba(244,242,239,.62);max-width:34ch}
+
+/* ---------- loaf ---------- */
+.table{position:relative;width:min(420px, 84vw);height:clamp(200px, 30vh, 260px);display:grid;place-items:center}
+#loaf{
+  position:relative;width:100%;height:100%;display:grid;place-items:center;
+  outline:none;border-radius:20px;
+}
+#loaf:focus-visible{box-shadow:0 0 0 1px var(--line)}
+#loaf svg{width:100%;height:100%;overflow:visible}
+#loaf .half{transition:transform .9s var(--ease), opacity .7s ease .35s;transform-box:fill-box}
+#loaf .half.l{transform-origin:100% 80%}
+#loaf .half.r{transform-origin:0% 80%}
+#loaf.idle svg{animation:breathe 3.4s ease-in-out infinite}
+#loaf:hover.idle svg{animation-duration:1.6s}
+#loaf.shake svg{animation:shake .38s ease}
+#loaf.broken .half.l{transform:translate(-26%, 6%) rotate(-16deg);opacity:0}
+#loaf.broken .half.r{transform:translate(26%, 6%) rotate(16deg);opacity:0}
+#loaf.rise svg{animation:riseIn .8s var(--ease)}
+@keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.012)}}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}45%{transform:rotate(3deg)}70%{transform:rotate(-2deg)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.steam{position:absolute;inset:0;pointer-events:none}
+.steam i{
+  position:absolute;bottom:62%;width:2px;height:38px;border-radius:2px;
+  background:linear-gradient(to top, rgba(244,242,239,0), rgba(244,242,239,.28), rgba(244,242,239,0));
+  animation:steam 3.2s ease-in-out infinite;opacity:0;
+}
+.steam i:nth-child(1){left:38%}
+.steam i:nth-child(2){left:50%;animation-delay:1s}
+.steam i:nth-child(3){left:62%;animation-delay:2s}
+@keyframes steam{0%{opacity:0;transform:translateY(10px) scaleY(.6)}40%{opacity:1}100%{opacity:0;transform:translateY(-34px) scaleY(1.2) translateX(6px)}}
+#loaf.broken ~ .steam{display:none}
+.hint{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(244,242,239,.42);display:flex;align-items:center;gap:10px}
+.hint s{position:relative;display:block;width:44px;height:1px;background:var(--line);overflow:hidden}
+.hint s::after{content:"";position:absolute;inset:0;background:#f4f2ef;transform:translateX(-100%);animation:sweep 2.6s var(--ease) infinite}
+@keyframes sweep{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(100%)}}
+.crumb{position:absolute;left:50%;top:50%;border-radius:40%;background:var(--crumb);pointer-events:none}
+
+/* ---------- verse card ---------- */
+.verse{
+  grid-area:1/1;align-self:center;width:min(620px, 92vw);
+  display:grid;gap:18px;justify-items:center;
+  opacity:0;transform:translateY(16px);pointer-events:none;
+  transition:opacity .8s var(--ease), transform .9s var(--ease);
+}
+.verse.show{opacity:1;transform:none;pointer-events:auto}
+.verse blockquote{
+  font-family:var(--serif);font-weight:400;font-size:clamp(20px, 2.6vw, 30px);line-height:1.34;letter-spacing:-.005em;
+  text-wrap:balance;
+}
+.verse blockquote.long{font-size:clamp(17px, 2vw, 23px);line-height:1.42}
+.verse cite{font-style:normal;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,242,239,.62)}
+.verse cite b{font-weight:400;color:var(--crumb)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px}
+.btn{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,242,239,.78);
+  min-height:44px;padding:10px 18px;border:1px solid rgba(244,242,239,.28);border-radius:999px;
+  transition:color .3s, border-color .3s, background .3s;
+}
+.btn:hover{color:#fff;border-color:rgba(255,255,255,.7)}
+.btn.primary{background:#f4f2ef;color:#000;border-color:#f4f2ef}
+.btn.primary:hover{background:#fff;color:#000}
+.stage{position:relative;width:100%;display:grid;place-items:center;gap:18px}
+.stage .table{grid-area:1/1}
+.stage .hint{grid-area:2/1}
+.stage.reading .table, .stage.reading .hint{opacity:0;pointer-events:none}
+.table, .hint{transition:opacity .5s ease}
+
+/* ---------- baskets ---------- */
+.baskets{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:linear-gradient(to bottom, transparent, #000 40%);
+  display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:14px calc(var(--pad) + var(--safe-right)) calc(var(--pad) + var(--safe-bottom)) calc(var(--pad) + var(--safe-left));
+  font-size:12px;color:rgba(244,242,239,.62);
+}
+.dots{display:flex;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;border:1px solid rgba(244,242,239,.35);transition:background .4s, border-color .4s, transform .4s var(--ease)}
+.dots i.on{background:var(--crumb);border-color:var(--crumb)}
+.dots i.pop{transform:scale(1.5)}
+.baskets button{font-size:12px;text-decoration:underline;text-underline-offset:3px;color:rgba(244,242,239,.72);min-height:44px;padding:0 4px}
+.baskets button:hover{color:#fff}
+
+#drawer{
+  position:fixed;inset:0;z-index:80;background:#050505;
+  clip-path:inset(100% 0 0 0);pointer-events:none;transition:clip-path .75s var(--ease);
+  overflow-y:auto;padding:calc(84px + var(--safe-top)) var(--pad) calc(var(--pad) * 2 + var(--safe-bottom));
+}
+#drawer.open{clip-path:inset(0);pointer-events:auto}
+#drawer h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px, 4vw, 42px);text-align:center;margin-bottom:8px}
+#drawer .note{text-align:center;font-size:12.5px;color:var(--dim);margin-bottom:28px}
+#drawer ol{list-style:none;max-width:720px;margin:0 auto;display:grid;gap:22px}
+#drawer li{border-top:1px solid rgba(244,242,239,.14);padding-top:18px;font-family:var(--serif);font-size:17px;line-height:1.45}
+#drawer li span{display:block;margin-top:6px;font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,242,239,.55)}
+#drawer .close{position:fixed;top:calc(var(--pad) * .8 + var(--safe-top));right:calc(var(--pad) + var(--safe-right))}
+#drawer .empty{text-align:center;color:var(--dim);font-size:13px}
+#drawer .reset{display:block;margin:30px auto 0}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(84px + var(--safe-bottom));transform:translate(-50%, 10px);z-index:90;
+  font-size:12px;padding:10px 16px;border-radius:999px;background:#f4f2ef;color:#000;
+  opacity:0;pointer-events:none;transition:opacity .35s, transform .35s var(--ease);
+}
+.toast.show{opacity:1;transform:translate(-50%, 0)}
+
+@media (max-width:640px){
+  :root{--pad:clamp(12px, 4vw, 18px)}
+  main{padding-bottom:calc(130px + var(--safe-bottom))}
+  .verse blockquote{font-size:clamp(19px, 5.4vw, 24px)}
+  .verse blockquote.long{font-size:clamp(16px, 4.4vw, 19px)}
+}
+@media (max-height:560px) and (orientation:landscape){
+  .sub, .kicker{display:none}
+  main{padding-top:calc(64px + var(--safe-top))}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.14s !important}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="index.html" aria-label="diam.dan.percaya">diam<em>.dan.percaya</em></a>
+  <a class="back" href="index.html">← Arsip</a>
+</header>
+
+<main>
+  <div class="kicker">Roti Hidup · Yohanes 6:35</div>
+  <h1>Pecahkan Roti</h1>
+  <p class="sub">Ketuk roti untuk memecahkannya dan terima satu ayat untuk hari ini.</p>
+
+  <div class="stage" id="stage">
+    <div class="table">
+      <div id="loaf" class="idle" role="button" tabindex="0" aria-label="Pecahkan roti">
+        <svg viewBox="0 0 400 220" aria-hidden="true">
+          <defs>
+            <linearGradient id="crust" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e2a663"/>
+              <stop offset=".55" stop-color="#c98b4a"/>
+              <stop offset="1" stop-color="#8a5326"/>
+            </linearGradient>
+            <radialGradient id="shine" cx=".38" cy=".3" r=".6">
+              <stop offset="0" stop-color="#fff3dc" stop-opacity=".45"/>
+              <stop offset="1" stop-color="#fff3dc" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="cutL"><polygon points="0,0 206,0 192,40 210,78 190,118 208,158 194,220 0,220"/></clipPath>
+            <clipPath id="cutR"><polygon points="206,0 400,0 400,220 194,220 208,158 190,118 210,78 192,40"/></clipPath>
+            <g id="bread">
+              <ellipse cx="200" cy="196" rx="168" ry="12" fill="#000" opacity=".55"/>
+              <path d="M40 150 C 34 92, 96 46, 200 44 C 304 46, 366 92, 360 150 C 356 180, 320 192, 200 192 C 80 192, 44 180, 40 150 Z" fill="url(#crust)"/>
+              <path d="M40 150 C 34 92, 96 46, 200 44 C 304 46, 366 92, 360 150 C 356 180, 320 192, 200 192 C 80 192, 44 180, 40 150 Z" fill="url(#shine)"/>
+              <g fill="none" stroke="#f0d3a3" stroke-width="5" stroke-linecap="round" opacity=".78">
+                <path d="M104 92 C 120 76, 138 70, 156 70"/>
+                <path d="M170 80 C 186 64, 206 58, 226 58"/>
+                <path d="M240 72 C 258 60, 278 60, 296 66"/>
+              </g>
+            </g>
+          </defs>
+          <g class="half l" clip-path="url(#cutL)"><use href="#bread"/></g>
+          <g class="half r" clip-path="url(#cutR)"><use href="#bread"/></g>
+        </svg>
+      </div>
+      <div class="steam"><i></i><i></i><i></i></div>
+    </div>
+    <div class="hint" id="hint"><s></s>Ketuk roti</div>
+
+    <div class="verse" id="verse" aria-live="polite">
+      <blockquote id="vText"></blockquote>
+      <cite id="vRef"></cite>
+      <div class="actions">
+        <button class="btn primary" id="again">Pecahkan lagi</button>
+        <button class="btn" id="copy">Salin</button>
+        <button class="btn" id="share" hidden>Bagikan</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="baskets">
+  <span id="bCount">0 / 12 bakul</span>
+  <span class="dots" id="dots"></span>
+  <button id="openDrawer">Lihat bakul</button>
+</div>
+
+<div id="drawer" aria-hidden="true">
+  <button class="btn close" id="closeDrawer">Tutup</button>
+  <h2>Bakul Roti</h2>
+  <p class="note">Ayat yang sudah kamu terima. Dua belas bakul penuh — Yohanes 6:13.</p>
+  <ol id="list"></ol>
+  <button class="btn reset" id="reset">Kosongkan bakul</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  // Ayat dari caption @diam.dan.percaya, teks Alkitab Terjemahan Baru (TB) © LAI, via alkitab.sabda.org.
+  const VERSES = [{"t":"Akulah pokok anggur dan kamulah ranting-rantingnya. Barangsiapa tinggal di dalam Aku dan Aku di dalam dia, ia berbuah banyak, sebab di luar Aku kamu tidak dapat berbuat apa-apa.","r":"Yohanes 15:5"},{"t":"Sebab penglihatan itu masih menanti saatnya, tetapi ia bersegera menuju kesudahannya dengan tidak menipu; apabila berlambat-lambat, nantikanlah itu, sebab itu sungguh-sungguh akan datang dan tidak akan bertangguh.","r":"Habakuk 2:3"},{"t":"Marilah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu.","r":"Matius 11:28"},{"t":"Iman adalah dasar dari segala sesuatu yang kita harapkan dan bukti dari segala sesuatu yang tidak kita lihat.","r":"Ibrani 11:1"},{"t":"Semoga Allah, sumber pengharapan, memenuhi kamu dengan segala sukacita dan damai sejahtera dalam iman kamu, supaya oleh kekuatan Roh Kudus kamu berlimpah-limpah dalam pengharapan.","r":"Roma 15:13"},{"t":"\"Diamlah dan ketahuilah, bahwa Akulah Allah! Aku ditinggikan di antara bangsa-bangsa, ditinggikan di bumi!\"","r":"Mazmur 46:11"},{"t":"Inilah hari yang dijadikan TUHAN, marilah kita bersorak-sorak dan bersukacita karenanya!","r":"Mazmur 118:24"},{"t":"Berserulah kepada-Ku, maka Aku akan menjawab engkau dan akan memberitahukan kepadamu hal-hal yang besar dan yang tidak terpahami, yakni hal-hal yang tidak kauketahui.","r":"Yeremia 33:3"},{"t":"Tak berkesudahan kasih setia TUHAN, tak habis-habisnya rahmat-Nya, selalu baru tiap pagi; besar kesetiaan-Mu!","r":"Ratapan 3:22-23"},{"t":"Tetapi jawab Tuhan kepadaku: \"Cukuplah kasih karunia-Ku bagimu, sebab justru dalam kelemahanlah kuasa-Ku menjadi sempurna.\" Sebab itu terlebih suka aku bermegah atas kelemahanku, supaya kuasa Kristus turun menaungi aku.","r":"2 Korintus 12:9"},{"t":"janganlah takut, sebab Aku menyertai engkau, janganlah bimbang, sebab Aku ini Allahmu; Aku akan meneguhkan, bahkan akan menolong engkau; Aku akan memegang engkau dengan tangan kanan-Ku yang membawa kemenangan.","r":"Yesaya 41:10"},{"t":"Apabila orang-orang benar itu berseru-seru, maka TUHAN mendengar, dan melepaskan mereka dari segala kesesakannya.","r":"Mazmur 34:18"},{"t":"Kita mengasihi, karena Allah lebih dahulu mengasihi kita.","r":"1 Yohanes 4:19"},{"t":"Untuk pemimpin biduan. Mazmur Daud. TUHAN, Engkau menyelidiki dan mengenal aku;","r":"Mazmur 139:1"},{"t":"Sebab TUHAN, Dia sendiri akan berjalan di depanmu, Dia sendiri akan menyertai engkau, Dia tidak akan membiarkan engkau dan tidak akan meninggalkan engkau; janganlah takut dan janganlah patah hati.\"","r":"Ulangan 31:8"},{"t":"Firman-Mu itu pelita bagi kakiku dan terang bagi jalanku.","r":"Mazmur 119:105"},{"t":"dan ajarlah mereka melakukan segala sesuatu yang telah Kuperintahkan kepadamu. Dan ketahuilah, Aku menyertai kamu senantiasa sampai kepada akhir zaman.\"","r":"Matius 28:20"},{"t":"Percayalah kepada TUHAN dengan segenap hatimu, dan janganlah bersandar kepada pengertianmu sendiri. Akuilah Dia dalam segala lakumu, maka Ia akan meluruskan jalanmu.","r":"Amsal 3:5-6"},{"t":"Yesus Kristus tetap sama, baik kemarin maupun hari ini dan sampai selama-lamanya.","r":"Ibrani 13:8"},{"t":"Yesus mengatakan suatu perumpamaan kepada mereka untuk menegaskan, bahwa mereka harus selalu berdoa dengan tidak jemu-jemu.","r":"Lukas 18:1"},{"t":"Beribadahlah kepada TUHAN dengan sukacita, datanglah ke hadapan-Nya dengan sorak-sorai!","r":"Mazmur 100:2"},{"t":"Ia membuat segala sesuatu indah pada waktunya, bahkan Ia memberikan kekekalan dalam hati mereka. Tetapi manusia tidak dapat menyelami pekerjaan yang dilakukan Allah dari awal sampai akhir.","r":"Pengkhotbah 3:11"},{"t":"Sekalipun aku berjalan dalam lembah kekelaman, aku tidak takut bahaya, sebab Engkau besertaku; gada-Mu dan tongkat-Mu, itulah yang menghibur aku.","r":"Mazmur 23:4"},{"t":"Karena itu aku senang dan rela di dalam kelemahan, di dalam siksaan, di dalam kesukaran, di dalam penganiayaan dan kesesakan oleh karena Kristus. Sebab jika aku lemah, maka aku kuat.","r":"2 Korintus 12:10"},{"t":"Aku hendak mengajar dan menunjukkan kepadamu jalan yang harus kautempuh; Aku hendak memberi nasihat, mata-Ku tertuju kepadamu.","r":"Mazmur 32:8"},{"t":"Ada seorang muda, yang pada waktu itu hanya memakai sehelai kain lenan untuk menutup badannya, mengikuti Dia. Mereka hendak menangkapnya, tetapi ia melepaskan kainnya dan lari dengan telanjang.","r":"Markus 14:51-52"},{"t":"Janganlah hendaknya kamu kuatir tentang apapun juga, tetapi nyatakanlah dalam segala hal keinginanmu kepada Allah dalam doa dan permohonan dengan ucapan syukur.","r":"Filipi 4:6"},{"t":"Hanya dekat Allah saja aku tenang, dari pada-Nyalah keselamatanku.","r":"Mazmur 62:2"},{"t":"Serahkanlah segala kekuatiranmu kepada-Nya, sebab Ia yang memelihara kamu.","r":"1 Petrus 5:7"},{"t":"TUHAN, pada waktu pagi Engkau mendengar seruanku, pada waktu pagi aku mengatur persembahan bagi-Mu, dan aku menunggu-nunggu.","r":"Mazmur 5:4"},{"t":"Serahkanlah hidupmu kepada TUHAN dan percayalah kepada-Nya, dan Ia akan bertindak;","r":"Mazmur 37:5"},{"t":"Ia menyembuhkan orang-orang yang patah hati dan membalut luka-luka mereka;","r":"Mazmur 147:3"},{"t":"Dia memberi kekuatan kepada yang lelah dan menambah semangat kepada yang tiada berdaya.","r":"Yesaya 40:29"},{"t":"Sebab Aku ini mengetahui rancangan-rancangan apa yang ada pada-Ku mengenai kamu, demikianlah firman TUHAN, yaitu rancangan damai sejahtera dan bukan rancangan kecelakaan, untuk memberikan kepadamu hari depan yang penuh harapan.","r":"Yeremia 29:11"},{"t":"Mengucap syukurlah dalam segala hal, sebab itulah yang dikehendaki Allah di dalam Kristus Yesus bagi kamu.","r":"1 Tesalonika 5:18"},{"t":"Sengsaraku Engkaulah yang menghitung-hitung, air mataku Kautaruh ke dalam kirbat-Mu. Bukankah semuanya telah Kaudaftarkan?","r":"Mazmur 56:9"},{"t":"Sebab itu janganlah kamu kuatir akan hari besok, karena hari besok mempunyai kesusahannya sendiri. Kesusahan sehari cukuplah untuk sehari.\"","r":"Matius 6:34"},{"t":"Damai sejahtera Allah, yang melampaui segala akal, akan memelihara hati dan pikiranmu dalam Kristus Yesus.","r":"Filipi 4:7"},{"t":"Ia menentukan jumlah bintang-bintang dan menyebut nama-nama semuanya.","r":"Mazmur 147:4"},{"t":"Masih banyak hal-hal lain lagi yang diperbuat oleh Yesus, tetapi jikalau semuanya itu harus dituliskan satu per satu, maka agaknya dunia ini tidak dapat memuat semua kitab yang harus ditulis itu.","r":"Yohanes 21:25"},{"t":"tetapi semua yang tercantum di sini telah dicatat, supaya kamu percaya, bahwa Yesuslah Mesias, Anak Allah, dan supaya kamu oleh imanmu memperoleh hidup dalam nama-Nya.","r":"Yohanes 20:31"},{"t":"Sebab karena kasih karunia kamu diselamatkan oleh iman; itu bukan hasil usahamu, tetapi pemberian Allah,","r":"Efesus 2:8"},{"t":"Demikian juga Roh membantu kita dalam kelemahan kita; sebab kita tidak tahu, bagaimana sebenarnya harus berdoa; tetapi Roh sendiri berdoa untuk kita kepada Allah dengan keluhan-keluhan yang tidak terucapkan.","r":"Roma 8:26"},{"t":"Akan hal ini aku yakin sepenuhnya, yaitu Ia, yang memulai pekerjaan yang baik di antara kamu, akan meneruskannya sampai pada akhirnya pada hari Kristus Yesus.","r":"Filipi 1:6"},{"t":"Hendaklah perkataan Kristus diam dengan segala kekayaannya di antara kamu, sehingga kamu dengan segala hikmat mengajar dan menegur seorang akan yang lain dan sambil menyanyikan mazmur, dan puji-pujian dan nyanyian rohani, kamu mengucap syukur kepada Allah di dalam hatimu.","r":"Kolose 3:16"},{"t":"Tetapi sekarang, ya TUHAN, Engkaulah Bapa kami! Kamilah tanah liat dan Engkaulah yang membentuk kami, dan kami sekalian adalah buatan tangan-Mu.","r":"Yesaya 64:8"},{"t":"Adalah baik menanti dengan diam pertolongan TUHAN.","r":"Ratapan 3:26"},{"t":"Kuatkan dan teguhkanlah hatimu, janganlah takut dan jangan gemetar karena mereka, sebab TUHAN, Allahmu, Dialah yang berjalan menyertai engkau; Ia tidak akan membiarkan engkau dan tidak akan meninggalkan engkau.\"","r":"Ulangan 31:6"},{"t":"Oleh karena engkau berharga di mata-Ku dan mulia, dan Aku ini mengasihi engkau, maka Aku memberikan manusia sebagai gantimu, dan bangsa-bangsa sebagai ganti nyawamu.","r":"Yesaya 43:4"},{"t":"TUHAN itu dekat kepada orang-orang yang patah hati, dan Ia menyelamatkan orang-orang yang remuk jiwanya.","r":"Mazmur 34:19"},{"t":"Ia mengembalikan daerah Israel, dari jalan masuk ke Hamat sampai ke Laut Araba sesuai dengan firman TUHAN, Allah Israel, yang telah diucapkan-Nya dengan perantaraan hamba-Nya, nabi Yunus bin Amitai dari Gat-Hefer.","r":"2 Raja-raja 14:25"},{"t":"Tali pengukur jatuh bagiku di tempat-tempat yang permai; ya, milik pusakaku menyenangkan hatiku.","r":"Mazmur 16:6"},{"t":"TUHAN dekat pada setiap orang yang berseru kepada-Nya, pada setiap orang yang berseru kepada-Nya dalam kesetiaan.","r":"Mazmur 145:18"},{"t":"Sebab rancangan-Ku bukanlah rancanganmu, dan jalanmu bukanlah jalan-Ku, demikianlah firman TUHAN.","r":"Yesaya 55:8"},{"t":"Dan berdoalah ia kepada TUHAN, katanya: \"Ya TUHAN, bukankah telah kukatakan itu, ketika aku masih di negeriku? Itulah sebabnya, maka aku dahulu melarikan diri ke Tarsis, sebab aku tahu, bahwa Engkaulah Allah yang pengasih dan penyayang, yang panjang sabar dan berlimpah kasih setia serta yang menyesal karena malapetaka yang hendak didatangkan-Nya.","r":"Yunus 4:2"},{"t":"--sebab hidup kami ini adalah hidup karena percaya, bukan karena melihat--","r":"2 Korintus 5:7"},{"t":"Sebab sesaat saja Ia murka, tetapi seumur hidup Ia murah hati; sepanjang malam ada tangisan, menjelang pagi terdengar sorak-sorai.","r":"Mazmur 30:6"},{"t":"Bangkitlah, menjadi teranglah, sebab terangmu datang, dan kemuliaan TUHAN terbit atasmu.","r":"Yesaya 60:1"},{"t":"Janganlah kita menjauhkan diri dari pertemuan-pertemuan ibadah kita, seperti dibiasakan oleh beberapa orang, tetapi marilah kita saling menasihati, dan semakin giat melakukannya menjelang hari Tuhan yang mendekat.","r":"Ibrani 10:25"},{"t":"Segera ayah anak itu berteriak: \"Aku percaya. Tolonglah aku yang tidak percaya ini!\"","r":"Markus 9:24"},{"t":"Jadi siapa yang ada di dalam Kristus, ia adalah ciptaan baru: yang lama sudah berlalu, sesungguhnya yang baru sudah datang.","r":"2 Korintus 5:17"},{"t":"Nantikanlah TUHAN! Kuatkanlah dan teguhkanlah hatimu! Ya, nantikanlah TUHAN!","r":"Mazmur 27:14"},{"t":"dengan pesan: \"Pergilah ke kampung yang di depanmu itu. Pada waktu kamu masuk di situ, kamu akan segera menemukan seekor keledai muda tertambat, yang belum pernah ditunggangi orang. Lepaskan keledai itu dan bawalah ke mari.","r":"Markus 11:2"},{"t":"Hati manusia memikir-mikirkan jalannya, tetapi Tuhanlah yang menentukan arah langkahnya.","r":"Amsal 16:9"},{"t":"Tetaplah berdoa.","r":"1 Tesalonika 5:17"},{"t":"Tetapi Yunus bersiap untuk melarikan diri ke Tarsis, jauh dari hadapan TUHAN; ia pergi ke Yafo dan mendapat di sana sebuah kapal, yang akan berangkat ke Tarsis. Ia membayar biaya perjalanannya, lalu naik kapal itu untuk berlayar bersama-sama dengan mereka ke Tarsis, jauh dari hadapan TUHAN.","r":"Yunus 1:3"},{"t":"Dan inilah keberanian percaya kita kepada-Nya, yaitu bahwa Ia mengabulkan doa kita, jikalau kita meminta sesuatu kepada-Nya menurut kehendak-Nya.","r":"1 Yohanes 5:14"},{"t":"TUHAN akan berperang untuk kamu, dan kamu akan diam saja.\"","r":"Keluaran 14:14"},{"t":"Maka Yesus berkata pula kepada orang banyak, kata-Nya: \"Akulah terang dunia; barangsiapa mengikut Aku, ia tidak akan berjalan dalam kegelapan, melainkan ia akan mempunyai terang hidup.\"","r":"Yohanes 8:12"},{"t":"Serahkanlah kuatirmu kepada TUHAN, maka Ia akan memelihara engkau! Tidak untuk selama-lamanya dibiarkan-Nya orang benar itu goyah.","r":"Mazmur 55:23"},{"t":"di dasar gunung-gunung. Aku tenggelam ke dasar bumi; pintunya terpalang di belakangku untuk selama-lamanya. Ketika itulah Engkau naikkan nyawaku dari dalam liang kubur, ya TUHAN, Allahku.","r":"Yunus 2:6"},{"t":"Janganlah kita jemu-jemu berbuat baik, karena apabila sudah datang waktunya, kita akan menuai, jika kita tidak menjadi lemah.","r":"Galatia 6:9"},{"t":"Kita tahu sekarang, bahwa Allah turut bekerja dalam segala sesuatu untuk mendatangkan kebaikan bagi mereka yang mengasihi Dia, yaitu bagi mereka yang terpanggil sesuai dengan rencana Allah.","r":"Roma 8:28"},{"t":"Sebab Aku ini, TUHAN, Allahmu, memegang tangan kananmu dan berkata kepadamu: \"Janganlah takut, Akulah yang menolong engkau.\"","r":"Yesaya 41:13"},{"t":"Kemudian datanglah firman TUHAN kepada Abram dalam suatu penglihatan: \"Janganlah takut, Abram, Akulah perisaimu; upahmu akan sangat besar.\"","r":"Kejadian 15:1"},{"t":"Kata malaikat itu kepadanya: \"Jangan takut, hai Maria, sebab engkau beroleh kasih karunia di hadapan Allah.","r":"Lukas 1:30"},{"t":"Lalu kata malaikat itu kepada mereka: \"Jangan takut, sebab sesungguhnya aku memberitakan kepadamu kesukaan besar untuk seluruh bangsa:","r":"Lukas 2:10"},{"t":"Biarlah segala yang bernafas memuji TUHAN! Haleluya!","r":"Mazmur 150:6"},{"t":"Akan tetapi Allah menunjukkan kasih-Nya kepada kita, oleh karena Kristus telah mati untuk kita, ketika kita masih berdosa.","r":"Roma 5:8"},{"t":"Pikullah kuk yang Kupasang dan belajarlah pada-Ku, karena Aku lemah lembut dan rendah hati dan jiwamu akan mendapat ketenangan.","r":"Matius 11:29"},{"t":"Semuanya itu Kukatakan kepadamu, supaya kamu beroleh damai sejahtera dalam Aku. Dalam dunia kamu menderita penganiayaan, tetapi kuatkanlah hatimu, Aku telah mengalahkan dunia.\"","r":"Yohanes 16:33"},{"t":"Maka atas penentuan TUHAN datanglah seekor ikan besar yang menelan Yunus; dan Yunus tinggal di dalam perut ikan itu tiga hari tiga malam lamanya.","r":"Yunus 1:17"},{"t":"Lalu berkatalah ia kepada mereka: \"Pergilah kamu, makanlah sedap-sedapan dan minumlah minuman manis dan kirimlah sebagian kepada mereka yang tidak sedia apa-apa, karena hari ini adalah kudus bagi Tuhan kita! Jangan kamu bersusah hati, sebab sukacita karena TUHAN itulah perlindunganmu!\"","r":"Nehemia 8:11"},{"t":"apabila ia jatuh, tidaklah sampai tergeletak, sebab TUHAN menopang tangannya.","r":"Mazmur 37:24"},{"t":"Yang hatinya teguh Kaujagai dengan damai sejahtera, sebab kepada-Mulah ia percaya.","r":"Yesaya 26:3"},{"t":"Mereka bertekun dalam pengajaran rasul-rasul dan dalam persekutuan. Dan mereka selalu berkumpul untuk memecahkan roti dan berdoa.","r":"Kisah Para Rasul 2:42"},{"t":"Dan pada jubah-Nya dan paha-Nya tertulis suatu nama, yaitu: \"Raja segala raja dan Tuan di atas segala tuan.\"","r":"Wahyu 19:16"},{"t":"Percayalah kepada TUHAN selama-lamanya, sebab TUHAN ALLAH adalah gunung batu yang kekal.","r":"Yesaya 26:4"},{"t":"Hendaklah masing-masing memberikan menurut kerelaan hatinya, jangan dengan sedih hati atau karena paksaan, sebab Allah mengasihi orang yang memberi dengan sukacita.","r":"2 Korintus 9:7"},{"t":"Mazmur Daud. TUHAN adalah gembalaku, takkan kekurangan aku.","r":"Mazmur 23:1"},{"t":"Nyanyian ziarah. Dalam kesesakanku aku berseru kepada TUHAN dan Ia menjawab aku:","r":"Mazmur 120:1"},{"t":"Sampai masa tuamu Aku tetap Dia dan sampai masa putih rambutmu Aku menggendong kamu. Aku telah melakukannya dan mau menanggung kamu terus; Aku mau memikul kamu dan menyelamatkan kamu.","r":"Yesaya 46:4"},{"t":"Aku mengasihi TUHAN, sebab Ia mendengarkan suaraku dan permohonanku. Sebab Ia menyendengkan telinga-Nya kepadaku, maka seumur hidupku aku akan berseru kepada-Nya.","r":"Mazmur 116:1-2"},{"t":"Maka bangkitlah ia dan pergi kepada bapanya. Ketika ia masih jauh, ayahnya telah melihatnya, lalu tergeraklah hatinya oleh belas kasihan. Ayahnya itu berlari mendapatkan dia lalu merangkul dan mencium dia.","r":"Lukas 15:20"},{"t":"TUHAN akan menjaga keluar masukmu, dari sekarang sampai selama-lamanya.","r":"Mazmur 121:8"},{"t":"Allah yang abadi adalah tempat perlindunganmu, dan di bawahmu ada lengan-lengan yang kekal. Ia mengusir musuh dari depanmu dan berfirman: Punahkanlah!","r":"Ulangan 33:27"},{"t":"Karena waktu kita masih lemah, Kristus telah mati untuk kita orang-orang durhaka pada waktu yang ditentukan oleh Allah.","r":"Roma 5:6"},{"t":"Lalu TUHAN membawa Abram ke luar serta berfirman: \"Coba lihat ke langit, hitunglah bintang-bintang, jika engkau dapat menghitungnya.\" Maka firman-Nya kepadanya: \"Demikianlah banyaknya nanti keturunanmu.\"","r":"Kejadian 15:5"},{"t":"Sebab lebih baik satu hari di pelataran-Mu dari pada seribu hari di tempat lain; lebih baik berdiri di ambang pintu rumah Allahku dari pada diam di kemah-kemah orang fasik.","r":"Mazmur 84:11"},{"t":"Sekalipun dagingku dan hatiku habis lenyap, gunung batuku dan bagianku tetaplah Allah selama-lamanya.","r":"Mazmur 73:26"},{"t":"tetapi orang-orang yang menanti-nantikan TUHAN mendapat kekuatan baru: mereka seumpama rajawali yang naik terbang dengan kekuatan sayapnya; mereka berlari dan tidak menjadi lesu, mereka berjalan dan tidak menjadi lelah.","r":"Yesaya 40:31"},{"t":"Bersyukurlah kepada TUHAN, sebab Ia baik! Bahwasanya untuk selama-lamanya kasih setia-Nya.","r":"Mazmur 136:1"},{"t":"Sia-sialah kamu bangun pagi-pagi dan duduk-duduk sampai jauh malam, dan makan roti yang diperoleh dengan susah payah--sebab Ia memberikannya kepada yang dicintai-Nya pada waktu tidur.","r":"Mazmur 127:2"},{"t":"Dan marilah kita saling memperhatikan supaya kita saling mendorong dalam kasih dan dalam pekerjaan baik.","r":"Ibrani 10:24"},{"t":"Lalu berfirmanlah TUHAN kepada ikan itu, dan ikan itupun memuntahkan Yunus ke darat.","r":"Yunus 2:10"},{"t":"Hal-hal yang tersembunyi ialah bagi TUHAN, Allah kita, tetapi hal-hal yang dinyatakan ialah bagi kita dan bagi anak-anak kita sampai selama-lamanya, supaya kita melakukan segala perkataan hukum Taurat ini.\"","r":"Ulangan 29:29"},{"t":"Aku bersyukur kepada-Mu oleh karena kejadianku dahsyat dan ajaib; ajaib apa yang Kaubuat, dan jiwaku benar-benar menyadarinya.","r":"Mazmur 139:14"},{"t":"Pencobaan-pencobaan yang kamu alami ialah pencobaan-pencobaan biasa, yang tidak melebihi kekuatan manusia. Sebab Allah setia dan karena itu Ia tidak akan membiarkan kamu dicobai melampaui kekuatanmu. Pada waktu kamu dicobai Ia akan memberikan kepadamu jalan ke luar, sehingga kamu dapat menanggungnya.","r":"1 Korintus 10:13"},{"t":"Lihat, Aku telah melukiskan engkau di telapak tangan-Ku; tembok-tembokmu tetap di ruang mata-Ku.","r":"Yesaya 49:16"},{"t":"Karena akar segala kejahatan ialah cinta uang. Sebab oleh memburu uanglah beberapa orang telah menyimpang dari iman dan menyiksa dirinya dengan berbagai-bagai duka.","r":"1 Timotius 6:10"},{"t":"Sesungguhnya tidak terlelap dan tidak tertidur Penjaga Israel.","r":"Mazmur 121:4"},{"t":"Janganlah engkau lupa memperkatakan kitab Taurat ini, tetapi renungkanlah itu siang dan malam, supaya engkau bertindak hati-hati sesuai dengan segala yang tertulis di dalamnya, sebab dengan demikian perjalananmu akan berhasil dan engkau akan beruntung.","r":"Yosua 1:8"},{"t":"Awasilah mulutku, ya TUHAN, berjagalah pada pintu bibirku!","r":"Mazmur 141:3"},{"t":"Bukankah telah Kuperintahkan kepadamu: kuatkan dan teguhkanlah hatimu? Janganlah kecut dan tawar hati, sebab TUHAN, Allahmu, menyertai engkau, ke manapun engkau pergi.\"","r":"Yosua 1:9"},{"t":"Tetapi hendaklah kamu ramah seorang terhadap yang lain, penuh kasih mesra dan saling mengampuni, sebagaimana Allah di dalam Kristus telah mengampuni kamu.","r":"Efesus 4:32"},{"t":"Damai sejahtera Kutinggalkan bagimu. Damai sejahtera-Ku Kuberikan kepadamu, dan apa yang Kuberikan tidak seperti yang diberikan oleh dunia kepadamu. Janganlah gelisah dan gentar hatimu.","r":"Yohanes 14:27"},{"t":"Datanglah firman TUHAN kepada Yunus untuk kedua kalinya, demikian:","r":"Yunus 3:1"},{"t":"Tetapi sekarang, beginilah firman TUHAN yang menciptakan engkau, hai Yakub, yang membentuk engkau, hai Israel: \"Janganlah takut, sebab Aku telah menebus engkau, Aku telah memanggil engkau dengan namamu, engkau ini kepunyaan-Ku.","r":"Yesaya 43:1"},{"t":"Karena itu, saudara-saudaraku yang kekasih, berdirilah teguh, jangan goyah, dan giatlah selalu dalam pekerjaan Tuhan! Sebab kamu tahu, bahwa dalam persekutuan dengan Tuhan jerih payahmu tidak sia-sia.","r":"1 Korintus 15:58"},{"t":"Ia takkan membiarkan kakimu goyah, Penjagamu tidak akan terlelap.","r":"Mazmur 121:3"},{"t":"Sebab kami mau, saudara-saudara, supaya kamu tahu akan penderitaan yang kami alami di Asia Kecil. Beban yang ditanggungkan atas kami adalah begitu besar dan begitu berat, sehingga kami telah putus asa juga akan hidup kami.","r":"2 Korintus 1:8"},{"t":"Karena masa depan sungguh ada, dan harapanmu tidak akan hilang.","r":"Amsal 23:18"},{"t":"Hari ini telah lahir bagimu Juruselamat, yaitu Kristus, Tuhan, di kota Daud.","r":"Lukas 2:11"},{"t":"Aku sangat menanti-nantikan TUHAN; lalu Ia menjenguk kepadaku dan mendengar teriakku minta tolong.","r":"Mazmur 40:2"},{"t":"Akuilah Dia dalam segala lakumu, maka Ia akan meluruskan jalanmu.","r":"Amsal 3:6"},{"t":"Untuk segala sesuatu ada masanya, untuk apapun di bawah langit ada waktunya.","r":"Pengkhotbah 3:1"},{"t":"Pada suatu kali orang sedang menguburkan mayat. Ketika mereka melihat gerombolan datang, dicampakkan merekalah mayat itu ke dalam kubur Elisa, lalu pergi. Dan demi mayat itu kena kepada tulang-tulang Elisa, maka hiduplah ia kembali dan bangun berdiri.","r":"2 Raja-raja 13:21"},{"t":"namun aku akan bersorak-sorak di dalam TUHAN, beria-ria di dalam Allah yang menyelamatkan aku.","r":"Habakuk 3:18"},{"t":"Allah itu bagi kita tempat perlindungan dan kekuatan, sebagai penolong dalam kesesakan sangat terbukti.","r":"Mazmur 46:2"},{"t":"Nyanyian ziarah. Aku melayangkan mataku ke gunung-gunung; dari manakah akan datang pertolonganku? Pertolonganku ialah dari TUHAN, yang menjadikan langit dan bumi.","r":"Mazmur 121:1-2"},{"t":"Sebab seperti Yunus menjadi tanda untuk orang-orang Niniwe, demikian pulalah Anak Manusia akan menjadi tanda untuk angkatan ini.","r":"Lukas 11:30"},{"t":"Menjauhlah dari padaku, kamu sekalian yang melakukan kejahatan, sebab TUHAN telah mendengar tangisku;","r":"Mazmur 6:9"},{"t":"Pujilah TUHAN, hai jiwaku, dan janganlah lupakan segala kebaikan-Nya!","r":"Mazmur 103:2"},{"t":"Bukan kamu yang memilih Aku, tetapi Akulah yang memilih kamu. Dan Aku telah menetapkan kamu, supaya kamu pergi dan menghasilkan buah dan buahmu itu tetap, supaya apa yang kamu minta kepada Bapa dalam nama-Ku, diberikan-Nya kepadamu.","r":"Yohanes 15:16"},{"t":"Berbahagialah orang yang suci hatinya, karena mereka akan melihat Allah.","r":"Matius 5:8"},{"t":"Jika aku melihat langit-Mu, buatan jari-Mu, bulan dan bintang-bintang yang Kautempatkan: apakah manusia, sehingga Engkau mengingatnya? Apakah anak manusia, sehingga Engkau mengindahkannya?","r":"Mazmur 8:4-5"},{"t":"Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.","r":"Filipi 4:13"},{"t":"Janganlah bersukacita atas aku, hai musuhku! Sekalipun aku jatuh, aku akan bangun pula, sekalipun aku duduk dalam gelap, TUHAN akan menjadi terangku.","r":"Mikha 7:8"},{"t":"TUHAN Allahmu ada di antaramu sebagai pahlawan yang memberi kemenangan. Ia bergirang karena engkau dengan sukacita, Ia membaharui engkau dalam kasih-Nya, Ia bersorak-sorak karena engkau dengan sorak-sorai,","r":"Zefanya 3:17"},{"t":"Janganlah kamu menjadi hamba uang dan cukupkanlah dirimu dengan apa yang ada padamu. Karena Allah telah berfirman: \"Aku sekali-kali tidak akan membiarkan engkau dan Aku sekali-kali tidak akan meninggalkan engkau.\"","r":"Ibrani 13:5"},{"t":"dan Aku memberikan hidup yang kekal kepada mereka dan mereka pasti tidak akan binasa sampai selama-lamanya dan seorangpun tidak akan merebut mereka dari tangan-Ku.","r":"Yohanes 10:28"},{"t":"Segala tulisan yang diilhamkan Allah memang bermanfaat untuk mengajar, untuk menyatakan kesalahan, untuk memperbaiki kelakuan dan untuk mendidik orang dalam kebenaran.","r":"2 Timotius 3:16"},{"t":"Apapun juga yang kamu perbuat, perbuatlah dengan segenap hatimu seperti untuk Tuhan dan bukan untuk manusia.","r":"Kolose 3:23"},{"t":"Tidakkah kautahu, dan tidakkah kaudengar? TUHAN ialah Allah kekal yang menciptakan bumi dari ujung ke ujung; Ia tidak menjadi lelah dan tidak menjadi lesu, tidak terduga pengertian-Nya.","r":"Yesaya 40:28"},{"t":"Betapa manisnya janji-Mu itu bagi langit-langitku, lebih dari pada madu bagi mulutku.","r":"Mazmur 119:103"},{"t":"Bersorak-soraklah bagi TUHAN, hai seluruh bumi, bergembiralah, bersorak-sorailah dan bermazmurlah!","r":"Mazmur 98:4"},{"t":"Apabila engkau menyeberang melalui air, Aku akan menyertai engkau, atau melalui sungai-sungai, engkau tidak akan dihanyutkan; apabila engkau berjalan melalui api, engkau tidak akan dihanguskan, dan nyala api tidak akan membakar engkau.","r":"Yesaya 43:2"},{"t":"Karena itu yang penting bukanlah yang menanam atau yang menyiram, melainkan Allah yang memberi pertumbuhan.","r":"1 Korintus 3:7"},{"t":"Jika kita mengaku dosa kita, maka Ia adalah setia dan adil, sehingga Ia akan mengampuni segala dosa kita dan menyucikan kita dari segala kejahatan.","r":"1 Yohanes 1:9"},{"t":"Tidak ada kasih yang lebih besar dari pada kasih seorang yang memberikan nyawanya untuk sahabat-sahabatnya.","r":"Yohanes 15:13"},{"t":"Domba-domba-Ku mendengarkan suara-Ku dan Aku mengenal mereka dan mereka mengikut Aku,","r":"Yohanes 10:27"},{"t":"Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku. Ia menuntun aku di jalan yang benar oleh karena nama-Nya.","r":"Mazmur 23:2-3"},{"t":"Layanilah seorang akan yang lain, sesuai dengan karunia yang telah diperoleh tiap-tiap orang sebagai pengurus yang baik dari kasih karunia Allah.","r":"1 Petrus 4:10"},{"t":"atau kuasa-kuasa, baik yang di atas, maupun yang di bawah, ataupun sesuatu makhluk lain, tidak akan dapat memisahkan kita dari kasih Allah, yang ada dalam Kristus Yesus, Tuhan kita.","r":"Roma 8:39"},{"t":"Hati yang gembira adalah obat yang manjur, tetapi semangat yang patah mengeringkan tulang.","r":"Amsal 17:22"},{"t":"Nyanyian ziarah Daud. Aku bersukacita, ketika dikatakan orang kepadaku: \"Mari kita pergi ke rumah TUHAN.\"","r":"Mazmur 122:1"},{"t":"Seorang sahabat menaruh kasih setiap waktu, dan menjadi seorang saudara dalam kesukaran.","r":"Amsal 17:17"},{"t":"Tetapi berfirmanlah TUHAN kepada Samuel: \"Janganlah pandang parasnya atau perawakan yang tinggi, sebab Aku telah menolaknya. Bukan yang dilihat manusia yang dilihat Allah; manusia melihat apa yang di depan mata, tetapi TUHAN melihat hati.\"","r":"1 Samuel 16:7"},{"t":"Dengan tenteram aku mau membaringkan diri, lalu segera tidur, sebab hanya Engkaulah, ya TUHAN, yang membiarkan aku diam dengan aman.","r":"Mazmur 4:9"},{"t":"Orang yang duduk dalam lindungan Yang Mahatinggi dan bermalam dalam naungan Yang Mahakuasa akan berkata kepada TUHAN: \"Tempat perlindunganku dan kubu pertahananku, Allahku, yang kupercayai.\"","r":"Mazmur 91:1-2"},{"t":"Sebab itu kami tidak tawar hati, tetapi meskipun manusia lahiriah kami semakin merosot, namun manusia batiniah kami dibaharui dari sehari ke sehari.","r":"2 Korintus 4:16"},{"t":"Jadi apabila Anak itu memerdekakan kamu, kamupun benar-benar merdeka.\"","r":"Yohanes 8:36"},{"t":"Sebab TUHAN itu baik, kasih setia-Nya untuk selama-lamanya, dan kesetiaan-Nya tetap turun-temurun.","r":"Mazmur 100:5"},{"t":"Kecaplah dan lihatlah, betapa baiknya TUHAN itu! Berbahagialah orang yang berlindung pada-Nya!","r":"Mazmur 34:9"},{"t":"Tetapi TUHAN Allah memanggil manusia itu dan berfirman kepadanya: \"Di manakah engkau?\"","r":"Kejadian 3:9"},{"t":"Aku berkata kepadamu: Sesungguhnya barangsiapa tidak menyambut Kerajaan Allah seperti seorang anak kecil, ia tidak akan masuk ke dalamnya.\"","r":"Markus 10:15"},{"t":"maka kegelapanpun tidak menggelapkan bagi-Mu, dan malam menjadi terang seperti siang; kegelapan sama seperti terang.","r":"Mazmur 139:12"},{"t":"Bagaimana tidak Aku akan sayang kepada Niniwe, kota yang besar itu, yang berpenduduk lebih dari seratus dua puluh ribu orang, yang semuanya tak tahu membedakan tangan kanan dari tangan kiri, dengan ternaknya yang banyak?\"","r":"Yunus 4:11"}];
+  const GOAL = 12;
+  const KEY = 'roti-hidup-v1';
+
+  const $ = s => document.querySelector(s);
+  const loaf = $('#loaf'), stage = $('#stage'), verse = $('#verse');
+  const vText = $('#vText'), vRef = $('#vRef');
+  const dots = $('#dots'), bCount = $('#bCount'), list = $('#list');
+  const drawer = $('#drawer'), toast = $('#toast');
+
+  /* ---------- state ---------- */
+  let state = { got: [], bag: [] };
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) state = Object.assign(state, JSON.parse(raw));
+  } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+
+  // Shuffle bag: no repeats until every verse has come up once.
+  function draw() {
+    state.bag = state.bag.filter(i => i < VERSES.length);
+    if (!state.bag.length) {
+      state.bag = VERSES.map((_, i) => i);
+      for (let i = state.bag.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [state.bag[i], state.bag[j]] = [state.bag[j], state.bag[i]];
+      }
+    }
+    return state.bag.pop();
+  }
+
+  for (let i = 0; i < GOAL; i++) dots.appendChild(document.createElement('i'));
+  function renderBaskets(pop) {
+    const n = Math.min(GOAL, state.got.length);
+    bCount.textContent = state.got.length >= GOAL ? `${GOAL} bakul penuh` : `${n} / ${GOAL} bakul`;
+    [...dots.children].forEach((d, i) => {
+      d.classList.toggle('on', i < n);
+      d.classList.toggle('pop', !!pop && i === n - 1);
+    });
+    if (pop) setTimeout(() => dots.children[n - 1] && dots.children[n - 1].classList.remove('pop'), 420);
+  }
+  function renderList() {
+    list.innerHTML = '';
+    if (!state.got.length) {
+      list.innerHTML = '<li class="empty" style="border:0">Bakul masih kosong. Pecahkan roti dulu.</li>';
+      return;
+    }
+    state.got.slice().reverse().forEach(i => {
+      const v = VERSES[i];
+      if (!v) return;
+      const li = document.createElement('li');
+      li.textContent = '“' + v.t + '”';
+      const s = document.createElement('span');
+      s.textContent = v.r;
+      li.appendChild(s);
+      list.appendChild(li);
+    });
+  }
+  renderBaskets(false);
+
+  /* ---------- crumbs ---------- */
+  const table = $('.table');
+  function crumbs() {
+    if (matchMedia('(prefers-reduced-motion:reduce)').matches || !Element.prototype.animate) return;
+    for (let i = 0; i < 28; i++) {
+      const c = document.createElement('i');
+      c.className = 'crumb';
+      const size = 3 + Math.random() * 7;
+      c.style.width = size + 'px';
+      c.style.height = size * (.7 + Math.random() * .5) + 'px';
+      c.style.background = Math.random() < .35 ? '#c98b4a' : '#f0d3a3';
+      table.appendChild(c);
+      const ang = -Math.PI / 2 + (Math.random() - .5) * Math.PI * 1.3;
+      const dist = 60 + Math.random() * 120;
+      const dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist;
+      const fall = 80 + Math.random() * 90;
+      const rot = (Math.random() - .5) * 540;
+      c.animate([
+        { transform: 'translate(-50%,-50%) rotate(0)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${dx * .7}px), calc(-50% + ${dy * .7}px)) rotate(${rot * .6}deg)`, opacity: 1, offset: .35 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy + fall}px)) rotate(${rot}deg)`, opacity: 0 }
+      ], { duration: 1100 + Math.random() * 500, easing: 'cubic-bezier(.2,.6,.4,1)' }).onfinish = () => c.remove();
+    }
+  }
+
+  /* ---------- break / reset ---------- */
+  let busy = false, current = -1;
+  function breakBread() {
+    if (busy || loaf.classList.contains('broken')) return;
+    busy = true;
+    loaf.classList.remove('idle', 'rise');
+    loaf.classList.add('shake');
+    setTimeout(() => {
+      loaf.classList.remove('shake');
+      loaf.classList.add('broken');
+      crumbs();
+      current = draw();
+      const v = VERSES[current];
+      vText.textContent = '“' + v.t + '”';
+      vText.classList.toggle('long', v.t.length > 180);
+      vRef.innerHTML = '';
+      const b = document.createElement('b');
+      b.textContent = v.r;
+      vRef.append(b, document.createTextNode(' · TB'));
+      if (!state.got.includes(current)) state.got.push(current);
+      save();
+      setTimeout(() => {
+        stage.classList.add('reading');
+        verse.classList.add('show');
+        renderBaskets(true);
+        if (state.got.length === GOAL) say('Dua belas bakul penuh 🤍');
+        busy = false;
+        $('#again').focus({ preventScroll: true });
+      }, 520);
+    }, 380);
+  }
+  function newLoaf() {
+    if (busy) return;
+    verse.classList.remove('show');
+    stage.classList.remove('reading');
+    const halves = loaf.querySelectorAll('.half');
+    halves.forEach(h => h.style.transition = 'none');
+    loaf.classList.remove('broken');
+    void loaf.offsetWidth;
+    halves.forEach(h => h.style.transition = '');
+    loaf.classList.add('rise');
+    setTimeout(() => { loaf.classList.remove('rise'); loaf.classList.add('idle'); }, 800);
+    loaf.focus({ preventScroll: true });
+  }
+
+  loaf.addEventListener('click', breakBread);
+  loaf.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); breakBread(); }
+  });
+  $('#again').addEventListener('click', newLoaf);
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) setDrawer(false);
+  });
+
+  /* ---------- copy / share ---------- */
+  function say(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(say.t);
+    say.t = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+  const verseString = () => {
+    const v = VERSES[current];
+    return v ? `“${v.t}” — ${v.r} (TB)` : '';
+  };
+  $('#copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(verseString()); say('Ayat disalin'); }
+    catch (_) { say('Tidak bisa menyalin'); }
+  });
+  const shareBtn = $('#share');
+  if (navigator.share) {
+    shareBtn.hidden = false;
+    shareBtn.addEventListener('click', () => {
+      navigator.share({ text: verseString() + '\n\n@diam.dan.percaya' }).catch(() => {});
+    });
+  }
+
+  /* ---------- drawer ---------- */
+  function setDrawer(open) {
+    if (open) renderList();
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+  }
+  $('#openDrawer').addEventListener('click', () => setDrawer(true));
+  $('#closeDrawer').addEventListener('click', () => setDrawer(false));
+  $('#reset').addEventListener('click', () => {
+    state = { got: [], bag: [] };
+    save();
+    renderBaskets(false);
+    renderList();
+    say('Bakul dikosongkan');
+  });
+})();
+</script>
+</body>
+</html>
