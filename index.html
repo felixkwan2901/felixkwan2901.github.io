@@ -1219,22 +1219,24 @@
         title: 'diam.dan.percaya',
         image: 'diam-dan-percaya-cover.webp',
         alt: 'A fan of quote cards from the diam.dan.percaya Instagram account',
-        summary: 'A daily devotional Instagram account that posts itself. A Python pipeline designs every post and GitHub Actions publishes it on schedule. Every post also lands in a 3D web archive, next to a small verse game.',
-        stats: [ {n:78,label:'Posts archived'}, {n:168,label:'Verses in game'}, {n:0,label:'Manual uploads'} ],
+        summary: 'A daily devotional Instagram account that posts itself. A Python pipeline designs every post and Reel, and GitHub Actions publishes them on schedule. Every post also lands in a 3D web archive, along with two small games built around Bible verses.',
+        stats: [ {n:365,label:'Posts archived'}, {n:13,label:'Reels'}, {n:2,label:'Games'} ],
         detail: {
           meta: 'Personal project · @diam.dan.percaya · Live',
-          body: 'diam.dan.percaya (“be still and trust”) shares one Bible verse and one short line, every day. I didn’t want to spend each night designing and uploading posts, so I automated the whole thing. I write a week of content as plain text. Python renders every image in a consistent style, and a GitHub Actions job publishes each post through the Instagram API at the right time. The web archive brings every post together in one place, and Roti Hidup (“Bread of Life”) lets visitors break a loaf of bread to get a verse for the day.',
+          body: 'diam.dan.percaya (“be still and trust”) shares Bible verses and short reminders every day. I didn’t want to spend each night designing and uploading posts, so I automated the whole thing. I write a week of content as plain text. Python renders every image and Reel in a consistent style, and a GitHub Actions job publishes each post through the Instagram API at the right time. Around the account I built a web home for it: an archive of every post, and two games that turn scripture into something you can play.',
           highlights: [
             'Hands-free publishing: a scheduled GitHub Actions job checks every 15 minutes and posts whatever is due through the Instagram API.',
             'No double posts: a log records everything already published, and anything more than 6 hours late is skipped instead of flooding the feed.',
-            'Three rotating post formats (serif quote carousels, “notification from God” scenes and bold colour cards) are all generated from text.',
-            'Web archive: every post sits on a 3D photo sphere you can drag and zoom, with a flat grid view one tap away.',
-            'Roti Hidup: tap the loaf, it breaks with a crumb animation and gives you a verse. Collect twelve to fill all the baskets (John 6:13).'
+            'Generated from text: serif quote carousels, “notification from God” scenes, bold colour cards and short Reels.',
+            'Web archive: 365 posts and 13 Reels on a 3D photo sphere you can drag and zoom, sorted into numbered collections with a flat grid view.',
+            'Roti Hidup (“Bread of Life”): tap the loaf to break it and get a verse for the day. Collect twelve to fill all the baskets (John 6:13).',
+            'Stand Firm: a tower-defence game. Place defenders like the Shield of Faith, the Sword of the Spirit and the Trumpet of Jericho to hold the road through twenty waves of darkness.'
           ],
-          tech: ['Python','Pillow','GitHub Actions','Instagram Graph API','JavaScript','CSS 3D'],
+          tech: ['Python','Pillow','GitHub Actions','Instagram Graph API','JavaScript','Canvas','CSS 3D'],
           links: [
             {label:'Explore the archive', url:'diam.dan.percaya/'},
             {label:'Play Roti Hidup', url:'diam.dan.percaya/roti.html'},
+            {label:'Play Stand Firm', url:'diam.dan.percaya/stand-firm.html'},
             {label:'@diam.dan.percaya on Instagram', url:'https://www.instagram.com/diam.dan.percaya/'}
           ]
         }
